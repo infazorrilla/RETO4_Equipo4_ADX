@@ -1,4 +1,4 @@
-package elorrieta.model;
+package model.pojos;
 
 import java.time.LocalTime;
 import java.util.Objects;

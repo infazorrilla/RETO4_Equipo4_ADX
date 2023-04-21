@@ -1,4 +1,4 @@
-package elorrieta.model;
+package jUnitTest;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.junit.jupiter.api.Assertions.assertNotNull;
@@ -8,6 +8,8 @@ import java.time.LocalTime;
 
 import org.junit.jupiter.api.BeforeAll;
 import org.junit.jupiter.api.Test;
+
+import model.pojos.Appointment;
 
 
 class AppointmentTest {

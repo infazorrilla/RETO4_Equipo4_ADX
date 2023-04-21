@@ -1,4 +1,4 @@
-package elorrieta.model;
+package model.pojos;
 
 import java.io.Serializable;
 import java.time.LocalTime;
