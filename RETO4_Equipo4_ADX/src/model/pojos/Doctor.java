@@ -7,24 +7,24 @@ public class Doctor extends Sanitarian implements Serializable {
 
 	private static final long serialVersionUID = -6651744658859466141L;
 
-	private String category;
-	private boolean eir;
+	private String speciality;
+	private boolean mir;
 
 	// GETTERS AND SETTERS //
-	public String getCategory() {
-		return category;
+	public String getSpeciality() {
+		return speciality;
 	}
 
-	public void setCategory(String category) {
-		this.category = category;
+	public void setSpeciality(String speciality) {
+		this.speciality = speciality;
 	}
 
-	public boolean isEir() {
-		return eir;
+	public boolean isMir() {
+		return mir;
 	}
 
-	public void setEir(boolean eir) {
-		this.eir = eir;
+	public void setMir(boolean mir) {
+		this.mir = mir;
 	}
 
 	// HASHCODE //
@@ -32,7 +32,7 @@ public class Doctor extends Sanitarian implements Serializable {
 	public int hashCode() {
 		final int prime = 31;
 		int result = super.hashCode();
-		result = prime * result + Objects.hash(category, eir);
+		result = prime * result + Objects.hash(mir, speciality);
 		return result;
 	}
 
@@ -46,13 +46,13 @@ public class Doctor extends Sanitarian implements Serializable {
 		if (getClass() != obj.getClass())
 			return false;
 		Doctor other = (Doctor) obj;
-		return Objects.equals(category, other.category) && eir == other.eir;
+		return mir == other.mir && Objects.equals(speciality, other.speciality);
 	}
 
-	// TO STRING //
+	// TOSTRING //
 	@Override
 	public String toString() {
-		return "Doctor [category=" + category + ", eir=" + eir + "]";
+		return "Doctor [speciality=" + speciality + ", mir=" + mir + "]";
 	}
 
 }

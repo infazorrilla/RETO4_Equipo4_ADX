@@ -7,30 +7,33 @@ public class Nurse extends Sanitarian implements Serializable {
 
 	private static final long serialVersionUID = -6651744658859466141L;
 
-	private String speciality;
-	private boolean mir;
+	private String category;
+	private boolean eir;
 
 	// GETTERS AND SETTERS //
-	public String getSpeciality() {
-		return speciality;
+	public String getCategory() {
+		return category;
 	}
 
-	public void setSpeciality(String speciality) {
-		this.speciality = speciality;
+	public void setCategory(String category) {
+		this.category = category;
 	}
 
-	public boolean isMir() {
-		return mir;
+	public boolean isEir() {
+		return eir;
 	}
 
-	public void setMir(boolean mir) {
-		this.mir = mir;
+	public void setEir(boolean eir) {
+		this.eir = eir;
 	}
 
 	// HASHCODE //
 	@Override
 	public int hashCode() {
-		return Objects.hash(mir, speciality);
+		final int prime = 31;
+		int result = super.hashCode();
+		result = prime * result + Objects.hash(category, eir);
+		return result;
 	}
 
 	// EQUALS //
@@ -38,18 +41,18 @@ public class Nurse extends Sanitarian implements Serializable {
 	public boolean equals(Object obj) {
 		if (this == obj)
 			return true;
-		if (obj == null)
+		if (!super.equals(obj))
 			return false;
 		if (getClass() != obj.getClass())
 			return false;
 		Nurse other = (Nurse) obj;
-		return mir == other.mir && Objects.equals(speciality, other.speciality);
+		return Objects.equals(category, other.category) && eir == other.eir;
 	}
 
-	// TOSTRING //
+	// TO STRING //
 	@Override
 	public String toString() {
-		return "Nurse [speciality=" + speciality + ", mir=" + mir + "]";
+		return "Nurse [category=" + category + ", eir=" + eir + "]";
 	}
 
 }
