@@ -9,6 +9,20 @@ public class Ambulatory {
 	private String phoneNumber;
 	private String address;
 
+	// CONSTRUCTOR //
+	public Ambulatory(int id, String name, String phoneNumber, String address) {
+		super();
+		this.id = id;
+		this.name = name;
+		this.phoneNumber = phoneNumber;
+		this.address = address;
+	}
+
+	public Ambulatory() {
+		super();
+		// TODO Auto-generated constructor stub
+	}
+
 	// GETTERS AND SETTERS //
 	public int getId() {
 		return id;
