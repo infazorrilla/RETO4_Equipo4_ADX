@@ -18,7 +18,7 @@ public abstract class AbstractManager<T> implements GeneralInterface <T>{
 	public abstract void update(T t) throws SQLException, Exception;
 
 	@Override
-	public abstract void delete(int id) ;
+	public abstract void delete(int id) throws SQLException, Exception;
 	
 
 }
