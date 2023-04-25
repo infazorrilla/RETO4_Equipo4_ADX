@@ -6,33 +6,19 @@ import java.util.List;
 public abstract class AbstractManager<T> implements GeneralInterface <T>{
 
 	@Override
-	public T select(int id) {
-		// TODO Auto-generated method stub
-		return null;
-	}
+	public abstract T select(int id) ;
 
 	@Override
-	public List<T> select() throws SQLException, Exception {
-		// TODO Auto-generated method stub
-		return null;
-	}
+	public abstract List<T> select() throws SQLException, Exception;
 
 	@Override
-	public void insert(T t) throws SQLException, Exception {
-		// TODO Auto-generated method stub
-		
-	}
+	public abstract void insert(T t) throws SQLException, Exception;
 
 	@Override
-	public void update(T t) throws SQLException, Exception {
-		// TODO Auto-generated method stub
-		
-	}
+	public abstract void update(T t) throws SQLException, Exception;
 
 	@Override
-	public void delete(int id) {
-		// TODO Auto-generated method stub
-		
-	}
+	public abstract void delete(int id) ;
+	
 
 }
