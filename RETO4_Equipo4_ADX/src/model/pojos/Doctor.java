@@ -21,6 +21,12 @@ public class Doctor extends Sanitarian implements Serializable {
 
 
 
+	public Doctor() {
+		// TODO Auto-generated constructor stub
+	}
+
+
+
 	public String getSpeciality() {
 		return speciality;
 	}

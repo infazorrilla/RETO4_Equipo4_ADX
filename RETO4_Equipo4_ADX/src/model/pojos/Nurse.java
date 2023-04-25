@@ -12,6 +12,10 @@ public class Nurse extends Sanitarian implements Serializable {
 		// TODO Auto-generated constructor stub
 	}
 
+	public Nurse() {
+		// TODO Auto-generated constructor stub
+	}
+
 	private static final long serialVersionUID = -6651744658859466141L;
 
 	private String category;

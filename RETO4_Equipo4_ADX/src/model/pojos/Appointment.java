@@ -29,6 +29,9 @@ public class Appointment implements Serializable {
 		this.timeSlot = timeSlot;
 		this.ambulatory = ambulatory;
 	}
+	public Appointment() {
+		// TODO Auto-generated constructor stub
+	}
 	public int getId() {
 		return id;
 	}

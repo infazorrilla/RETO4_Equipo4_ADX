@@ -35,8 +35,6 @@ class SanitarianTest {
 		// APPOINTMENT //
 		Appointment apointment = new Appointment();
 		apointment.setId(2);
-		apointment.setHour(LocalTime.parse("09:00"));
-		apointment.setType("Cita");
 		apointment.setSanitarians(null);
 		apointment.setPatient(null);
 		assertNotNull(sanitarian.getAppointments());

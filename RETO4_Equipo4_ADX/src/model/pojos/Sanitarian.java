@@ -26,6 +26,9 @@ public class Sanitarian extends User implements Serializable  {
 		this.appointments = appointments;
 		this.ambulatory = ambulatory;
 	}
+	public Sanitarian() {
+		// TODO Auto-generated constructor stub
+	}
 	// GETTERS AND SETTERS //
 	public int getStaffNum() {
 		return staffNum;
