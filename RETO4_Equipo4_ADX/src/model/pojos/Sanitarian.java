@@ -12,6 +12,7 @@ public class Sanitarian extends User implements Serializable  {
 	private float salary;
 	private String type;
 	private ArrayList<Appointment> appointments;
+	private ArrayList<Ambulatory> ambulatory;
 	
 	// GETTERS AND SETTERS //
 	public int getStaffNum() {
@@ -41,16 +42,23 @@ public class Sanitarian extends User implements Serializable  {
 	public static long getSerialversionuid() {
 		return serialVersionUID;
 	}
+	public ArrayList<Ambulatory> getAmbulatory() {
+		return ambulatory;
+	}
+	public void setAmbulatory(ArrayList<Ambulatory> ambulatory) {
+		this.ambulatory = ambulatory;
+	}
 	
 	// HASHCODE //
-	
 	@Override
 	public int hashCode() {
 		final int prime = 31;
 		int result = super.hashCode();
-		result = prime * result + Objects.hash(appointments, salary, staffNum, type);
+		result = prime * result + Objects.hash(ambulatory, appointments, salary, staffNum, type);
 		return result;
 	}
+	
+	// EQUALS //
 	@Override
 	public boolean equals(Object obj) {
 		if (this == obj)
@@ -60,24 +68,15 @@ public class Sanitarian extends User implements Serializable  {
 		if (getClass() != obj.getClass())
 			return false;
 		Sanitarian other = (Sanitarian) obj;
-		return Objects.equals(appointments, other.appointments)
+		return Objects.equals(ambulatory, other.ambulatory) && Objects.equals(appointments, other.appointments)
 				&& Float.floatToIntBits(salary) == Float.floatToIntBits(other.salary) && staffNum == other.staffNum
 				&& Objects.equals(type, other.type);
 	}
+	// TO STRING //
 	@Override
 	public String toString() {
 		return "Sanitarian [staffNum=" + staffNum + ", salary=" + salary + ", type=" + type + ", appointments="
-				+ appointments + "]";
+				+ appointments + ", ambulatory=" + ambulatory + "]";
 	}
-
-	
-	
-
-	
-	
-	
-	
-	// TO STRING //
-	
 	
 }

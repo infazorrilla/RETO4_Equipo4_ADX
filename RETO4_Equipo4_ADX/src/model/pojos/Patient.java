@@ -4,7 +4,7 @@ import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.Objects;
 
-public class Patient implements Serializable {
+public class Patient extends User implements Serializable {
 
 	private static final long serialVersionUID = -6651744658859466141L;
 	

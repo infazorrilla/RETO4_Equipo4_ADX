@@ -18,6 +18,7 @@ public class Appointment implements Serializable {
 	private ArrayList<Sanitarian> sanitarians;
 	private Patient patient;
 	private TimeSlot timeSlot;
+	private ArrayList<Ambulatory> ambulatory;
 
 	public Appointment() {
 
@@ -75,10 +76,18 @@ public class Appointment implements Serializable {
 	public static long getSerialversionuid() {
 		return serialVersionUID;
 	}
+	
+	public ArrayList<Ambulatory> getAmbulatory() {
+		return ambulatory;
+	}
+
+	public void setAmbulatory(ArrayList<Ambulatory> ambulatory) {
+		this.ambulatory = ambulatory;
+	}
 
 	@Override
 	public int hashCode() {
-		return Objects.hash(id, patient, sanitarians, timeSlot, type);
+		return Objects.hash(ambulatory, id, patient, sanitarians, timeSlot, type);
 	}
 
 	@Override
@@ -90,7 +99,7 @@ public class Appointment implements Serializable {
 		if (getClass() != obj.getClass())
 			return false;
 		Appointment other = (Appointment) obj;
-		return id == other.id && Objects.equals(patient, other.patient)
+		return Objects.equals(ambulatory, other.ambulatory) && id == other.id && Objects.equals(patient, other.patient)
 				&& Objects.equals(sanitarians, other.sanitarians) && Objects.equals(timeSlot, other.timeSlot)
 				&& Objects.equals(type, other.type);
 	}
@@ -98,7 +107,7 @@ public class Appointment implements Serializable {
 	@Override
 	public String toString() {
 		return "Appointment [id=" + id + ", type=" + type + ", sanitarians=" + sanitarians + ", patient=" + patient
-				+ ", timeSlot=" + timeSlot + "]";
+				+ ", timeSlot=" + timeSlot + ", ambulatory=" + ambulatory + "]";
 	}
-
+	
 }
