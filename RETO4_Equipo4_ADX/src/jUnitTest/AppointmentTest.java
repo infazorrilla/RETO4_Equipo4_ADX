@@ -26,7 +26,8 @@ class AppointmentTest {
 		assertEquals(apointment.getId(), 1);
 		
 		apointment.setHour(LocalTime.parse("11:00"));
-		assertEquals(apointment.getHour(), "11:00");
+		LocalTime expected = LocalTime.parse("11:00");
+		assertEquals(apointment.getHour(), expected);
 
 		apointment.setType("Cita");
 		assertEquals(apointment.getType(), "Cita");

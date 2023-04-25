@@ -23,10 +23,12 @@ class TimeSlotTest {
 		assertEquals(timeSlot.getId(), 1);
 
 		timeSlot.setStartTime(LocalTime.parse("11:00"));
-		assertEquals(timeSlot.getStartTime(), "11:00");
+		LocalTime expectedStartTime = LocalTime.parse("11:00");
+		assertEquals(timeSlot.getStartTime(), expectedStartTime);
 
-		timeSlot.setStartTime(LocalTime.parse("11:30"));
-		assertEquals(timeSlot.getEndTime(), "11:30");
+		timeSlot.setEndTime(LocalTime.parse("11:30"));
+		LocalTime expectedEndTime = LocalTime.parse("11:30");
+		assertEquals(timeSlot.getEndTime(), expectedEndTime);
 
 		timeSlot.setAvailable(true);
 		assertEquals(timeSlot.isAvailable(), true);
