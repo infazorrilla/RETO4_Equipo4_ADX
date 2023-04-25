@@ -6,7 +6,7 @@ import java.util.List;
 public abstract class AbstractManager<T> implements GeneralInterface <T>{
 
 	@Override
-	public abstract T select(int id) ;
+	public abstract T select(int id) throws SQLException, Exception;
 
 	@Override
 	public abstract List<T> select() throws SQLException, Exception;

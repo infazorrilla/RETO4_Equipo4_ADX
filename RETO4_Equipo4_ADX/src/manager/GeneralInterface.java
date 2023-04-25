@@ -5,7 +5,7 @@ import java.util.List;
 
 public interface GeneralInterface<T> {
 	
-	public T select(int id);
+	public T select(int id) throws SQLException, Exception;
 	
 	public List<T> select() throws SQLException, Exception;
 	
