@@ -91,7 +91,10 @@ public class Sanitarian extends User implements Serializable  {
 	@Override
 	public String toString() {
 		return "Sanitarian [staffNum=" + staffNum + ", salary=" + salary + ", type=" + type + ", appointments="
-				+ appointments + ", ambulatory=" + ambulatory + "]";
+				+ appointments + ", ambulatory=" + ambulatory + ", dni=" + dni + ", name=" + name + ", surname="
+				+ surname + ", gender=" + gender + ", birthDate=" + birthDate + ", password=" + password + "]";
 	}
-	
+
 }
+	
+

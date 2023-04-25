@@ -62,12 +62,15 @@ public class Patient extends User implements Serializable {
 		return Objects.equals(address, other.address) && Objects.equals(appointments, other.appointments)
 				&& Objects.equals(phoneNumber, other.phoneNumber);
 	}
-	
-	// TO STRING //
 	@Override
 	public String toString() {
-		return "Patient [phoneNumber=" + phoneNumber + ", address=" + address + ", appointments=" + appointments + "]";
+		return "Patient [phoneNumber=" + phoneNumber + ", address=" + address + ", appointments=" + appointments
+				+ ", dni=" + dni + ", name=" + name + ", surname=" + surname + ", gender=" + gender + ", birthDate="
+				+ birthDate + ", password=" + password + "]";
 	}
+	
+	// TO STRING //
+	
 	
 
 }

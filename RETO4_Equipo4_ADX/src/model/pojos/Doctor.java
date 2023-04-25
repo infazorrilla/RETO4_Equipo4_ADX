@@ -83,8 +83,13 @@ public class Doctor extends Sanitarian implements Serializable {
 
 	@Override
 	public String toString() {
-		return "Doctor [speciality=" + speciality + ", mir=" + mir + "]";
+		return "Doctor [speciality=" + speciality + ", mir=" + mir + ", dni=" + dni + ", name=" + name + ", surname="
+				+ surname + ", gender=" + gender + ", birthDate=" + birthDate + ", password=" + password + "]";
 	}
+
+
+
+	
 
 	
 }

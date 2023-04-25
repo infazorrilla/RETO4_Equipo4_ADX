@@ -53,10 +53,13 @@ public class Nurse extends Sanitarian implements Serializable {
 		Nurse other = (Nurse) obj;
 		return Objects.equals(category, other.category) && eir == other.eir;
 	}
+
 	@Override
 	public String toString() {
-		return "Nurse [category=" + category + ", eir=" + eir + "]";
+		return "Nurse [category=" + category + ", eir=" + eir + ", dni=" + dni + ", name=" + name + ", surname="
+				+ surname + ", gender=" + gender + ", birthDate=" + birthDate + ", password=" + password + "]";
 	}
+	
 
 	
 
