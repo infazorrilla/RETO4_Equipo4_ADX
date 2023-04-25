@@ -24,9 +24,6 @@ class AppointmentTest {
 
 		apointment.setId(1);
 		assertEquals(apointment.getId(), 1);
-
-		apointment.setType("Cita");
-		assertEquals(apointment.getType(), "Cita");
 		
 		apointment.setSanitarians(null);
 		assertEquals(apointment.getSanitarians(), null);
@@ -42,7 +39,6 @@ class AppointmentTest {
 	public void testAppointmentEquals() {
 		Appointment apointmentOne = new Appointment();
 		apointmentOne.setId(1);
-		apointmentOne.setType("Cita");
 		apointmentOne.setSanitarians(null);
 		apointmentOne.setPatient(null);
 		apointmentOne.setTimeSlot(null);
@@ -50,7 +46,6 @@ class AppointmentTest {
 
 		Appointment apointmentTwo = new Appointment();
 		apointmentTwo.setId(1);
-		apointmentTwo.setType("Cita");
 		apointmentTwo.setSanitarians(null);
 		apointmentTwo.setPatient(null);
 		apointmentTwo.setTimeSlot(null);
@@ -63,13 +58,12 @@ class AppointmentTest {
 	public void testAppointmentToString() {
 		Appointment apointment = new Appointment();
 		apointment.setId(1);
-		apointment.setType("Cita");
 		apointment.setSanitarians(null);
 		apointment.setPatient(null);
 		apointment.setTimeSlot(null);
 
-		String sentence = "Appointment [id=" + 1 + ", type=" + "Cita" + ", sanitarians=" + null + ", patient=" + null
-				+ ", timeSlot=" + null + "]";
+		String sentence = "Appointment [id=" + 1 + ", sanitarians=" + null + ", patient=" + null + ", timeSlot="
+				+ null + ", ambulatory=" + null + "]";
 		
 		assertEquals(sentence, apointment.toString());		
 	}
@@ -78,7 +72,6 @@ class AppointmentTest {
 	public void testHasCode() {
 		Appointment apointment = new Appointment();
 		apointment.setId(1);
-		apointment.setType("Cita");
 		apointment.setSanitarians(null);
 		apointment.setPatient(null);
 		apointment.setTimeSlot(null);
