@@ -10,19 +10,18 @@ import java.time.LocalTime;
 import java.util.ArrayList;
 import java.util.List;
 
-
-import model.pojos.WorkingDay;
+import model.pojos.TimeSlot;
 import model.utils.BBDDUtils;
 
-public class WorkingDayManager extends AbstractManager<WorkingDay> {
+public class TimeSlotManager extends AbstractManager<TimeSlot> {
 
-	public static final String WORKINGDAY_TABLE = "jornada";
+	public static final String TIMESLOT_TABLE = "franja";
 
 	@Override
-	public WorkingDay select(int id) throws SQLException, Exception{
-		WorkingDay ret = null;
+	public TimeSlot select(int id) throws SQLException, Exception {
+		TimeSlot ret = null;
 
-		String sql = "select * from " + WORKINGDAY_TABLE + " where id=" +id;
+		String sql = "select * from " + TIMESLOT_TABLE + " where id=" + id;
 
 		Connection connection = null;
 		Statement statement = null;
@@ -35,16 +34,17 @@ public class WorkingDayManager extends AbstractManager<WorkingDay> {
 
 		while (resultSet.next()) {
 			if (null == ret)
-				ret = new WorkingDay();
-			
-			String weekDay = resultSet.getString("diaSemana");
+				ret = new TimeSlot();
+
 			LocalTime startTime = LocalTime.parse(resultSet.getString("horaInicio"));
 			LocalTime endTime = LocalTime.parse(resultSet.getString("horaFin"));
+			String available = resultSet.getString("disponible");
+			boolean isAvailable = Boolean.valueOf(available);
 
 			ret.setId(id);
-			ret.setWeekDay(weekDay);
 			ret.setStartTime(startTime);
 			ret.setEndTime(endTime);
+			ret.setAvailable(isAvailable);
 		}
 
 		resultSet.close();
@@ -58,10 +58,10 @@ public class WorkingDayManager extends AbstractManager<WorkingDay> {
 	}
 
 	@Override
-	public List<WorkingDay> select() throws SQLException, Exception {
-		ArrayList<WorkingDay> ret = null;
+	public List<TimeSlot> select() throws SQLException, Exception {
+		ArrayList<TimeSlot> ret = null;
 
-		String sql = "select * from " + WORKINGDAY_TABLE;
+		String sql = "select * from " + TIMESLOT_TABLE;
 
 		Connection connection = null;
 		Statement statement = null;
@@ -74,20 +74,21 @@ public class WorkingDayManager extends AbstractManager<WorkingDay> {
 
 		while (resultSet.next()) {
 			if (null == ret)
-				ret = new ArrayList<WorkingDay>();
+				ret = new ArrayList<TimeSlot>();
 
 			int id = resultSet.getInt("id");
-			String weekDay = resultSet.getString("diaSemana");
 			LocalTime startTime = LocalTime.parse(resultSet.getString("horaInicio"));
 			LocalTime endTime = LocalTime.parse(resultSet.getString("horaFin"));
+			String available = resultSet.getString("disponible");
+			boolean isAvailable = Boolean.valueOf(available);
 
-			WorkingDay workingDay = new WorkingDay();
-			workingDay.setId(id);
-			workingDay.setWeekDay(weekDay);
-			workingDay.setStartTime(startTime);
-			workingDay.setEndTime(endTime);
+			TimeSlot timeSlot = new TimeSlot();
+			timeSlot.setId(id);
+			timeSlot.setStartTime(startTime);
+			timeSlot.setEndTime(endTime);
+			timeSlot.setAvailable(isAvailable);
 
-			ret.add(workingDay);
+			ret.add(timeSlot);
 		}
 
 		resultSet.close();
@@ -102,15 +103,15 @@ public class WorkingDayManager extends AbstractManager<WorkingDay> {
 	}
 
 	@Override
-	public void insert(WorkingDay workingDay) throws SQLException, Exception {
+	public void insert(TimeSlot timeSlot) throws SQLException, Exception {
 		Connection connection = DriverManager.getConnection(BBDDUtils.URL_LOCAL, BBDDUtils.USER_LOCAL,
 				BBDDUtils.PASS_LOCAL);
 		Statement statement = connection.createStatement();
 		Class.forName(BBDDUtils.DRIVER_LOCAL);
 
-		String sql = "insert into " + WORKINGDAY_TABLE + " (dniSanitario, diaSemana, horaInicio, horaFin) values ('"
-				+ /* workingDay.getSanitarian.getDniSanitario() + "', '" + */ workingDay.getStartTime() + "', '"
-				+ workingDay.getEndTime() + "')";
+		String sql = "insert into " + TIMESLOT_TABLE + " (idJornada, horaInicio, horaFin, disponible) values ('"
+				+ timeSlot.getWorkingDay().getId() + "', '" + timeSlot.getStartTime() + "', '" + timeSlot.getEndTime()
+				+ "', '" + timeSlot.isAvailable() + "')";
 
 		statement.executeUpdate(sql);
 
@@ -119,17 +120,18 @@ public class WorkingDayManager extends AbstractManager<WorkingDay> {
 
 		if (connection != null)
 			connection.close();
+
 	}
 
 	@Override
-	public void update(WorkingDay workingDay) throws SQLException, Exception {
+	public void update(TimeSlot timeSlot) throws SQLException, Exception {
 		Connection connection = DriverManager.getConnection(BBDDUtils.URL_LOCAL, BBDDUtils.USER_LOCAL,
 				BBDDUtils.PASS_LOCAL);
 		PreparedStatement preparedStatement = null;
 
 		Class.forName(BBDDUtils.DRIVER_LOCAL);
 
-//		String sql = "update "+APPOINTMENT_TABLE+" set idJornada = ? where id = ?";
+//		String sql = "update "+TIMESLOT_TABLE+" set idFranja = ? where id = ?";
 //		preparedStatement = connection.prepareStatement(sql);
 //		preparedStatement.setInt(1, 1);
 //		preparedStatement.setint(2, appointment.getId());
@@ -150,7 +152,7 @@ public class WorkingDayManager extends AbstractManager<WorkingDay> {
 		PreparedStatement preparedStatement = null;
 
 		Class.forName(BBDDUtils.DRIVER_LOCAL);
-		String sql = "delete from " + WORKINGDAY_TABLE + " where id = " + id;
+		String sql = "delete from " + TIMESLOT_TABLE + " where id = " + id;
 		preparedStatement = connection.prepareStatement(sql);
 
 		preparedStatement.executeUpdate();
@@ -159,6 +161,7 @@ public class WorkingDayManager extends AbstractManager<WorkingDay> {
 			preparedStatement.close();
 		if (connection != null)
 			connection.close();
+
 	}
 
 }
