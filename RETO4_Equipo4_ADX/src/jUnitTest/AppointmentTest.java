@@ -24,10 +24,6 @@ class AppointmentTest {
 
 		apointment.setId(1);
 		assertEquals(apointment.getId(), 1);
-		
-		apointment.setHour(LocalTime.parse("11:00"));
-		LocalTime expected = LocalTime.parse("11:00");
-		assertEquals(apointment.getHour(), expected);
 
 		apointment.setType("Cita");
 		assertEquals(apointment.getType(), "Cita");
@@ -37,23 +33,28 @@ class AppointmentTest {
 		
 		apointment.setPatient(null);
 		assertEquals(apointment.getPatient(), null);
+		
+		apointment.setTimeSlot(null);
+		assertEquals(apointment.getTimeSlot(), null);
 	}
 	
 	@Test
 	public void testAppointmentEquals() {
 		Appointment apointmentOne = new Appointment();
 		apointmentOne.setId(1);
-		apointmentOne.setHour(LocalTime.parse("11:00"));
 		apointmentOne.setType("Cita");
 		apointmentOne.setSanitarians(null);
 		apointmentOne.setPatient(null);
+		apointmentOne.setTimeSlot(null);
+
 
 		Appointment apointmentTwo = new Appointment();
 		apointmentTwo.setId(1);
-		apointmentTwo.setHour(LocalTime.parse("11:00"));
 		apointmentTwo.setType("Cita");
 		apointmentTwo.setSanitarians(null);
 		apointmentTwo.setPatient(null);
+		apointmentTwo.setTimeSlot(null);
+
 		
 		assertTrue(apointmentOne.equals(apointmentTwo));
 	}
@@ -62,13 +63,13 @@ class AppointmentTest {
 	public void testAppointmentToString() {
 		Appointment apointment = new Appointment();
 		apointment.setId(1);
-		apointment.setHour(LocalTime.parse("11:00"));
 		apointment.setType("Cita");
 		apointment.setSanitarians(null);
 		apointment.setPatient(null);
-		
-		String sentence = "Appointment [id=" + 1 + ", hour=" + "11:00" + ", type=" + "Cita" + ", sanitarians=" + null
-				+ ", patient=" + null + "]";
+		apointment.setTimeSlot(null);
+
+		String sentence = "Appointment [id=" + 1 + ", type=" + "Cita" + ", sanitarians=" + null + ", patient=" + null
+				+ ", timeSlot=" + null + "]";
 		
 		assertEquals(sentence, apointment.toString());		
 	}
@@ -77,10 +78,10 @@ class AppointmentTest {
 	public void testHasCode() {
 		Appointment apointment = new Appointment();
 		apointment.setId(1);
-		apointment.setHour(LocalTime.parse("11:00"));
 		apointment.setType("Cita");
 		apointment.setSanitarians(null);
 		apointment.setPatient(null);
+		apointment.setTimeSlot(null);
 		
 		assertNotNull(apointment.hashCode());
 	}

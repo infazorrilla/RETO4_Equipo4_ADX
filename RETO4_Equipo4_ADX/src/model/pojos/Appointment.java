@@ -13,23 +13,23 @@ public class Appointment implements Serializable {
 	private static final long serialVersionUID = -406540892233438477L;
 
 	private int id;
-	private LocalTime hour;
 	private String type;
 
 	private ArrayList<Sanitarian> sanitarians;
 	private Patient patient;
+	private TimeSlot timeSlot;
 
 	public Appointment() {
 
 	}
 
-	public Appointment(int id, LocalTime hour, String type, ArrayList<Sanitarian> sanitarians, Patient patient) {
+	public Appointment(int id, String type, ArrayList<Sanitarian> sanitarians, Patient patient, TimeSlot timeSlot) {
 		super();
 		this.id = id;
-		this.hour = hour;
 		this.type = type;
 		this.sanitarians = sanitarians;
 		this.patient = patient;
+		this.timeSlot = timeSlot;
 	}
 
 	public int getId() {
@@ -38,14 +38,6 @@ public class Appointment implements Serializable {
 
 	public void setId(int id) {
 		this.id = id;
-	}
-
-	public LocalTime getHour() {
-		return hour;
-	}
-
-	public void setHour(LocalTime hour) {
-		this.hour = hour;
 	}
 
 	public String getType() {
@@ -72,13 +64,21 @@ public class Appointment implements Serializable {
 		this.patient = patient;
 	}
 
+	public TimeSlot getTimeSlot() {
+		return timeSlot;
+	}
+
+	public void setTimeSlot(TimeSlot timeSlot) {
+		this.timeSlot = timeSlot;
+	}
+
 	public static long getSerialversionuid() {
 		return serialVersionUID;
 	}
 
 	@Override
 	public int hashCode() {
-		return Objects.hash(hour, id, patient, sanitarians, type);
+		return Objects.hash(id, patient, sanitarians, timeSlot, type);
 	}
 
 	@Override
@@ -90,14 +90,15 @@ public class Appointment implements Serializable {
 		if (getClass() != obj.getClass())
 			return false;
 		Appointment other = (Appointment) obj;
-		return Objects.equals(hour, other.hour) && id == other.id && Objects.equals(patient, other.patient)
-				&& Objects.equals(sanitarians, other.sanitarians) && Objects.equals(type, other.type);
+		return id == other.id && Objects.equals(patient, other.patient)
+				&& Objects.equals(sanitarians, other.sanitarians) && Objects.equals(timeSlot, other.timeSlot)
+				&& Objects.equals(type, other.type);
 	}
 
 	@Override
 	public String toString() {
-		return "Appointment [id=" + id + ", hour=" + hour + ", type=" + type + ", sanitarians=" + sanitarians
-				+ ", patient=" + patient + "]";
+		return "Appointment [id=" + id + ", type=" + type + ", sanitarians=" + sanitarians + ", patient=" + patient
+				+ ", timeSlot=" + timeSlot + "]";
 	}
 
 }
