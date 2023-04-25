@@ -20,14 +20,16 @@ class WorkingDayTest {
 		workingDay.setId(1);
 		assertEquals(workingDay.getId(), 1);
 		
-		workingDay.setDate(Date.valueOf("2023-12-12"));
-		assertEquals(workingDay.getDate(), "2023-12-12");
+		workingDay.setWeekDay("Lunes");
+		assertEquals(workingDay.getWeekDay(), "Lunes");
 
 		workingDay.setStartTime(LocalTime.parse("15:30"));
-		assertEquals(workingDay.getStartTime(), "15:30");
+		LocalTime expectedStartTime = LocalTime.parse("15:30");
+		assertEquals(workingDay.getStartTime(), expectedStartTime);
 		
 		workingDay.setEndTime(LocalTime.parse("18:30"));
-		assertEquals(workingDay.getEndTime(), "18:30");
+		LocalTime expectedEndTime = LocalTime.parse("18:30");
+		assertEquals(workingDay.getEndTime(), expectedEndTime);
 		
 		workingDay.setTimeSlots(null);
 		assertEquals(workingDay.getTimeSlots(), null);
@@ -40,7 +42,7 @@ class WorkingDayTest {
 	public void testAppointmentEquals() {
 		WorkingDay workingDayOne = new WorkingDay();
 		workingDayOne.setId(1);
-		workingDayOne.setDate(Date.valueOf("2023-12-12"));
+		workingDayOne.setWeekDay("Lunes");
 		workingDayOne.setStartTime(LocalTime.parse("15:30"));
 		workingDayOne.setEndTime(LocalTime.parse("18:30"));
 		workingDayOne.setTimeSlots(null);
@@ -48,7 +50,7 @@ class WorkingDayTest {
 
 		WorkingDay workingDayTwo = new WorkingDay();
 		workingDayTwo.setId(1);
-		workingDayTwo.setDate(Date.valueOf("2023-12-12"));
+		workingDayTwo.setWeekDay("Lunes");
 		workingDayTwo.setStartTime(LocalTime.parse("15:30"));
 		workingDayTwo.setEndTime(LocalTime.parse("18:30"));
 		workingDayTwo.setTimeSlots(null);
@@ -61,13 +63,13 @@ class WorkingDayTest {
 	public void testWorkingDayToString() {
 		WorkingDay workingDay = new WorkingDay();
 		workingDay.setId(1);
-		workingDay.setDate(Date.valueOf("2023-12-12"));
+		workingDay.setWeekDay("Lunes");
 		workingDay.setStartTime(LocalTime.parse("15:30"));
 		workingDay.setEndTime(LocalTime.parse("18:30"));
 		workingDay.setTimeSlots(null);
 		workingDay.setSanitarian(null);
 		
-		String sentence = "WorkingDay [id=" + 1 + ", date=" + "2023-12-12" + ", startTime=" + "15:30" + ", endTime=" + "18:30"
+		String sentence = "WorkingDay [id=" + 1 + ", weekDay=" + "Lunes" + ", startTime=" + "15:30" + ", endTime=" + "18:30"
 				+ ", timeSlots=" + null + ", sanitarian=" + null + "]";
 		
 		assertEquals(sentence, workingDay.toString());		
@@ -77,7 +79,7 @@ class WorkingDayTest {
 	public void testHasCode() {
 		WorkingDay workingDay = new WorkingDay();
 		workingDay.setId(1);
-		workingDay.setDate(Date.valueOf("2023-12-12"));
+		workingDay.setWeekDay("Lunes");
 		workingDay.setStartTime(LocalTime.parse("15:30"));
 		workingDay.setEndTime(LocalTime.parse("18:30"));
 		workingDay.setTimeSlots(null);
