@@ -14,6 +14,18 @@ public class Sanitarian extends User implements Serializable  {
 	private ArrayList<Appointment> appointments;
 	private ArrayList<Ambulatory> ambulatory;
 	
+	
+	
+	
+	public Sanitarian(int staffNum, float salary, String type, ArrayList<Appointment> appointments,
+			ArrayList<Ambulatory> ambulatory) {
+		super();
+		this.staffNum = staffNum;
+		this.salary = salary;
+		this.type = type;
+		this.appointments = appointments;
+		this.ambulatory = ambulatory;
+	}
 	// GETTERS AND SETTERS //
 	public int getStaffNum() {
 		return staffNum;

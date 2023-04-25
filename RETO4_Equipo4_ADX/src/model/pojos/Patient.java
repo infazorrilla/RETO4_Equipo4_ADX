@@ -12,6 +12,14 @@ public class Patient extends User implements Serializable {
 	private String address;
 	private ArrayList<Appointment> appointments;
 	
+	
+	
+	public Patient(String phoneNumber, String address, ArrayList<Appointment> appointments) {
+		super();
+		this.phoneNumber = phoneNumber;
+		this.address = address;
+		this.appointments = appointments;
+	}
 	// GETTERS AND SETTERS //
 	public String getPhoneNumber() {
 		return phoneNumber;

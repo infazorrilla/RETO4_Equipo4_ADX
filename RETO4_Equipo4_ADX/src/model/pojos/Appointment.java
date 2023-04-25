@@ -18,6 +18,17 @@ public class Appointment implements Serializable {
 	private TimeSlot timeSlot;
 	private ArrayList<Ambulatory> ambulatory;
 	
+	
+	
+	public Appointment(int id, ArrayList<Sanitarian> sanitarians, Patient patient, TimeSlot timeSlot,
+			ArrayList<Ambulatory> ambulatory) {
+		super();
+		this.id = id;
+		this.sanitarians = sanitarians;
+		this.patient = patient;
+		this.timeSlot = timeSlot;
+		this.ambulatory = ambulatory;
+	}
 	public int getId() {
 		return id;
 	}

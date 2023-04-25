@@ -1,33 +1,36 @@
 package model.pojos;
 
 import java.io.Serializable;
+import java.util.ArrayList;
 import java.util.Objects;
 
 public class Nurse extends Sanitarian implements Serializable {
+
+	public Nurse(int staffNum, float salary, String type, ArrayList<Appointment> appointments,
+			ArrayList<Ambulatory> ambulatory, String category, boolean eir) {
+		super(staffNum, salary, type, appointments, ambulatory);
+		// TODO Auto-generated constructor stub
+	}
 
 	private static final long serialVersionUID = -6651744658859466141L;
 
 	private String category;
 	private boolean eir;
-
-	// GETTERS AND SETTERS //
 	public String getCategory() {
 		return category;
 	}
-
 	public void setCategory(String category) {
 		this.category = category;
 	}
-
 	public boolean isEir() {
 		return eir;
 	}
-
 	public void setEir(boolean eir) {
 		this.eir = eir;
 	}
-
-	// HASHCODE //
+	public static long getSerialversionuid() {
+		return serialVersionUID;
+	}
 	@Override
 	public int hashCode() {
 		final int prime = 31;
@@ -35,8 +38,6 @@ public class Nurse extends Sanitarian implements Serializable {
 		result = prime * result + Objects.hash(category, eir);
 		return result;
 	}
-
-	// EQUALS //
 	@Override
 	public boolean equals(Object obj) {
 		if (this == obj)
@@ -48,11 +49,13 @@ public class Nurse extends Sanitarian implements Serializable {
 		Nurse other = (Nurse) obj;
 		return Objects.equals(category, other.category) && eir == other.eir;
 	}
-
-	// TO STRING //
 	@Override
 	public String toString() {
 		return "Nurse [category=" + category + ", eir=" + eir + "]";
 	}
+
+	
+
+
 
 }
