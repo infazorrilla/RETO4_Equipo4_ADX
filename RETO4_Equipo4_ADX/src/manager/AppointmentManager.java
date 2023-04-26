@@ -55,6 +55,7 @@ public class AppointmentManager extends AbstractManager<Appointment>{
 				ret = new ArrayList<Appointment>();
 			
 			int id = resultSet.getInt("id");
+			
 
 			Appointment appointment = new Appointment();
 			appointment.setId(id);
@@ -76,14 +77,31 @@ public class AppointmentManager extends AbstractManager<Appointment>{
 	}
 
 	@Override
-	public void insert(Appointment t) throws SQLException, Exception {
-		// TODO Auto-generated method stub
+	public void insert(Appointment appointment) throws SQLException, Exception {
+		
+		Connection connection = DriverManager.getConnection(BBDDUtils.URL_LOCAL, BBDDUtils.USER_LOCAL,
+				BBDDUtils.PASS_LOCAL);
+		Statement statement = connection.createStatement();
+		Class.forName(BBDDUtils.DRIVER_LOCAL);
+
+		String sql = "insert into " + APPOINTMENT_TABLE + " (id) values ('"
+				+ appointment.getPatient.getDniPatient()  + "', '" + appointment.getSanitarian.getDniSanitarian() + "', '" 
+				+ appointment.getAmbulatory.getId  + "', '" + appointment.getId() +  "')";
+				
+
+		statement.executeUpdate(sql);
+
+		if (statement != null)
+			statement.close();
+
+		if (connection != null)
+			connection.close();
 		
 	}
 
 	@Override
-	public void update(Appointment t) throws SQLException, Exception {
-		// TODO Auto-generated method stub
+	public void update(Appointment ) throws SQLException, Exception {
+		
 		
 	}
 
