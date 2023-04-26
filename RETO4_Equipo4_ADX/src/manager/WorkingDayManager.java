@@ -10,7 +10,6 @@ import java.time.LocalTime;
 import java.util.ArrayList;
 import java.util.List;
 
-
 import model.pojos.WorkingDay;
 import model.utils.BBDDUtils;
 
@@ -19,41 +18,57 @@ public class WorkingDayManager extends AbstractManager<WorkingDay> {
 	public static final String WORKINGDAY_TABLE = "jornada";
 
 	@Override
-	public WorkingDay select(int id) throws SQLException, Exception{
+	public WorkingDay select(int id) throws SQLException, Exception {
 		WorkingDay ret = null;
 
-		String sql = "select * from " + WORKINGDAY_TABLE + " where id=" +id;
+		String sql = "select * from " + WORKINGDAY_TABLE + " where id=" + id;
 
 		Connection connection = null;
 		Statement statement = null;
 		ResultSet resultSet = null;
 
-		Class.forName(BBDDUtils.DRIVER_LOCAL);
-		connection = DriverManager.getConnection(BBDDUtils.URL_LOCAL, BBDDUtils.USER_LOCAL, BBDDUtils.PASS_LOCAL);
-		statement = connection.createStatement();
-		resultSet = statement.executeQuery(sql);
+		try {
+			Class.forName(BBDDUtils.DRIVER_LOCAL);
+			connection = DriverManager.getConnection(BBDDUtils.URL_LOCAL, BBDDUtils.USER_LOCAL, BBDDUtils.PASS_LOCAL);
+			statement = connection.createStatement();
+			resultSet = statement.executeQuery(sql);
 
-		while (resultSet.next()) {
-			if (null == ret)
-				ret = new WorkingDay();
-			
-			String weekDay = resultSet.getString("diaSemana");
-			LocalTime startTime = LocalTime.parse(resultSet.getString("horaInicio"));
-			LocalTime endTime = LocalTime.parse(resultSet.getString("horaFin"));
+			while (resultSet.next()) {
+				if (null == ret)
+					ret = new WorkingDay();
 
-			ret.setId(id);
-			ret.setWeekDay(weekDay);
-			ret.setStartTime(startTime);
-			ret.setEndTime(endTime);
+				String weekDay = resultSet.getString("diaSemana");
+				LocalTime startTime = LocalTime.parse(resultSet.getString("horaInicio"));
+				LocalTime endTime = LocalTime.parse(resultSet.getString("horaFin"));
+
+				ret.setId(id);
+				ret.setWeekDay(weekDay);
+				ret.setStartTime(startTime);
+				ret.setEndTime(endTime);
+			}
+
+		} catch (SQLException sqle) {
+		} catch (Exception e) {
+		} finally {
+			try {
+				if (resultSet != null)
+					resultSet.close();
+			} catch (Exception e) {
+			}
+			;
+			try {
+				if (statement != null)
+					statement.close();
+			} catch (Exception e) {
+			}
+			;
+			try {
+				if (connection != null)
+					connection.close();
+			} catch (Exception e) {
+			}
+			;
 		}
-
-		resultSet.close();
-
-		if (statement != null)
-			statement.close();
-
-		if (connection != null)
-			connection.close();
 		return ret;
 	}
 
@@ -67,98 +82,161 @@ public class WorkingDayManager extends AbstractManager<WorkingDay> {
 		Statement statement = null;
 		ResultSet resultSet = null;
 
-		Class.forName(BBDDUtils.DRIVER_LOCAL);
-		connection = DriverManager.getConnection(BBDDUtils.URL_LOCAL, BBDDUtils.USER_LOCAL, BBDDUtils.PASS_LOCAL);
-		statement = connection.createStatement();
-		resultSet = statement.executeQuery(sql);
+		try {
+			Class.forName(BBDDUtils.DRIVER_LOCAL);
+			connection = DriverManager.getConnection(BBDDUtils.URL_LOCAL, BBDDUtils.USER_LOCAL, BBDDUtils.PASS_LOCAL);
+			statement = connection.createStatement();
+			resultSet = statement.executeQuery(sql);
 
-		while (resultSet.next()) {
-			if (null == ret)
-				ret = new ArrayList<WorkingDay>();
+			while (resultSet.next()) {
+				if (null == ret)
+					ret = new ArrayList<WorkingDay>();
 
-			int id = resultSet.getInt("id");
-			String weekDay = resultSet.getString("diaSemana");
-			LocalTime startTime = LocalTime.parse(resultSet.getString("horaInicio"));
-			LocalTime endTime = LocalTime.parse(resultSet.getString("horaFin"));
+				int id = resultSet.getInt("id");
+				String weekDay = resultSet.getString("diaSemana");
+				LocalTime startTime = LocalTime.parse(resultSet.getString("horaInicio"));
+				LocalTime endTime = LocalTime.parse(resultSet.getString("horaFin"));
 
-			WorkingDay workingDay = new WorkingDay();
-			workingDay.setId(id);
-			workingDay.setWeekDay(weekDay);
-			workingDay.setStartTime(startTime);
-			workingDay.setEndTime(endTime);
+				WorkingDay workingDay = new WorkingDay();
+				workingDay.setId(id);
+				workingDay.setWeekDay(weekDay);
+				workingDay.setStartTime(startTime);
+				workingDay.setEndTime(endTime);
 
-			ret.add(workingDay);
+				ret.add(workingDay);
+			}
+
+		} catch (SQLException sqle) {
+		} catch (Exception e) {
+		} finally {
+			try {
+				if (resultSet != null)
+					resultSet.close();
+			} catch (Exception e) {
+			}
+			;
+			try {
+				if (statement != null)
+					statement.close();
+			} catch (Exception e) {
+			}
+			;
+			try {
+				if (connection != null)
+					connection.close();
+			} catch (Exception e) {
+			}
+			;
 		}
-
-		resultSet.close();
-
-		if (statement != null)
-			statement.close();
-
-		if (connection != null)
-			connection.close();
-
 		return ret;
 	}
 
 	@Override
 	public void insert(WorkingDay workingDay) throws SQLException, Exception {
-		Connection connection = DriverManager.getConnection(BBDDUtils.URL_LOCAL, BBDDUtils.USER_LOCAL,
-				BBDDUtils.PASS_LOCAL);
-		Statement statement = connection.createStatement();
-		Class.forName(BBDDUtils.DRIVER_LOCAL);
+		Connection connection = null;
+		Statement statement = null;
 
-		String sql = "insert into " + WORKINGDAY_TABLE + " (dniSanitario, diaSemana, horaInicio, horaFin) values ('"
-				+ /* workingDay.getSanitarian.getDniSanitario() + "', '" + */ workingDay.getStartTime() + "', '"
-				+ workingDay.getEndTime() + "')";
+		try {
+			connection = DriverManager.getConnection(BBDDUtils.URL_LOCAL, BBDDUtils.USER_LOCAL, BBDDUtils.PASS_LOCAL);
+			statement = connection.createStatement();
+			Class.forName(BBDDUtils.DRIVER_LOCAL);
 
-		statement.executeUpdate(sql);
+			String sql = "insert into " + WORKINGDAY_TABLE + " (dniSanitario, diaSemana, horaInicio, horaFin) values ('"
+					+ /* workingDay.getSanitarian.getDniSanitario() + "', '" + */ workingDay.getStartTime() + "', '"
+					+ workingDay.getEndTime() + "')";
 
-		if (statement != null)
-			statement.close();
+			statement.executeUpdate(sql);
 
-		if (connection != null)
-			connection.close();
+		} catch (SQLException sqle) {
+		} catch (Exception e) {
+		} finally {
+			try {
+				if (statement != null)
+					statement.close();
+			} catch (Exception e) {
+			}
+			;
+			try {
+				if (connection != null)
+					connection.close();
+			} catch (Exception e) {
+			}
+			;
+		}
 	}
 
 	@Override
 	public void update(WorkingDay workingDay) throws SQLException, Exception {
-		Connection connection = DriverManager.getConnection(BBDDUtils.URL_LOCAL, BBDDUtils.USER_LOCAL,
-				BBDDUtils.PASS_LOCAL);
+		Connection connection = null;
 		PreparedStatement preparedStatement = null;
 
-		Class.forName(BBDDUtils.DRIVER_LOCAL);
+		try {
+			connection = DriverManager.getConnection(BBDDUtils.URL_LOCAL, BBDDUtils.USER_LOCAL, BBDDUtils.PASS_LOCAL);
+			preparedStatement = null;
 
-//		String sql = "update "+APPOINTMENT_TABLE+" set idJornada = ? where id = ?";
-//		preparedStatement = connection.prepareStatement(sql);
-//		preparedStatement.setInt(1, 1);
-//		preparedStatement.setint(2, appointment.getId());
+			Class.forName(BBDDUtils.DRIVER_LOCAL);
 
-		preparedStatement.executeUpdate();
+			// String sql = "update "+APPOINTMENT_TABLE+" set idJornada = ? where id = ?";
+			// preparedStatement = connection.prepareStatement(sql);
+			// preparedStatement.setInt(1, 1);
+			// preparedStatement.setint(2, appointment.getId());
 
-		if (preparedStatement != null)
-			preparedStatement.close();
+			preparedStatement.executeUpdate();
 
-		if (connection != null)
-			connection.close();
+		} catch (SQLException sqle) {
+			System.out.println("Error con la BBDD - " + sqle.getMessage());
+		} catch (Exception e) {
+			System.out.println("Error generico - " + e.getMessage());
+		} finally {
+			// Cerramos al reves de como las abrimos
+			try {
+				if (preparedStatement != null)
+					preparedStatement.close();
+			} catch (Exception e) {
+				// No hace falta
+			}
+			;
+			try {
+				if (connection != null)
+					connection.close();
+			} catch (Exception e) {
+				// No hace falta
+			}
+			;
+		}
 	}
 
 	@Override
 	public void delete(int id) throws SQLException, Exception {
-		Connection connection = DriverManager.getConnection(BBDDUtils.URL_LOCAL, BBDDUtils.USER_LOCAL,
-				BBDDUtils.PASS_LOCAL);
+		Connection connection = null;
 		PreparedStatement preparedStatement = null;
 
-		Class.forName(BBDDUtils.DRIVER_LOCAL);
-		String sql = "delete from " + WORKINGDAY_TABLE + " where id = " + id;
-		preparedStatement = connection.prepareStatement(sql);
+		try {
+			connection = DriverManager.getConnection(BBDDUtils.URL_LOCAL, BBDDUtils.USER_LOCAL,
+					BBDDUtils.PASS_LOCAL);
+			preparedStatement = null;
+	
+			Class.forName(BBDDUtils.DRIVER_LOCAL);
+			String sql = "delete from " + WORKINGDAY_TABLE + " where id = " + id;
+			preparedStatement = connection.prepareStatement(sql);
+	
+			preparedStatement.executeUpdate();
 
-		preparedStatement.executeUpdate();
-
-		if (preparedStatement != null)
-			preparedStatement.close();
-		if (connection != null)
-			connection.close();
+		} catch (SQLException sqle) {  
+		} catch(Exception e){ 
+		} finally {
+			// Cerramos al reves de como las abrimos
+			try {
+				if (preparedStatement != null) 
+					preparedStatement.close(); 
+			} catch(Exception e){ 
+			};
+			try {
+				if (connection != null) 
+					connection.close(); 
+			} catch(Exception e){ 
+			};					
+		}
 	}
 
 }

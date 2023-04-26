@@ -11,10 +11,10 @@ import model.pojos.WorkingDay;
 
 
 
-class WorkingDayTest {
+public class WorkingDayTest {
 
 	@Test
-	void testGettersAndSetters() {
+	public void testGettersAndSetters() {
 		WorkingDay workingDay = new WorkingDay();
 
 		workingDay.setId(1);
