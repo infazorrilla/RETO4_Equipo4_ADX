@@ -1,6 +1,7 @@
 package model.pojos;
 
 import java.time.LocalTime;
+import java.util.ArrayList;
 import java.util.Objects;
 
 public class TimeSlot {
@@ -10,65 +11,80 @@ public class TimeSlot {
 	private LocalTime endTime;
 	private boolean available;
 
-	private WorkingDay workingDay;
+	private ArrayList<AppointmentWorkingDayTimeSlot> workingDays;
+	
 
 	public TimeSlot() {
 
 	}
 
-	public TimeSlot(int id, LocalTime startTime, LocalTime endTime, boolean available, WorkingDay workingDay) {
+
+	public TimeSlot(int id, LocalTime startTime, LocalTime endTime, boolean available,
+			ArrayList<AppointmentWorkingDayTimeSlot> workingDays) {
 		super();
 		this.id = id;
 		this.startTime = startTime;
 		this.endTime = endTime;
 		this.available = available;
-		this.workingDay = workingDay;
+		this.workingDays = workingDays;
 	}
+
 
 	public int getId() {
 		return id;
 	}
 
+
 	public void setId(int id) {
 		this.id = id;
 	}
+
 
 	public LocalTime getStartTime() {
 		return startTime;
 	}
 
+
 	public void setStartTime(LocalTime startTime) {
 		this.startTime = startTime;
 	}
+
 
 	public LocalTime getEndTime() {
 		return endTime;
 	}
 
+
 	public void setEndTime(LocalTime endTime) {
 		this.endTime = endTime;
 	}
+
 
 	public boolean isAvailable() {
 		return available;
 	}
 
+
 	public void setAvailable(boolean available) {
 		this.available = available;
 	}
 
-	public WorkingDay getWorkingDay() {
-		return workingDay;
+
+	public ArrayList<AppointmentWorkingDayTimeSlot> getWorkingDays() {
+		return workingDays;
 	}
 
-	public void setWorkingDay(WorkingDay workingDay) {
-		this.workingDay = workingDay;
+
+	public void setWorkingDays(ArrayList<AppointmentWorkingDayTimeSlot> workingDays) {
+		this.workingDays = workingDays;
 	}
+
 
 	@Override
 	public int hashCode() {
-		return Objects.hash(available, endTime, id, startTime, workingDay);
+		return Objects.hash(available, endTime, id, startTime, workingDays);
 	}
+
 
 	@Override
 	public boolean equals(Object obj) {
@@ -80,13 +96,15 @@ public class TimeSlot {
 			return false;
 		TimeSlot other = (TimeSlot) obj;
 		return available == other.available && Objects.equals(endTime, other.endTime) && id == other.id
-				&& Objects.equals(startTime, other.startTime) && Objects.equals(workingDay, other.workingDay);
+				&& Objects.equals(startTime, other.startTime) && Objects.equals(workingDays, other.workingDays);
 	}
+
 
 	@Override
 	public String toString() {
 		return "TimeSlot [id=" + id + ", startTime=" + startTime + ", endTime=" + endTime + ", available=" + available
-				+ ", workingDay=" + workingDay + "]";
+				+ ", workingDays=" + workingDays + "]";
 	}
+
 
 }

@@ -3,6 +3,7 @@ package model.pojos;
 import java.io.Serializable;
 import java.time.LocalTime;
 import java.util.ArrayList;
+import java.util.Date;
 import java.util.Objects;
 
 public class WorkingDay implements Serializable {
@@ -14,25 +15,24 @@ public class WorkingDay implements Serializable {
 
 	private int id = 0;
 
-	private String weekDay = null;
+	private Date date = null;
 	private LocalTime startTime = null;
 	private LocalTime endTime = null;
-	private ArrayList<TimeSlot> timeSlots;
-	private Sanitarian sanitarian;
+
+	private ArrayList<WorkingDaySanitarian> sanitarians;
 
 	public WorkingDay() {
 
 	}
 
-	public WorkingDay(int id, String weekDay, LocalTime startTime, LocalTime endTime, ArrayList<TimeSlot> timeSlots,
-			Sanitarian sanitarian) {
+	public WorkingDay(int id, Date date, LocalTime startTime, LocalTime endTime,
+			ArrayList<WorkingDaySanitarian> sanitarians) {
 		super();
 		this.id = id;
-		this.weekDay = weekDay;
+		this.date = date;
 		this.startTime = startTime;
 		this.endTime = endTime;
-		this.timeSlots = timeSlots;
-		this.sanitarian = sanitarian;
+		this.sanitarians = sanitarians;
 	}
 
 	public int getId() {
@@ -43,12 +43,12 @@ public class WorkingDay implements Serializable {
 		this.id = id;
 	}
 
-	public String getWeekDay() {
-		return weekDay;
+	public Date getDate() {
+		return date;
 	}
 
-	public void setWeekDay(String weekDay) {
-		this.weekDay = weekDay;
+	public void setDate(Date date) {
+		this.date = date;
 	}
 
 	public LocalTime getStartTime() {
@@ -67,20 +67,12 @@ public class WorkingDay implements Serializable {
 		this.endTime = endTime;
 	}
 
-	public ArrayList<TimeSlot> getTimeSlots() {
-		return timeSlots;
+	public ArrayList<WorkingDaySanitarian> getSanitarians() {
+		return sanitarians;
 	}
 
-	public void setTimeSlots(ArrayList<TimeSlot> timeSlots) {
-		this.timeSlots = timeSlots;
-	}
-
-	public Sanitarian getSanitarian() {
-		return sanitarian;
-	}
-
-	public void setSanitarian(Sanitarian sanitarian) {
-		this.sanitarian = sanitarian;
+	public void setSanitarians(ArrayList<WorkingDaySanitarian> sanitarians) {
+		this.sanitarians = sanitarians;
 	}
 
 	public static long getSerialversionuid() {
@@ -89,7 +81,7 @@ public class WorkingDay implements Serializable {
 
 	@Override
 	public int hashCode() {
-		return Objects.hash(endTime, id, sanitarian, startTime, timeSlots, weekDay);
+		return Objects.hash(date, endTime, id, sanitarians, startTime);
 	}
 
 	@Override
@@ -101,15 +93,14 @@ public class WorkingDay implements Serializable {
 		if (getClass() != obj.getClass())
 			return false;
 		WorkingDay other = (WorkingDay) obj;
-		return Objects.equals(endTime, other.endTime) && id == other.id && Objects.equals(sanitarian, other.sanitarian)
-				&& Objects.equals(startTime, other.startTime) && Objects.equals(timeSlots, other.timeSlots)
-				&& Objects.equals(weekDay, other.weekDay);
+		return Objects.equals(date, other.date) && Objects.equals(endTime, other.endTime) && id == other.id
+				&& Objects.equals(sanitarians, other.sanitarians) && Objects.equals(startTime, other.startTime);
 	}
 
 	@Override
 	public String toString() {
-		return "WorkingDay [id=" + id + ", weekDay=" + weekDay + ", startTime=" + startTime + ", endTime=" + endTime
-				+ ", timeSlots=" + timeSlots + ", sanitarian=" + sanitarian + "]";
+		return "WorkingDay [id=" + id + ", date=" + date + ", startTime=" + startTime + ", endTime=" + endTime
+				+ ", sanitarians=" + sanitarians + "]";
 	}
 
 }
