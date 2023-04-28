@@ -8,9 +8,13 @@ import java.sql.SQLException;
 import java.sql.Statement;
 import java.time.LocalTime;
 import java.util.ArrayList;
+import java.util.Date;
 import java.util.List;
 
+import model.pojos.AppointmentWorkingDayTimeSlot;
+import model.pojos.Sanitarian;
 import model.pojos.WorkingDay;
+import model.pojos.WorkingDaySanitarian;
 import model.utils.BBDDUtils;
 
 public class WorkingDayManager extends AbstractManager<WorkingDay> {
@@ -37,12 +41,12 @@ public class WorkingDayManager extends AbstractManager<WorkingDay> {
 				if (null == ret)
 					ret = new WorkingDay();
 
-				String weekDay = resultSet.getString("diaSemana");
+				Date date = resultSet.getDate("fecha");
 				LocalTime startTime = LocalTime.parse(resultSet.getString("horaInicio"));
 				LocalTime endTime = LocalTime.parse(resultSet.getString("horaFin"));
 
 				ret.setId(id);
-				ret.setWeekDay(weekDay);
+				ret.setDate(date);
 				ret.setStartTime(startTime);
 				ret.setEndTime(endTime);
 			}
@@ -93,13 +97,13 @@ public class WorkingDayManager extends AbstractManager<WorkingDay> {
 					ret = new ArrayList<WorkingDay>();
 
 				int id = resultSet.getInt("id");
-				String weekDay = resultSet.getString("diaSemana");
+				java.sql.Date date = resultSet.getDate("fecha");
 				LocalTime startTime = LocalTime.parse(resultSet.getString("horaInicio"));
 				LocalTime endTime = LocalTime.parse(resultSet.getString("horaFin"));
 
 				WorkingDay workingDay = new WorkingDay();
 				workingDay.setId(id);
-				workingDay.setWeekDay(weekDay);
+				workingDay.setDate(date);
 				workingDay.setStartTime(startTime);
 				workingDay.setEndTime(endTime);
 
@@ -141,7 +145,7 @@ public class WorkingDayManager extends AbstractManager<WorkingDay> {
 			statement = connection.createStatement();
 			Class.forName(BBDDUtils.DRIVER_LOCAL);
 
-			String sql = "insert into " + WORKINGDAY_TABLE + " (dniSanitario, diaSemana, horaInicio, horaFin) values ('"
+			String sql = "insert into " + WORKINGDAY_TABLE + " (dniSanitario, fecha, horaInicio, horaFin) values ('"
 					+ /* workingDay.getSanitarian.getDniSanitario() + "', '" + */ workingDay.getStartTime() + "', '"
 					+ workingDay.getEndTime() + "')";
 

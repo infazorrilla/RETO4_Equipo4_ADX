@@ -38,13 +38,10 @@ public class TimeSlotManager extends AbstractManager<TimeSlot> {
 
 			LocalTime startTime = LocalTime.parse(resultSet.getString("horaInicio"));
 			LocalTime endTime = LocalTime.parse(resultSet.getString("horaFin"));
-			String available = resultSet.getString("disponible");
-			boolean isAvailable = Boolean.valueOf(available);
 
 			ret.setId(id);
 			ret.setStartTime(startTime);
 			ret.setEndTime(endTime);
-			ret.setAvailable(isAvailable);
 		}
 
 		resultSet.close();
@@ -86,7 +83,6 @@ public class TimeSlotManager extends AbstractManager<TimeSlot> {
 			timeSlot.setId(id);
 			timeSlot.setStartTime(startTime);
 			timeSlot.setEndTime(endTime);
-			timeSlot.setAvailable(isAvailable);
 
 			ret.add(timeSlot);
 		}
@@ -110,8 +106,8 @@ public class TimeSlotManager extends AbstractManager<TimeSlot> {
 		Class.forName(BBDDUtils.DRIVER_LOCAL);
 
 		String sql = "insert into " + TIMESLOT_TABLE + " (idJornada, horaInicio, horaFin, disponible) values ('"
-				+ timeSlot.getWorkingDay().getId() + "', '" + timeSlot.getStartTime() + "', '" + timeSlot.getEndTime()
-				+ "', '" + timeSlot.isAvailable() + "')";
+				+ timeSlot.getWorkingDays().getid() + "', '" + timeSlot.getStartTime() + "', '" + timeSlot.getEndTime()
+				+ "')";
 
 		statement.executeUpdate(sql);
 
