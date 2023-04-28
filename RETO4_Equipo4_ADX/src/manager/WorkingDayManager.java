@@ -6,6 +6,7 @@ import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.sql.Statement;
+import java.sql.Time;
 import java.time.LocalTime;
 import java.util.ArrayList;
 import java.util.Date;
@@ -144,6 +145,8 @@ public class WorkingDayManager extends AbstractManager<WorkingDay> {
 			connection = DriverManager.getConnection(BBDDUtils.URL_LOCAL, BBDDUtils.USER_LOCAL, BBDDUtils.PASS_LOCAL);
 			statement = connection.createStatement();
 			Class.forName(BBDDUtils.DRIVER_LOCAL);
+			
+//			Necesito el gestor de Doctor y de Nurse para hacer un select
 
 			String sql = "insert into " + WORKINGDAY_TABLE + " (dniSanitario, fecha, horaInicio, horaFin) values ('"
 					+ /* workingDay.getSanitarian.getDniSanitario() + "', '" + */ workingDay.getStartTime() + "', '"
@@ -179,11 +182,13 @@ public class WorkingDayManager extends AbstractManager<WorkingDay> {
 			preparedStatement = null;
 
 			Class.forName(BBDDUtils.DRIVER_LOCAL);
+			
+			String time = "11:00";
 
-			// String sql = "update "+APPOINTMENT_TABLE+" set idJornada = ? where id = ?";
-			// preparedStatement = connection.prepareStatement(sql);
-			// preparedStatement.setInt(1, 1);
-			// preparedStatement.setint(2, appointment.getId());
+			 String sql = "update "+ WORKINGDAY_TABLE +" set horaInicio = ? where id = ?";
+			 preparedStatement = connection.prepareStatement(sql);
+			 preparedStatement.setString(1, time);
+			 preparedStatement.setInt(2, workingDay.getId());
 
 			preparedStatement.executeUpdate();
 
@@ -192,19 +197,16 @@ public class WorkingDayManager extends AbstractManager<WorkingDay> {
 		} catch (Exception e) {
 			System.out.println("Error generico - " + e.getMessage());
 		} finally {
-			// Cerramos al reves de como las abrimos
 			try {
 				if (preparedStatement != null)
 					preparedStatement.close();
 			} catch (Exception e) {
-				// No hace falta
 			}
 			;
 			try {
 				if (connection != null)
 					connection.close();
 			} catch (Exception e) {
-				// No hace falta
 			}
 			;
 		}
@@ -229,7 +231,6 @@ public class WorkingDayManager extends AbstractManager<WorkingDay> {
 		} catch (SQLException sqle) {  
 		} catch(Exception e){ 
 		} finally {
-			// Cerramos al reves de como las abrimos
 			try {
 				if (preparedStatement != null) 
 					preparedStatement.close(); 
