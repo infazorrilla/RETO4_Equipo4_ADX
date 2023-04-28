@@ -20,19 +20,21 @@ public class WorkingDay implements Serializable {
 	private LocalTime endTime = null;
 
 	private ArrayList<WorkingDaySanitarian> sanitarians;
+	private ArrayList<AppointmentWorkingDayTimeSlot> timeSlots;
 
 	public WorkingDay() {
 
 	}
 
 	public WorkingDay(int id, Date date, LocalTime startTime, LocalTime endTime,
-			ArrayList<WorkingDaySanitarian> sanitarians) {
+			ArrayList<WorkingDaySanitarian> sanitarians, ArrayList<AppointmentWorkingDayTimeSlot> timeSlots) {
 		super();
 		this.id = id;
 		this.date = date;
 		this.startTime = startTime;
 		this.endTime = endTime;
 		this.sanitarians = sanitarians;
+		this.timeSlots = timeSlots;
 	}
 
 	public int getId() {
@@ -75,13 +77,21 @@ public class WorkingDay implements Serializable {
 		this.sanitarians = sanitarians;
 	}
 
+	public ArrayList<AppointmentWorkingDayTimeSlot> getTimeSlots() {
+		return timeSlots;
+	}
+
+	public void setTimeSlots(ArrayList<AppointmentWorkingDayTimeSlot> timeSlots) {
+		this.timeSlots = timeSlots;
+	}
+
 	public static long getSerialversionuid() {
 		return serialVersionUID;
 	}
 
 	@Override
 	public int hashCode() {
-		return Objects.hash(date, endTime, id, sanitarians, startTime);
+		return Objects.hash(date, endTime, id, sanitarians, startTime, timeSlots);
 	}
 
 	@Override
@@ -94,13 +104,14 @@ public class WorkingDay implements Serializable {
 			return false;
 		WorkingDay other = (WorkingDay) obj;
 		return Objects.equals(date, other.date) && Objects.equals(endTime, other.endTime) && id == other.id
-				&& Objects.equals(sanitarians, other.sanitarians) && Objects.equals(startTime, other.startTime);
+				&& Objects.equals(sanitarians, other.sanitarians) && Objects.equals(startTime, other.startTime)
+				&& Objects.equals(timeSlots, other.timeSlots);
 	}
 
 	@Override
 	public String toString() {
 		return "WorkingDay [id=" + id + ", date=" + date + ", startTime=" + startTime + ", endTime=" + endTime
-				+ ", sanitarians=" + sanitarians + "]";
+				+ ", sanitarians=" + sanitarians + ", timeSlots=" + timeSlots + "]";
 	}
 
 }
