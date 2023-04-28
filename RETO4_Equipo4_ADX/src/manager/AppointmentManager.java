@@ -13,26 +13,58 @@ import model.pojos.Appointment;
 
 import model.utils.BBDDUtils;
 
-public class AppointmentManager extends AbstractManager<Appointment>{
-	
-	public static final String APPOINTMENT_TABLE = "cita"; 
-	
+public class AppointmentManager extends AbstractManager<Appointment> {
+
+	public static final String APPOINTMENT_TABLE = "cita";
+
 	@Override
-	public Appointment select(int id) throws SQLException, Exception{
+	public Appointment select(int id) throws SQLException, Exception {
 		Appointment ret = null;
-		
-		String sql = "select * from " + APPOINTMENT_TABLE  + " where id=" +id;
+
+		String sql = "select * from " + APPOINTMENT_TABLE + " where id=" + id;
 
 		Connection connection = null;
 		Statement statement = null;
 		ResultSet resultSet = null;
 
-		Class.forName(BBDDUtils.DRIVER_LOCAL);
-		connection = DriverManager.getConnection(BBDDUtils.URL_LOCAL, BBDDUtils.USER_LOCAL, BBDDUtils.PASS_LOCAL);
-		statement = connection.createStatement();
-		resultSet = statement.executeQuery(sql);
-		return ret;
+		try {
+			Class.forName(BBDDUtils.DRIVER_LOCAL);
+			connection = DriverManager.getConnection(BBDDUtils.URL_LOCAL, BBDDUtils.USER_LOCAL, BBDDUtils.PASS_LOCAL);
+			statement = connection.createStatement();
+			resultSet = statement.executeQuery(sql);
 
+			while (resultSet.next()) {
+				if (null == ret)
+					ret = new Appointment();
+
+				int id = 0;
+
+				ret.setId(id);
+
+			}
+		} catch (SQLException sqle) {
+		} catch (Exception e) {
+		} finally {
+			try {
+				if (resultSet != null)
+					resultSet.close();
+			} catch (Exception e) {
+			}
+			;
+			try {
+				if (statement != null)
+					statement.close();
+			} catch (Exception e) {
+			}
+			;
+			try {
+				if (connection != null)
+					connection.close();
+			} catch (Exception e) {
+			}
+			;
+		}
+		return ret;
 	}
 
 	@Override
@@ -44,36 +76,22 @@ public class AppointmentManager extends AbstractManager<Appointment>{
 		Connection connection = null;
 		Statement statement = null;
 		ResultSet resultSet = null;
-		
+
 		Class.forName(BBDDUtils.DRIVER_LOCAL);
 		connection = DriverManager.getConnection(BBDDUtils.URL_LOCAL, BBDDUtils.USER_LOCAL, BBDDUtils.PASS_LOCAL);
 		statement = connection.createStatement();
-		resultSet = statement.executeQuery(sql);   
+		resultSet = statement.executeQuery(sql);
 
-		while (resultSet.next()) {
-			if (null == ret)
-				ret = new ArrayList<Appointment>();
-			
-			int id = resultSet.getInt("id");
-			
+	}
 
-			Appointment appointment = new Appointment();
-			appointment.setId(id);
-			
+	resultSet.close();
 
-			ret.add(appointment);
-		}
+	if(statement!=null)statement.close();
 
-		resultSet.close();
+	if(connection!=null)connection.close();
 
-		if (statement != null)
-			statement.close();
+	return ret;
 
-		if (connection != null)
-			connection.close();
-
-		return ret;
-		
 	}
 
 	@Override
@@ -100,7 +118,7 @@ public class AppointmentManager extends AbstractManager<Appointment>{
 	}
 
 	@Override
-	public void update(Appointment ) throws SQLException, Exception {
+	public void update(Appointment appointment) throws SQLException, Exception {
 		
 		
 	}

@@ -34,6 +34,9 @@ public class Appointment implements Serializable {
 		this.appointmentWorkingDayTimeSlot = appointmentWorkingDayTimeSlot;
 		
 	}
+	public Appointment() {
+		// TODO Auto-generated constructor stub
+	}
 	public void setId(int id) {
 		this.id = id;
 	}
