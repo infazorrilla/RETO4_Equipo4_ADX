@@ -4,16 +4,16 @@ import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.Objects;
 
-public class Sanitarian extends User implements Serializable {
+public abstract class Sanitarian extends User implements Serializable {
 
 	private static final long serialVersionUID = -6651744658859466141L;
 
-	private int staffNum;
-	private float salary;
-	private String type;
-	private ArrayList<Appointment> appointments = null;
-	private ArrayList<WorkingDaySanitarian> workingDay = null;
-	private Ambulatory ambulatory;
+	protected int staffNum;
+	protected float salary;
+	protected String type;
+	protected ArrayList<Appointment> appointments = null;
+	protected ArrayList<WorkingDaySanitarian> workingDay = null;
+	protected Ambulatory ambulatory;
 
 	// CONSTRUCTOR | USING FIELDS //
 	public Sanitarian(int staffNum, float salary, String type, ArrayList<Appointment> appointments,
