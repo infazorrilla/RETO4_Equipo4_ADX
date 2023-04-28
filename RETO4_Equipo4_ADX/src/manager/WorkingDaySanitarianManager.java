@@ -6,23 +6,20 @@ import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.sql.Statement;
-import java.time.LocalTime;
 import java.util.ArrayList;
-import java.util.Date;
 import java.util.List;
 
-import model.pojos.WorkingDay;
+import model.pojos.WorkingDaySanitarian;
 import model.utils.BBDDUtils;
 
-public class WorkingDayManager extends AbstractManager<WorkingDay> {
+public class WorkingDaySanitarianManager{
+	
+	public static final String WORKINGDAYSANITARIAN_TABLE = "jornadasanitario";
 
-	public static final String WORKINGDAY_TABLE = "jornada";
+	public WorkingDaySanitarian select(String id) throws SQLException, Exception {
+		WorkingDaySanitarian ret = null;
 
-	@Override
-	public WorkingDay select(int id) throws SQLException, Exception {
-		WorkingDay ret = null;
-
-		String sql = "select * from " + WORKINGDAY_TABLE + " where idJornada=" + id;
+		String sql = "select * from " + WORKINGDAYSANITARIAN_TABLE + " where dniSanitario =" + id;
 
 		Connection connection = null;
 		Statement statement = null;
@@ -36,16 +33,12 @@ public class WorkingDayManager extends AbstractManager<WorkingDay> {
 
 			while (resultSet.next()) {
 				if (null == ret)
-					ret = new WorkingDay();
+					ret = new WorkingDaySanitarian();
 
-				Date date = resultSet.getDate("fecha");
-				LocalTime startTime = LocalTime.parse(resultSet.getString("horaInicio"));
-				LocalTime endTime = LocalTime.parse(resultSet.getString("horaFin"));
-
-				ret.setId(id);
-				ret.setDate(date);
-				ret.setStartTime(startTime);
-				ret.setEndTime(endTime);
+				int idWorkingDay = resultSet.getInt("idJornada");
+				String dniSanitarian = resultSet.getString("dniSanitario");
+				
+				//TODO
 			}
 
 		} catch (SQLException sqle) {
@@ -73,11 +66,10 @@ public class WorkingDayManager extends AbstractManager<WorkingDay> {
 		return ret;
 	}
 
-	@Override
-	public List<WorkingDay> select() throws SQLException, Exception {
-		ArrayList<WorkingDay> ret = null;
+	public List<WorkingDaySanitarian> select() throws SQLException, Exception {
+		ArrayList<WorkingDaySanitarian> ret = null;
 
-		String sql = "select * from " + WORKINGDAY_TABLE;
+		String sql = "select * from " + WORKINGDAYSANITARIAN_TABLE;
 
 		Connection connection = null;
 		Statement statement = null;
@@ -91,20 +83,12 @@ public class WorkingDayManager extends AbstractManager<WorkingDay> {
 
 			while (resultSet.next()) {
 				if (null == ret)
-					ret = new ArrayList<WorkingDay>();
+					ret = new ArrayList<WorkingDaySanitarian>();
 
-				int id = resultSet.getInt("id");
-				java.sql.Date date = resultSet.getDate("fecha");
-				LocalTime startTime = LocalTime.parse(resultSet.getString("horaInicio"));
-				LocalTime endTime = LocalTime.parse(resultSet.getString("horaFin"));
+				int idWorkingDay = resultSet.getInt("idJornada");
+				String dniSanitarian = resultSet.getString("dniSanitario");
 
-				WorkingDay workingDay = new WorkingDay();
-				workingDay.setId(id);
-				workingDay.setDate(date);
-				workingDay.setStartTime(startTime);
-				workingDay.setEndTime(endTime);
-
-				ret.add(workingDay);
+				//TODO
 			}
 
 		} catch (SQLException sqle) {
@@ -132,8 +116,7 @@ public class WorkingDayManager extends AbstractManager<WorkingDay> {
 		return ret;
 	}
 
-	@Override
-	public void insert(WorkingDay workingDay) throws SQLException, Exception {
+	public void insert(WorkingDaySanitarian workingDaySanitarian) throws SQLException, Exception {
 		Connection connection = null;
 		Statement statement = null;
 
@@ -142,11 +125,8 @@ public class WorkingDayManager extends AbstractManager<WorkingDay> {
 			statement = connection.createStatement();
 			Class.forName(BBDDUtils.DRIVER_LOCAL);
 			
-//			Necesito el gestor de Doctor y de Nurse para hacer un select
-
-			String sql = "insert into " + WORKINGDAY_TABLE + " (dniSanitario, fecha, horaInicio, horaFin) values ('"
-					+ /* workingDay.getSanitarian.getDniSanitario() + "', '" + */ workingDay.getStartTime() + "', '"
-					+ workingDay.getEndTime() + "')";
+			String sql = "insert into " + WORKINGDAYSANITARIAN_TABLE + " (idJornada, dniSanitario) values ('"
+					+  workingDaySanitarian.getWorkingDay().getId() + "', '" +  workingDaySanitarian.getSanitarian().getDni() +  "')";
 
 			statement.executeUpdate(sql);
 
@@ -168,46 +148,11 @@ public class WorkingDayManager extends AbstractManager<WorkingDay> {
 		}
 	}
 
-	@Override
-	public void update(WorkingDay workingDay) throws SQLException, Exception {
-		Connection connection = null;
-		PreparedStatement preparedStatement = null;
-
-		try {
-			connection = DriverManager.getConnection(BBDDUtils.URL_LOCAL, BBDDUtils.USER_LOCAL, BBDDUtils.PASS_LOCAL);
-			preparedStatement = null;
-
-			Class.forName(BBDDUtils.DRIVER_LOCAL);
-			
-			String time = "11:00";
-
-			 String sql = "update "+ WORKINGDAY_TABLE +" set horaInicio = ? where idJornada = ?";
-			 preparedStatement = connection.prepareStatement(sql);
-			 preparedStatement.setString(1, time);
-			 preparedStatement.setInt(2, workingDay.getId());
-
-			preparedStatement.executeUpdate();
-
-		} catch (SQLException sqle) {
-		} catch (Exception e) {
-		} finally {
-			try {
-				if (preparedStatement != null)
-					preparedStatement.close();
-			} catch (Exception e) {
-			}
-			;
-			try {
-				if (connection != null)
-					connection.close();
-			} catch (Exception e) {
-			}
-			;
-		}
+//	No puedo cambiar nada, porque los dos ids son foreign keys
+	public void update(WorkingDaySanitarian workingDaySanitarian) throws SQLException, Exception {
 	}
 
-	@Override
-	public void delete(int id) throws SQLException, Exception {
+	public void delete(String id) throws SQLException, Exception {
 		Connection connection = null;
 		PreparedStatement preparedStatement = null;
 
@@ -217,7 +162,8 @@ public class WorkingDayManager extends AbstractManager<WorkingDay> {
 			preparedStatement = null;
 	
 			Class.forName(BBDDUtils.DRIVER_LOCAL);
-			String sql = "delete from " + WORKINGDAY_TABLE + " where idJornada = " + id;
+			String sql = "delete from " + WORKINGDAYSANITARIAN_TABLE + " where dniSanitario = " + id;
+			
 			preparedStatement = connection.prepareStatement(sql);
 	
 			preparedStatement.executeUpdate();
@@ -237,5 +183,6 @@ public class WorkingDayManager extends AbstractManager<WorkingDay> {
 			};					
 		}
 	}
+
 
 }

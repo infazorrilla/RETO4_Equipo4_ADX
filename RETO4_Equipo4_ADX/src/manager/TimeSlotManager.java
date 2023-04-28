@@ -21,7 +21,7 @@ public class TimeSlotManager extends AbstractManager<TimeSlot> {
 	public TimeSlot select(int id) throws SQLException, Exception {
 		TimeSlot ret = null;
 
-		String sql = "select * from " + TIMESLOT_TABLE + " where id=" + id;
+		String sql = "select * from " + TIMESLOT_TABLE + " where idFranja=" + id;
 
 		Connection connection = null;
 		Statement statement = null;
@@ -174,7 +174,7 @@ public class TimeSlotManager extends AbstractManager<TimeSlot> {
 
 			String time = "11:00";
 
-			String sql = "update " + TIMESLOT_TABLE + " set horaInicio = ? where id = ?";
+			String sql = "update " + TIMESLOT_TABLE + " set horaInicio = ? where idFranja = ?";
 			preparedStatement = connection.prepareStatement(sql);
 			preparedStatement.setString(1, time);
 			preparedStatement.setInt(2, timeSlot.getId());
@@ -209,7 +209,7 @@ public class TimeSlotManager extends AbstractManager<TimeSlot> {
 			preparedStatement = null;
 
 			Class.forName(BBDDUtils.DRIVER_LOCAL);
-			String sql = "delete from " + TIMESLOT_TABLE + " where id = " + id;
+			String sql = "delete from " + TIMESLOT_TABLE + " where idFranja = " + id;
 			preparedStatement = connection.prepareStatement(sql);
 
 			preparedStatement.executeUpdate();
