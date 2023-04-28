@@ -15,14 +15,15 @@ import model.pojos.Appointment;
 import model.pojos.Patient;
 import model.utils.BBDDUtils;
 
-public class PatientManager  {
+public class AppointmentWorkingDayTimeSlot extends AbstractManager<Appointment> {
 
-	public static final String PATIENT_TABLE = "paciente";
+	public static final String AWT = "citaJornadaFranja";
+	
+	@Override
+	public AppointmentWorkingDayTimeSlot select(int id) throws SQLException, Exception {
+		AppointmentWorkingDayTimeSlot ret = null;
 
-	public Patient select(String dni) throws SQLException, Exception {
-		Patient ret = null;
-
-		String sql = "select * from " + PATIENT_TABLE + " where dniPaciente=" + dni;
+		String sql = "select * from " + AWT + " where idCita=" + id;
 
 		Connection connection = null;
 		Statement statement = null;
@@ -36,26 +37,9 @@ public class PatientManager  {
 
 			while (resultSet.next()) {
 				if (null == ret)
-					ret = new Patient();
-				
+					ret = new AppointmentWorkingDayTimeSlot();
 
-				String phoneNumber = resultSet.getString("telefono");
-				String address = resultSet.getString("direccion");
-				String name = resultSet.getString("nombre");
-				String surname = resultSet.getString("apellido");
-				String gender = resultSet.getString("genero");
-				Date birthDate = resultSet.getDate("fechaNac");
-				String password = resultSet.getString("contrasena");
 				
-				ret.setDni(dni);
-				ret.setPhoneNumber(phoneNumber);
-				ret.setAddress(address);
-				ret.setName(name);
-				ret.setSurname(surname);
-				ret.setGender(gender);
-				ret.setBirthDate(birthDate);
-				ret.setPassword(password);
-
 			}
 		} catch (SQLException sqle) {
 		} catch (Exception e) {
@@ -82,11 +66,11 @@ public class PatientManager  {
 		return ret;
 	}
 
-	
+	@Override
 	public List<Patient> select() throws SQLException, Exception {
 		ArrayList<Patient> ret = null;
 
-		String sql = "select * from " + PATIENT_TABLE;
+		String sql = "select * from " + AWT;
 
 		Connection connection = null;
 		Statement statement = null;
@@ -154,7 +138,7 @@ public class PatientManager  {
 
 	
 
-	
+	@Override
 	public void insert(Patient patient) throws SQLException, Exception {
 		Connection connection = null;
 		Statement statement = null;
@@ -163,7 +147,7 @@ public class PatientManager  {
 		 statement = connection.createStatement();
 		Class.forName(BBDDUtils.DRIVER_LOCAL);
 
-		String sql = "insert into " + PATIENT_TABLE + " (dniPaciente, telefono, direccion) values ('" + 
+		String sql = "insert into " + AWT + " (dniPaciente, telefono, direccion) values ('" + 
 		patient.getDni() + "', '" + patient.getPhoneNumber()+ "', '" + patient.getAddress()+ "')";
 		
 
@@ -187,7 +171,7 @@ public class PatientManager  {
 	}
 	}
 
-	
+	@Override
 	public void update(Patient patient) throws SQLException, Exception {
 		Connection connection = null;
 		PreparedStatement preparedStatement = null;
@@ -200,7 +184,7 @@ public class PatientManager  {
 			
 			String phoneNumber = "999999999";
 
-			 String sql = "update "+ PATIENT_TABLE +" set telefono = ? where dni = ?";
+			 String sql = "update "+ AWT +" set telefono = ? where dni = ?";
 			 preparedStatement = connection.prepareStatement(sql);
 			 preparedStatement.setString(1, phoneNumber);
 			 preparedStatement.setString(2, patient.getDni());
@@ -225,7 +209,7 @@ public class PatientManager  {
 		}
 	}
 
-	
+	@Override
 	public void delete(String dni) throws SQLException, Exception {
 		Connection connection = null;
 		PreparedStatement preparedStatement = null;
@@ -236,7 +220,7 @@ public class PatientManager  {
 			preparedStatement = null;
 	
 			Class.forName(BBDDUtils.DRIVER_LOCAL);
-			String sql = "delete from " + PATIENT_TABLE + " where dni_paciente = " + dni;
+			String sql = "delete from " + AWT + " where dni_paciente = " + dni;
 			preparedStatement = connection.prepareStatement(sql);
 	
 			preparedStatement.executeUpdate();
@@ -255,6 +239,24 @@ public class PatientManager  {
 			} catch(Exception e){ 
 			};					
 		}
+	}
+
+	@Override
+	public void insert(Appointment t) throws SQLException, Exception {
+		// TODO Auto-generated method stub
+		
+	}
+
+	@Override
+	public void update(Appointment t) throws SQLException, Exception {
+		// TODO Auto-generated method stub
+		
+	}
+
+	@Override
+	public void delete(int id) throws SQLException, Exception {
+		// TODO Auto-generated method stub
+		
 	}
 
 	
