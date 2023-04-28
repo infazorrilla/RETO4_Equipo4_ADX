@@ -15,11 +15,11 @@ import model.pojos.Appointment;
 import model.pojos.Patient;
 import model.utils.BBDDUtils;
 
-public class AppointmentWorkingDayTimeSlot extends AbstractManager<Appointment> {
+public class AppointmentWorkingDayTimeSlot  {
 
 	public static final String AWT = "citaJornadaFranja";
 	
-	@Override
+
 	public AppointmentWorkingDayTimeSlot select(int id) throws SQLException, Exception {
 		AppointmentWorkingDayTimeSlot ret = null;
 
@@ -66,9 +66,9 @@ public class AppointmentWorkingDayTimeSlot extends AbstractManager<Appointment> 
 		return ret;
 	}
 
-	@Override
-	public List<Patient> select() throws SQLException, Exception {
-		ArrayList<Patient> ret = null;
+	
+	public List<AppointmentWorkingDayTimeSlot> select() throws SQLException, Exception {
+		ArrayList<AppointmentWorkingDayTimeSlot> ret = null;
 
 		String sql = "select * from " + AWT;
 
@@ -85,7 +85,7 @@ public class AppointmentWorkingDayTimeSlot extends AbstractManager<Appointment> 
 		
 		while (resultSet.next()) {
 			if (null == ret)
-				ret = new ArrayList<Patient>();
+				ret = new ArrayList<AppointmentWorkingDayTimeSlot>();
 				
 			
 				String phoneNumber = resultSet.getString("telefono");
@@ -138,7 +138,7 @@ public class AppointmentWorkingDayTimeSlot extends AbstractManager<Appointment> 
 
 	
 
-	@Override
+
 	public void insert(Patient patient) throws SQLException, Exception {
 		Connection connection = null;
 		Statement statement = null;
@@ -171,7 +171,7 @@ public class AppointmentWorkingDayTimeSlot extends AbstractManager<Appointment> 
 	}
 	}
 
-	@Override
+
 	public void update(Patient patient) throws SQLException, Exception {
 		Connection connection = null;
 		PreparedStatement preparedStatement = null;
@@ -209,7 +209,7 @@ public class AppointmentWorkingDayTimeSlot extends AbstractManager<Appointment> 
 		}
 	}
 
-	@Override
+
 	public void delete(String dni) throws SQLException, Exception {
 		Connection connection = null;
 		PreparedStatement preparedStatement = null;
@@ -240,27 +240,6 @@ public class AppointmentWorkingDayTimeSlot extends AbstractManager<Appointment> 
 			};					
 		}
 	}
-
-	@Override
-	public void insert(Appointment t) throws SQLException, Exception {
-		// TODO Auto-generated method stub
-		
-	}
-
-	@Override
-	public void update(Appointment t) throws SQLException, Exception {
-		// TODO Auto-generated method stub
-		
-	}
-
-	@Override
-	public void delete(int id) throws SQLException, Exception {
-		// TODO Auto-generated method stub
-		
-	}
-
-	
-	
 
 
 }
