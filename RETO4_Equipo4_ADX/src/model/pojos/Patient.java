@@ -12,11 +12,17 @@ public class Patient extends User implements Serializable {
 	private String address;
 	private ArrayList<Appointment> appointments = null;
 
+	
+
 	public Patient(String phoneNumber, String address, ArrayList<Appointment> appointments) {
 		super();
 		this.phoneNumber = phoneNumber;
 		this.address = address;
 		this.appointments = appointments;
+	}
+
+	public Patient() {
+		// TODO Auto-generated constructor stub
 	}
 
 	public String getPhoneNumber() {

@@ -8,21 +8,21 @@ import java.sql.SQLException;
 import java.sql.Statement;
 
 import java.util.ArrayList;
+import java.util.Date;
 import java.util.List;
 
 import model.pojos.Appointment;
-
+import model.pojos.Patient;
 import model.utils.BBDDUtils;
 
-public class AppointmentManager extends AbstractManager<Appointment> {
+public class PatientManager  {
 
-	public static final String APPOINTMENT_TABLE = "cita";
+	public static final String PATIENT_TABLE = "paciente";
 
-	@Override
-	public Appointment select(int id) throws SQLException, Exception {
-		Appointment ret = null;
+	public Patient select(String dni) throws SQLException, Exception {
+		Patient ret = null;
 
-		String sql = "select * from " + APPOINTMENT_TABLE + " where id=" + id;
+		String sql = "select * from " + PATIENT_TABLE + " where dniPaciente=" + dni;
 
 		Connection connection = null;
 		Statement statement = null;
@@ -36,9 +36,9 @@ public class AppointmentManager extends AbstractManager<Appointment> {
 
 			while (resultSet.next()) {
 				if (null == ret)
-					ret = new Appointment();
+					ret = new Patient();
 
-				ret.setId(id);
+				ret.setDni(dni);
 
 			}
 		} catch (SQLException sqle) {
@@ -66,11 +66,11 @@ public class AppointmentManager extends AbstractManager<Appointment> {
 		return ret;
 	}
 
-	@Override
-	public List<Appointment> select() throws SQLException, Exception {
-		ArrayList<Appointment> ret = null;
+	
+	public List<Patient> select() throws SQLException, Exception {
+		ArrayList<Patient> ret = null;
 
-		String sql = "select * from " + APPOINTMENT_TABLE;
+		String sql = "select * from " + PATIENT_TABLE;
 
 		Connection connection = null;
 		Statement statement = null;
@@ -85,14 +85,29 @@ public class AppointmentManager extends AbstractManager<Appointment> {
 		
 		while (resultSet.next()) {
 			if (null == ret)
-				ret = new ArrayList<Appointment>();
-
-				int id = resultSet.getInt("id");
+				ret = new ArrayList<Patient>();
 				
-				Appointment appointment= new Appointment();
-				appointment.setId(id);
+			
+				String phoneNumber = resultSet.getString("telefono");
+				String address = resultSet.getString("direccion");
+				String dni = resultSet.getString("dniPaciente");
+				String name = resultSet.getString("nombre");
+				String surname = resultSet.getString("apellido");
+				String gender = resultSet.getString("genero");
+				Date birthDate = resultSet.getDate("fechaNac");
+				String password = resultSet.getString("contrasena");
 				
-			ret.add(appointment);
+				Patient patient= new Patient();
+				patient.setPhoneNumber(phoneNumber);
+				patient.setAddress(address);
+				patient.setDni(dni);
+				patient.setName(name);
+				patient.setSurname(surname);
+				patient.setGender(gender);
+				patient.setBirthDate(birthDate);
+				patient.setPassword(password);
+				
+			ret.add(patient);
 		}
 
 		} catch (SQLException sqle) {
@@ -123,19 +138,18 @@ public class AppointmentManager extends AbstractManager<Appointment> {
 
 	
 
-	@Override
-	public void insert(Appointment appointment) throws SQLException, Exception {
+	
+	public void insert(Patient patient) throws SQLException, Exception {
 		Connection connection = null;
 		Statement statement = null;
-		
 	try {	
 		 connection = DriverManager.getConnection(BBDDUtils.URL_LOCAL, BBDDUtils.USER_LOCAL,BBDDUtils.PASS_LOCAL);
 		 statement = connection.createStatement();
 		Class.forName(BBDDUtils.DRIVER_LOCAL);
 
-		String sql = "insert into " + APPOINTMENT_TABLE + " (id) values ('" + appointment.getPatient().getDni()
-				+ "', '" + appointment.getSanitarian().getDni() + "', '" + appointment.getAmbulatory().getId()
-				+ "', '" + appointment.getId() + "')";
+		String sql = "insert into " + PATIENT_TABLE + " (dniPaciente, telefono, direccion) values ('" + 
+		patient.getDni() + "', '" + patient.getPhoneNumber()+ "', '" + patient.getAddress()+ "')";
+		
 
 		statement.executeUpdate(sql);
 
@@ -157,8 +171,8 @@ public class AppointmentManager extends AbstractManager<Appointment> {
 	}
 	}
 
-	@Override
-	public void update(Appointment appointment) throws SQLException, Exception {
+	
+	public void update(Patient patient) throws SQLException, Exception {
 		Connection connection = null;
 		PreparedStatement preparedStatement = null;
 
@@ -168,12 +182,12 @@ public class AppointmentManager extends AbstractManager<Appointment> {
 
 			Class.forName(BBDDUtils.DRIVER_LOCAL);
 			
-			int id= 8000;
+			String phoneNumber = "999999999";
 
-			 String sql = "update "+ APPOINTMENT_TABLE +" set id = ? where id = ?";
+			 String sql = "update "+ PATIENT_TABLE +" set telefono = ? where dni = ?";
 			 preparedStatement = connection.prepareStatement(sql);
-			 preparedStatement.setInt(1, id);
-			 preparedStatement.setInt(2, appointment.getId());
+			 preparedStatement.setString(1, phoneNumber);
+			 preparedStatement.setString(2, patient.getDni());
 
 			preparedStatement.executeUpdate();
 
@@ -195,8 +209,8 @@ public class AppointmentManager extends AbstractManager<Appointment> {
 		}
 	}
 
-	@Override
-	public void delete(int id) throws SQLException, Exception {
+	
+	public void delete(String dni) throws SQLException, Exception {
 		Connection connection = null;
 		PreparedStatement preparedStatement = null;
 
@@ -206,7 +220,7 @@ public class AppointmentManager extends AbstractManager<Appointment> {
 			preparedStatement = null;
 	
 			Class.forName(BBDDUtils.DRIVER_LOCAL);
-			String sql = "delete from " + APPOINTMENT_TABLE + " where id = " + id;
+			String sql = "delete from " + PATIENT_TABLE + " where dni_paciente = " + dni;
 			preparedStatement = connection.prepareStatement(sql);
 	
 			preparedStatement.executeUpdate();
@@ -226,6 +240,9 @@ public class AppointmentManager extends AbstractManager<Appointment> {
 			};					
 		}
 	}
+
+	
+	
 
 
 }
