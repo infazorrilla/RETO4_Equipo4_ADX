@@ -37,8 +37,7 @@ public class AppointmentManager extends AbstractManager<Appointment> {
 				if (null == ret)
 					ret = new Appointment();
 
-				int id = 0;
-
+				
 				ret.setId(id);
 
 			}
