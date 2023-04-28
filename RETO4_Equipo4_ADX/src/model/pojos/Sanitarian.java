@@ -4,75 +4,93 @@ import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.Objects;
 
-public class Sanitarian extends User implements Serializable  {
+public class Sanitarian extends User implements Serializable {
 
 	private static final long serialVersionUID = -6651744658859466141L;
 
 	private int staffNum;
 	private float salary;
 	private String type;
-	private ArrayList<Appointment> appointments;
-	private ArrayList<Ambulatory> ambulatory;
-	
-	
-	
-	
+	private ArrayList<Appointment> appointments = null;
+	private ArrayList<WorkingDaySanitarian> workingDay = null;
+	private Ambulatory ambulatory;
+
+	// CONSTRUCTOR | USING FIELDS //
 	public Sanitarian(int staffNum, float salary, String type, ArrayList<Appointment> appointments,
-			ArrayList<Ambulatory> ambulatory) {
+			ArrayList<WorkingDaySanitarian> workingDay, Ambulatory ambulatory) {
 		super();
 		this.staffNum = staffNum;
 		this.salary = salary;
 		this.type = type;
 		this.appointments = appointments;
+		this.workingDay = workingDay;
 		this.ambulatory = ambulatory;
 	}
+
+	// CONSTRUCTOR | SUPERCLASS //
 	public Sanitarian() {
+		super();
 		// TODO Auto-generated constructor stub
 	}
+
 	// GETTERS AND SETTERS //
 	public int getStaffNum() {
 		return staffNum;
 	}
+
 	public void setStaffNum(int staffNum) {
 		this.staffNum = staffNum;
 	}
+
 	public float getSalary() {
 		return salary;
 	}
+
 	public void setSalary(float salary) {
 		this.salary = salary;
 	}
+
 	public String getType() {
 		return type;
 	}
+
 	public void setType(String type) {
 		this.type = type;
 	}
+
 	public ArrayList<Appointment> getAppointments() {
 		return appointments;
 	}
+
 	public void setAppointments(ArrayList<Appointment> appointments) {
 		this.appointments = appointments;
 	}
-	public static long getSerialversionuid() {
-		return serialVersionUID;
+
+	public ArrayList<WorkingDaySanitarian> getWorkingDay() {
+		return workingDay;
 	}
-	public ArrayList<Ambulatory> getAmbulatory() {
+
+	public void setWorkingDay(ArrayList<WorkingDaySanitarian> workingDay) {
+		this.workingDay = workingDay;
+	}
+
+	public Ambulatory getAmbulatory() {
 		return ambulatory;
 	}
-	public void setAmbulatory(ArrayList<Ambulatory> ambulatory) {
+
+	public void setAmbulatory(Ambulatory ambulatory) {
 		this.ambulatory = ambulatory;
 	}
-	
+
 	// HASHCODE //
 	@Override
 	public int hashCode() {
 		final int prime = 31;
 		int result = super.hashCode();
-		result = prime * result + Objects.hash(ambulatory, appointments, salary, staffNum, type);
+		result = prime * result + Objects.hash(ambulatory, appointments, salary, staffNum, type, workingDay);
 		return result;
 	}
-	
+
 	// EQUALS //
 	@Override
 	public boolean equals(Object obj) {
@@ -85,16 +103,14 @@ public class Sanitarian extends User implements Serializable  {
 		Sanitarian other = (Sanitarian) obj;
 		return Objects.equals(ambulatory, other.ambulatory) && Objects.equals(appointments, other.appointments)
 				&& Float.floatToIntBits(salary) == Float.floatToIntBits(other.salary) && staffNum == other.staffNum
-				&& Objects.equals(type, other.type);
+				&& Objects.equals(type, other.type) && Objects.equals(workingDay, other.workingDay);
 	}
+
 	// TO STRING //
 	@Override
 	public String toString() {
 		return "Sanitarian [staffNum=" + staffNum + ", salary=" + salary + ", type=" + type + ", appointments="
-				+ appointments + ", ambulatory=" + ambulatory + ", dni=" + dni + ", name=" + name + ", surname="
-				+ surname + ", gender=" + gender + ", birthDate=" + birthDate + ", password=" + password + "]";
+				+ appointments + ", workingDay=" + workingDay + ", ambulatory=" + ambulatory + "]";
 	}
 
 }
-	
-
