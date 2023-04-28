@@ -19,6 +19,7 @@ public abstract class User implements Serializable  {
 	protected Date birthDate= null;
 	protected String password= null;
 	
+	
 	public String getDni() {
 		return dni;
 	}
