@@ -14,6 +14,7 @@ import javax.swing.JTextField;
 
 public class View {
 	
+	public JFrame frame;
 	private JPanel panelLogin;
 	private JPanel panelRegistration;
 	private JPanel panelUpdateUser;
@@ -28,7 +29,7 @@ public class View {
 	}
 	
 	private void initialize() {
-		JFrame frame = new JFrame();
+		frame = new JFrame();
 
 		frame.setBounds(100, 100, 632, 390);
 		frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
