@@ -27,30 +27,46 @@ public class TimeSlotManager extends AbstractManager<TimeSlot> {
 		Statement statement = null;
 		ResultSet resultSet = null;
 
-		Class.forName(BBDDUtils.DRIVER_LOCAL);
-		connection = DriverManager.getConnection(BBDDUtils.URL_LOCAL, BBDDUtils.USER_LOCAL, BBDDUtils.PASS_LOCAL);
-		statement = connection.createStatement();
-		resultSet = statement.executeQuery(sql);
+		try {
+			Class.forName(BBDDUtils.DRIVER_LOCAL);
+			connection = DriverManager.getConnection(BBDDUtils.URL_LOCAL, BBDDUtils.USER_LOCAL, BBDDUtils.PASS_LOCAL);
+			statement = connection.createStatement();
+			resultSet = statement.executeQuery(sql);
 
-		while (resultSet.next()) {
-			if (null == ret)
-				ret = new TimeSlot();
+			while (resultSet.next()) {
+				if (null == ret)
+					ret = new TimeSlot();
 
-			LocalTime startTime = LocalTime.parse(resultSet.getString("horaInicio"));
-			LocalTime endTime = LocalTime.parse(resultSet.getString("horaFin"));
+				LocalTime startTime = LocalTime.parse(resultSet.getString("horaInicio"));
+				LocalTime endTime = LocalTime.parse(resultSet.getString("horaFin"));
 
-			ret.setId(id);
-			ret.setStartTime(startTime);
-			ret.setEndTime(endTime);
+				ret.setId(id);
+				ret.setStartTime(startTime);
+				ret.setEndTime(endTime);
+			}
+
+		} catch (SQLException sqle) {
+		} catch (Exception e) {
+		} finally {
+			try {
+				if (resultSet != null)
+					resultSet.close();
+			} catch (Exception e) {
+			}
+			;
+			try {
+				if (statement != null)
+					statement.close();
+			} catch (Exception e) {
+			}
+			;
+			try {
+				if (connection != null)
+					connection.close();
+			} catch (Exception e) {
+			}
+			;
 		}
-
-		resultSet.close();
-
-		if (statement != null)
-			statement.close();
-
-		if (connection != null)
-			connection.close();
 		return ret;
 	}
 
@@ -64,99 +80,156 @@ public class TimeSlotManager extends AbstractManager<TimeSlot> {
 		Statement statement = null;
 		ResultSet resultSet = null;
 
-		Class.forName(BBDDUtils.DRIVER_LOCAL);
-		connection = DriverManager.getConnection(BBDDUtils.URL_LOCAL, BBDDUtils.USER_LOCAL, BBDDUtils.PASS_LOCAL);
-		statement = connection.createStatement();
-		resultSet = statement.executeQuery(sql);
+		try {
 
-		while (resultSet.next()) {
-			if (null == ret)
-				ret = new ArrayList<TimeSlot>();
+			Class.forName(BBDDUtils.DRIVER_LOCAL);
+			connection = DriverManager.getConnection(BBDDUtils.URL_LOCAL, BBDDUtils.USER_LOCAL, BBDDUtils.PASS_LOCAL);
+			statement = connection.createStatement();
+			resultSet = statement.executeQuery(sql);
 
-			int id = resultSet.getInt("id");
-			LocalTime startTime = LocalTime.parse(resultSet.getString("horaInicio"));
-			LocalTime endTime = LocalTime.parse(resultSet.getString("horaFin"));
-			String available = resultSet.getString("disponible");
-			boolean isAvailable = Boolean.valueOf(available);
+			while (resultSet.next()) {
+				if (null == ret)
+					ret = new ArrayList<TimeSlot>();
 
-			TimeSlot timeSlot = new TimeSlot();
-			timeSlot.setId(id);
-			timeSlot.setStartTime(startTime);
-			timeSlot.setEndTime(endTime);
+				int id = resultSet.getInt("id");
+				LocalTime startTime = LocalTime.parse(resultSet.getString("horaInicio"));
+				LocalTime endTime = LocalTime.parse(resultSet.getString("horaFin"));
 
-			ret.add(timeSlot);
+				TimeSlot timeSlot = new TimeSlot();
+				timeSlot.setId(id);
+				timeSlot.setStartTime(startTime);
+				timeSlot.setEndTime(endTime);
+
+				ret.add(timeSlot);
+			}
+
+		} catch (SQLException sqle) {
+		} catch (Exception e) {
+		} finally {
+			try {
+				if (resultSet != null)
+					resultSet.close();
+			} catch (Exception e) {
+			}
+			;
+			try {
+				if (statement != null)
+					statement.close();
+			} catch (Exception e) {
+			}
+			;
+			try {
+				if (connection != null)
+					connection.close();
+			} catch (Exception e) {
+			}
+			;
 		}
-
-		resultSet.close();
-
-		if (statement != null)
-			statement.close();
-
-		if (connection != null)
-			connection.close();
-
 		return ret;
 	}
 
 	@Override
 	public void insert(TimeSlot timeSlot) throws SQLException, Exception {
-		Connection connection = DriverManager.getConnection(BBDDUtils.URL_LOCAL, BBDDUtils.USER_LOCAL,
-				BBDDUtils.PASS_LOCAL);
-		Statement statement = connection.createStatement();
-		Class.forName(BBDDUtils.DRIVER_LOCAL);
+		Connection connection = null;
+		Statement statement = null;
 
-		String sql = "insert into " + TIMESLOT_TABLE + " (idJornada, horaInicio, horaFin, disponible) values ('"
-				+ timeSlot.getWorkingDays().getid() + "', '" + timeSlot.getStartTime() + "', '" + timeSlot.getEndTime()
-				+ "')";
+		try {
+			connection = DriverManager.getConnection(BBDDUtils.URL_LOCAL, BBDDUtils.USER_LOCAL, BBDDUtils.PASS_LOCAL);
+			statement = connection.createStatement();
+			Class.forName(BBDDUtils.DRIVER_LOCAL);
 
-		statement.executeUpdate(sql);
+			String sql = "insert into " + TIMESLOT_TABLE + " (horaInicio, horaFin) values ('" + timeSlot.getStartTime()
+					+ "', '" + timeSlot.getEndTime() + "')";
 
-		if (statement != null)
-			statement.close();
+			statement.executeUpdate(sql);
 
-		if (connection != null)
-			connection.close();
-
+		} catch (SQLException sqle) {
+		} catch (Exception e) {
+		} finally {
+			try {
+				if (statement != null)
+					statement.close();
+			} catch (Exception e) {
+			}
+			;
+			try {
+				if (connection != null)
+					connection.close();
+			} catch (Exception e) {
+			}
+			;
+		}
 	}
 
 	@Override
 	public void update(TimeSlot timeSlot) throws SQLException, Exception {
-		Connection connection = DriverManager.getConnection(BBDDUtils.URL_LOCAL, BBDDUtils.USER_LOCAL,
-				BBDDUtils.PASS_LOCAL);
+		Connection connection = null;
 		PreparedStatement preparedStatement = null;
 
-		Class.forName(BBDDUtils.DRIVER_LOCAL);
+		try {
+			connection = DriverManager.getConnection(BBDDUtils.URL_LOCAL, BBDDUtils.USER_LOCAL, BBDDUtils.PASS_LOCAL);
+			preparedStatement = null;
 
-//		String sql = "update "+TIMESLOT_TABLE+" set idFranja = ? where id = ?";
-//		preparedStatement = connection.prepareStatement(sql);
-//		preparedStatement.setInt(1, 1);
-//		preparedStatement.setint(2, appointment.getId());
+			Class.forName(BBDDUtils.DRIVER_LOCAL);
 
-		preparedStatement.executeUpdate();
+			String time = "11:00";
 
-		if (preparedStatement != null)
-			preparedStatement.close();
+			String sql = "update " + TIMESLOT_TABLE + " set horaInicio = ? where id = ?";
+			preparedStatement = connection.prepareStatement(sql);
+			preparedStatement.setString(1, time);
+			preparedStatement.setInt(2, timeSlot.getId());
 
-		if (connection != null)
-			connection.close();
+			preparedStatement.executeUpdate();
+
+		} catch (SQLException sqle) {
+		} catch (Exception e) {
+		} finally {
+			try {
+				if (preparedStatement != null)
+					preparedStatement.close();
+			} catch (Exception e) {
+			}
+			;
+			try {
+				if (connection != null)
+					connection.close();
+			} catch (Exception e) {
+			}
+			;
+		}
 	}
 
 	@Override
 	public void delete(int id) throws SQLException, Exception {
-		Connection connection = DriverManager.getConnection(BBDDUtils.URL_LOCAL, BBDDUtils.USER_LOCAL,
-				BBDDUtils.PASS_LOCAL);
+		Connection connection = null;
 		PreparedStatement preparedStatement = null;
 
-		Class.forName(BBDDUtils.DRIVER_LOCAL);
-		String sql = "delete from " + TIMESLOT_TABLE + " where id = " + id;
-		preparedStatement = connection.prepareStatement(sql);
+		try {
+			connection = DriverManager.getConnection(BBDDUtils.URL_LOCAL, BBDDUtils.USER_LOCAL, BBDDUtils.PASS_LOCAL);
+			preparedStatement = null;
 
-		preparedStatement.executeUpdate();
+			Class.forName(BBDDUtils.DRIVER_LOCAL);
+			String sql = "delete from " + TIMESLOT_TABLE + " where id = " + id;
+			preparedStatement = connection.prepareStatement(sql);
 
-		if (preparedStatement != null)
-			preparedStatement.close();
-		if (connection != null)
-			connection.close();
+			preparedStatement.executeUpdate();
+
+		} catch (SQLException sqle) {
+		} catch (Exception e) {
+		} finally {
+			try {
+				if (preparedStatement != null)
+					preparedStatement.close();
+			} catch (Exception e) {
+			}
+			;
+			try {
+				if (connection != null)
+					connection.close();
+			} catch (Exception e) {
+			}
+			;
+		}
 
 	}
 

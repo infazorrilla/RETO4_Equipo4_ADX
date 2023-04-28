@@ -6,16 +6,12 @@ import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.sql.Statement;
-import java.sql.Time;
 import java.time.LocalTime;
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
 
-import model.pojos.AppointmentWorkingDayTimeSlot;
-import model.pojos.Sanitarian;
 import model.pojos.WorkingDay;
-import model.pojos.WorkingDaySanitarian;
 import model.utils.BBDDUtils;
 
 public class WorkingDayManager extends AbstractManager<WorkingDay> {
@@ -193,9 +189,7 @@ public class WorkingDayManager extends AbstractManager<WorkingDay> {
 			preparedStatement.executeUpdate();
 
 		} catch (SQLException sqle) {
-			System.out.println("Error con la BBDD - " + sqle.getMessage());
 		} catch (Exception e) {
-			System.out.println("Error generico - " + e.getMessage());
 		} finally {
 			try {
 				if (preparedStatement != null)
