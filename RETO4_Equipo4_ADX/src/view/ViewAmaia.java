@@ -1,12 +1,14 @@
 package view;
 
 import java.awt.Color;
+import java.awt.HeadlessException;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+import java.awt.event.KeyAdapter;
+import java.awt.event.KeyEvent;
 import java.sql.SQLException;
 
 import javax.swing.JButton;
-import javax.swing.JComboBox;
 import javax.swing.JFrame;
 import javax.swing.JLabel;
 import javax.swing.JOptionPane;
@@ -14,43 +16,80 @@ import javax.swing.JPanel;
 import javax.swing.JPasswordField;
 import javax.swing.JTextField;
 import javax.swing.SwingConstants;
+import javax.swing.event.CaretEvent;
+import javax.swing.event.CaretListener;
 
 import manager.PatientManager;
+import manager.UserDataModificationManager;
+//import manager.DoctorManager;
+//import manager.NurseManager;
+import model.pojos.Doctor;
+import model.pojos.Nurse;
+import model.pojos.Patient;
+import model.pojos.User;
+import javax.swing.JComboBox;
+import javax.swing.JRadioButton;
+import javax.swing.JFormattedTextField;
+import java.awt.event.ItemListener;
+import java.awt.event.ItemEvent;
 
 public class ViewAmaia {
-	
 	private PatientManager patientManager;
+//	private DoctorManager doctorManager;
+//	private NurseManager nurseManager;
+	private UserDataModificationManager userDataModificationManager;
 	private String userDNI;
-	
+	private User user;
+
+	public JFrame frame;
 	private JPanel panelLogin;
-	private JPanel panelRegistration;
-	private JPanel panelModifyUser;
-	private JTextField tfModifyUserAdress;
-	private JTextField tfModifyUserPhoneNumber;
-	
+	private JPanel panelModifyPatient;
+	private JPanel panelModifySanitarian;
+	private JTextField tfModifyPatientAddress;
+	private JTextField tfModifyPatientPhoneNumber;
+	private JPasswordField tfModifyPatientPassword;
+	private JButton btnModifyPatientOk;
+	private JButton btnModifyPatientUnsubscribe;
+	private JButton btnModifyPatientCancel;
+	private JButton btnLoginOk;
+	private JButton btnLoginCancel;
+	private JButton btnLoginResgistration;
+	private JTextField tfModifyPatientDNI;
+	private JTextField tfModifySanitarianDNI;
+	private JPasswordField tfModifySanitarianPassword;
+	private JButton btnModifySanitarianOk;
+	private JButton btnModifySanitarianCancel;
+	private JButton btnModifySanitarianUnsubscribe;
+	private JRadioButton rdbtnSelectNurse;
+	private JButton btnOkSelectAppointmentAmbulatoryType;
+	private JButton btnCancelSelectAppointmentAmbulatoryType;
+	private JPanel panelSelectAppointmentAmbulatoryType;
+
 	/**
 	 * Create the application.
 	 */
 	public ViewAmaia() {
-//		inicializar gestores
 		patientManager = new PatientManager();
+//		doctorManager = new DoctorManager();
+//		nurseManager = new NurseManager();
+		userDataModificationManager = new UserDataModificationManager();
 		initialize();
 	}
-	
+
 	private void initialize() {
-		JFrame frame = new JFrame();
+		frame = new JFrame();
 
 		frame.setBounds(100, 100, 632, 390);
 		frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 		frame.getContentPane().setLayout(null);
-		
-		//Login panel
+
+//		Login panel
 		panelLogin = new JPanel();
 		panelLogin.setBackground(new Color(0, 128, 192));
-		panelLogin.setBounds(583, 0, 33, 351);
+		panelLogin.setBounds(0, 0, 616, 351);
 		frame.getContentPane().add(panelLogin);
 		panelLogin.setLayout(null);
-		panelLogin.setVisible(false);
+		panelLogin.setVisible(true);
 
 		JLabel lblLogin = new JLabel("Inicio de sesión");
 		lblLogin.setBounds(250, 66, 133, 14);
@@ -73,202 +112,398 @@ public class ViewAmaia {
 		tfLoginPassword.setBounds(250, 162, 171, 20);
 		panelLogin.add(tfLoginPassword);
 
-		JButton btnLoginOk = new JButton("Aceptar");
+		btnLoginOk = new JButton("Aceptar");
 		btnLoginOk.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
 				userDNI = tfLoginUser.getText();
-				
-				
+
+				try {
+					user = userDataModificationManager.identifyUserType(userDNI);
+				} catch (SQLException e2) {
+					JOptionPane.showMessageDialog(null, e2.getMessage(), "Error", 0);
+				} catch (Exception e2) {
+					JOptionPane.showMessageDialog(null, e2.getMessage(), "Error", 0);
+				}
+
+				if (user instanceof Patient) {
+					tfModifyPatientDNI.setText(userDNI);
+//					panelModifyPatient.setVisible(true);
+					panelSelectAppointmentAmbulatoryType.setVisible(true);
+				}
+
+				if (user instanceof Doctor) {
+					tfModifySanitarianDNI.setText(userDNI);
+					panelModifySanitarian.setVisible(true);
+				}
+
+				if (user instanceof Nurse) {
+					tfModifySanitarianDNI.setText(userDNI);
+					panelModifySanitarian.setVisible(true);
+				}
+
+				panelLogin.setVisible(false);
 			}
 		});
 		btnLoginOk.setBounds(204, 245, 89, 23);
 		panelLogin.add(btnLoginOk);
 
-		JButton btnLoginCancel = new JButton("Cancelar");
+		btnLoginCancel = new JButton("Cancelar");
 		btnLoginCancel.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
-
+				// TODO
 			}
 		});
 		btnLoginCancel.setBounds(346, 245, 89, 23);
 		panelLogin.add(btnLoginCancel);
 
-		JButton btnLoginResgistration = new JButton("Registro");
+		btnLoginResgistration = new JButton("Registro");
 		btnLoginResgistration.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
-				
+				// TODO
 			}
 		});
 		btnLoginResgistration.setBounds(442, 10, 154, 37);
 		panelLogin.add(btnLoginResgistration);
-		
-		//Registration panel
-		//XABI pon los nombres en inglés
-		panelRegistration = new JPanel();
-		panelRegistration.setBackground(new Color(0, 128, 192));
-		panelRegistration.setBounds(538, 0, 78, 351);
-		frame.getContentPane().add(panelRegistration);
-		panelRegistration.setLayout(null);
-		panelRegistration.setVisible(false);
 
-		JLabel lbl = new JLabel("Registro de usuario");
-		lbl.setBounds(227, 34, 165, 14);
-		panelRegistration.add(lbl);
+//		Modify Patient panel
+		panelModifyPatient = new JPanel();
+		panelModifyPatient.setBackground(new Color(0, 128, 192));
+		panelModifyPatient.setBounds(543, 0, 73, 351);
+		frame.getContentPane().add(panelModifyPatient);
+		panelModifyPatient.setLayout(null);
+		panelModifyPatient.setVisible(false);
 
-		JLabel lblDniRegistro = new JLabel("DNI:");
-		lblDniRegistro.setBounds(106, 93, 119, 14);
-		panelRegistration.add(lblDniRegistro);
+		JLabel lblModifyPatient = new JLabel("Modificación de datos");
+		lblModifyPatient.setHorizontalAlignment(SwingConstants.CENTER);
+		lblModifyPatient.setBounds(225, 32, 165, 14);
+		panelModifyPatient.add(lblModifyPatient);
 
-		JLabel lblNombreRegistro = new JLabel("Nombre:");
-		lblNombreRegistro.setBounds(106, 118, 127, 14);
-		panelRegistration.add(lblNombreRegistro);
+		JLabel lblModifyPatientDNI = new JLabel("DNI:");
+		lblModifyPatientDNI.setSize(94, 23);
+		lblModifyPatientDNI.setLocation(106, 102);
+		lblModifyPatientDNI.setBounds(106, 93, 119, 14);
+		panelModifyPatient.add(lblModifyPatientDNI);
 
-		JLabel lblApellidoRegistro = new JLabel("Apellido:");
-		lblApellidoRegistro.setBounds(104, 143, 119, 14);
-		panelRegistration.add(lblApellidoRegistro);
+		JLabel lblModifyPatientAddress = new JLabel("Dirección:");
+		lblModifyPatientAddress.setBounds(106, 118, 127, 14);
+		panelModifyPatient.add(lblModifyPatientAddress);
 
-		JLabel lblSexoRegistro = new JLabel("Sexo:");
-		lblSexoRegistro.setBounds(106, 168, 127, 14);
-		panelRegistration.add(lblSexoRegistro);
+		JLabel lblModifyPatientPhoneNumber = new JLabel("Teléfono:");
+		lblModifyPatientPhoneNumber.setBounds(104, 143, 119, 14);
+		panelModifyPatient.add(lblModifyPatientPhoneNumber);
 
-		JLabel lblContrasenaRegistro = new JLabel("Contraseña:");
-		lblContrasenaRegistro.setBounds(106, 193, 119, 14);
-		panelRegistration.add(lblContrasenaRegistro);
+		JLabel lblModifyPatientPassword = new JLabel("Contraseña:");
+		lblModifyPatientPassword.setBounds(106, 168, 119, 14);
+		panelModifyPatient.add(lblModifyPatientPassword);
 
-		JTextField textFieldDNI = new JTextField();
-		textFieldDNI.setEditable(false);
-		textFieldDNI.setBounds(233, 90, 183, 20);
-		panelRegistration.add(textFieldDNI);
-		textFieldDNI.setColumns(10);
+		tfModifyPatientDNI = new JTextField();
+		tfModifyPatientDNI.setEnabled(false);
+		tfModifyPatientDNI.setEditable(false);
+		tfModifyPatientDNI.setBounds(225, 90, 183, 20);
+		panelModifyPatient.add(tfModifyPatientDNI);
+		tfModifyPatientDNI.setColumns(10);
 
-		JTextField textFieldNombre = new JTextField();
-		textFieldNombre.setEditable(false);
-		textFieldNombre.setBounds(233, 115, 183, 20);
-		panelRegistration.add(textFieldNombre);
-		textFieldNombre.setColumns(10);
-
-		JTextField textFieldApellido = new JTextField();
-		textFieldApellido.setEditable(false);
-		textFieldApellido.setBounds(233, 140, 183, 20);
-		panelRegistration.add(textFieldApellido);
-		textFieldApellido.setColumns(10);
-
-		JPasswordField textFieldPasswd = new JPasswordField();
-		textFieldPasswd.setBounds(233, 190, 183, 20);
-		panelRegistration.add(textFieldPasswd);
-
-		JComboBox<String> comboBoxSexo = new JComboBox<String>();
-		comboBoxSexo.setBounds(233, 164, 183, 22);
-		panelRegistration.add(comboBoxSexo);
-		comboBoxSexo.addItem("Hombre");
-		comboBoxSexo.addItem("Mujer");
-		comboBoxSexo.addItem("Otro");
-
-		JButton btnAceptarRegistro = new JButton("Aceptar");
-		btnAceptarRegistro.addActionListener(new ActionListener() {
-			public void actionPerformed(ActionEvent e) {
-
+		tfModifyPatientPassword = new JPasswordField();
+		tfModifyPatientPassword.addCaretListener(new CaretListener() {
+			public void caretUpdate(CaretEvent e) {
+				if (null == tfModifyPatientPassword)
+					tfModifyPatientPassword.setText("");
+				if (null == tfModifyPatientAddress)
+					tfModifyPatientAddress.setText("");
+				if (null == tfModifyPatientPhoneNumber)
+					tfModifyPatientPhoneNumber.setText("");
+				String tfPasswd = String.valueOf(tfModifyPatientPassword.getPassword());
+				btnModifyPatientOk.setEnabled(userDataModificationManager.enableModifyPatientOkButton(tfPasswd,
+						tfModifyPatientAddress.getText(), tfModifyPatientPhoneNumber.getText()));
 			}
 		});
-		btnAceptarRegistro.setBounds(200, 271, 89, 23);
-		panelRegistration.add(btnAceptarRegistro);
-
-		JButton btnCancelarRegistro = new JButton("Cancelar");
-		btnCancelarRegistro.addActionListener(new ActionListener() {
-			public void actionPerformed(ActionEvent e) {
-
-			}
-		});
-		btnCancelarRegistro.setBounds(350, 271, 89, 23);
-		panelRegistration.add(btnCancelarRegistro);
-		
-		//Update users' information panel
-		panelModifyUser = new JPanel();
-		panelModifyUser.setBackground(new Color(0, 128, 192));
-		panelModifyUser.setBounds(0, 0, 616, 351);
-		frame.getContentPane().add(panelModifyUser);
-		panelModifyUser.setLayout(null);
-		panelModifyUser.setVisible(true);
-		
-		JLabel lblModifyUser = new JLabel("Modificación de datos");
-		lblModifyUser.setHorizontalAlignment(SwingConstants.CENTER);
-		lblModifyUser.setBounds(225, 32, 165, 14);
-		panelModifyUser.add(lblModifyUser);
-
-		JLabel lblModifyUserDNI = new JLabel("DNI:");
-		lblModifyUserDNI.setSize(94, 23);
-		lblModifyUserDNI.setLocation(106, 102);
-		lblModifyUserDNI.setBounds(106, 93, 119, 14);
-		panelModifyUser.add(lblModifyUserDNI);
-
-		JLabel lblModifyUserAddress = new JLabel("Dirección:");
-		lblModifyUserAddress.setBounds(106, 118, 127, 14);
-		panelModifyUser.add(lblModifyUserAddress);
-
-		JLabel lblModifyUserPhoneNumber = new JLabel("Teléfono:");
-		lblModifyUserPhoneNumber.setBounds(104, 143, 119, 14);
-		panelModifyUser.add(lblModifyUserPhoneNumber);
-
-		JLabel lblModifyUserPassword = new JLabel("Contraseña:");
-		lblModifyUserPassword.setBounds(106, 168, 119, 14);
-		panelModifyUser.add(lblModifyUserPassword);
-		
-		JTextField tfModifyUserDNI = new JTextField();
-		tfModifyUserDNI.setEditable(false);
-		tfModifyUserDNI.setBounds(225, 90, 183, 20);
-		panelModifyUser.add(tfModifyUserDNI);
-		tfModifyUserDNI.setColumns(10);
-
-
-		JPasswordField tfModifyUserPassword = new JPasswordField();
-		tfModifyUserPassword.setBounds(225, 165, 183, 20);
-		panelModifyUser.add(tfModifyUserPassword);
-		
-
-		JButton btnModifyUserOk = new JButton("Guardar");
-		btnModifyUserOk.addActionListener(new ActionListener() {
-			public void actionPerformed(ActionEvent e) {
-
-			}
-		});
-		btnModifyUserOk.setBounds(200, 271, 89, 23);
-		panelModifyUser.add(btnModifyUserOk);
-
-		JButton btnModifyUserCancel= new JButton("Cancelar");
-		btnModifyUserCancel.addActionListener(new ActionListener() {
-			public void actionPerformed(ActionEvent e) {
-
-			}
-		});
-		btnModifyUserCancel.setBounds(350, 271, 89, 23);
-		panelModifyUser.add(btnModifyUserCancel);
-		
-		tfModifyUserAdress = new JTextField();
-		tfModifyUserAdress.setColumns(10);
-		tfModifyUserAdress.setBounds(225, 115, 183, 20);
-		panelModifyUser.add(tfModifyUserAdress);
-		
-		tfModifyUserPhoneNumber = new JTextField();
-		tfModifyUserPhoneNumber.setColumns(10);
-		tfModifyUserPhoneNumber.setBounds(225, 140, 183, 20);
-		panelModifyUser.add(tfModifyUserPhoneNumber);
-		
-		JButton btnModifyUserUnsubscribe = new JButton("Eliminar cuenta");
-		btnModifyUserUnsubscribe.addActionListener(new ActionListener() {
-			public void actionPerformed(ActionEvent e) {
-				try {
-					patientManager.delete(userDNI);
-				} catch (SQLException sqle) {
-					JOptionPane.showMessageDialog(btnAceptarRegistro, sqle.getMessage(), "Aviso", 0);
-				}catch (Exception e1) {
-					JOptionPane.showMessageDialog(btnAceptarRegistro, e1.getMessage(), "Aviso", 0);
+		tfModifyPatientPassword.addKeyListener(new KeyAdapter() {
+			@Override
+			public void keyTyped(KeyEvent e) {
+				if (tfModifyPatientPassword.getCaretPosition() >= 50) {
+					e.consume();
 				}
 			}
 		});
-		btnModifyUserUnsubscribe.setBounds(260, 206, 130, 23);
-		panelModifyUser.add(btnModifyUserUnsubscribe);
+		tfModifyPatientPassword.setBounds(225, 165, 183, 20);
+		panelModifyPatient.add(tfModifyPatientPassword);
 
-	
+		tfModifyPatientAddress = new JTextField();
+		tfModifyPatientAddress.addCaretListener(new CaretListener() {
+			public void caretUpdate(CaretEvent e) {
+				if (null == tfModifyPatientPassword)
+					tfModifyPatientPassword.setText("");
+				if (null == tfModifyPatientAddress)
+					tfModifyPatientAddress.setText("");
+				if (null == tfModifyPatientPhoneNumber)
+					tfModifyPatientPhoneNumber.setText("");
+				String tfPasswd = String.valueOf(tfModifyPatientPassword.getPassword());
+				btnModifyPatientOk.setEnabled(userDataModificationManager.enableModifyPatientOkButton(tfPasswd,
+						tfModifyPatientAddress.getText(), tfModifyPatientPhoneNumber.getText()));
+			}
+		});
+		tfModifyPatientAddress.addKeyListener(new KeyAdapter() {
+			@Override
+			public void keyTyped(KeyEvent e) {
+				if (tfModifyPatientAddress.getCaretPosition() >= 60) {
+					e.consume();
+				}
+			}
+		});
+		tfModifyPatientAddress.setColumns(10);
+		tfModifyPatientAddress.setBounds(225, 115, 183, 20);
+		panelModifyPatient.add(tfModifyPatientAddress);
+
+		tfModifyPatientPhoneNumber = new JTextField();
+		tfModifyPatientPhoneNumber.addCaretListener(new CaretListener() {
+			public void caretUpdate(CaretEvent e) {
+
+				if (null == tfModifyPatientPassword)
+					tfModifyPatientPassword.setText("");
+				if (null == tfModifyPatientAddress)
+					tfModifyPatientAddress.setText("");
+				if (null == tfModifyPatientPhoneNumber)
+					tfModifyPatientPhoneNumber.setText("");
+				String tfPasswd = String.valueOf(tfModifyPatientPassword.getPassword());
+				btnModifyPatientOk.setEnabled(userDataModificationManager.enableModifyPatientOkButton(tfPasswd,
+						tfModifyPatientAddress.getText(), tfModifyPatientPhoneNumber.getText()));
+
+			}
+		});
+		tfModifyPatientPhoneNumber.addKeyListener(new KeyAdapter() {
+
+			@Override
+			public void keyTyped(KeyEvent e) {
+				if (tfModifyPatientPhoneNumber.getCaretPosition() >= 9) {
+					e.consume();
+				}
+			}
+		});
+		tfModifyPatientPhoneNumber.setColumns(10);
+		tfModifyPatientPhoneNumber.setBounds(225, 140, 183, 20);
+		panelModifyPatient.add(tfModifyPatientPhoneNumber);
+
+		btnModifyPatientOk = new JButton("Guardar");
+		btnModifyPatientOk.setEnabled(false);
+		btnModifyPatientOk.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent e) {
+				boolean isOk = true;
+					String tfPasswd = String.valueOf(tfModifyPatientPassword.getPassword());
+					try {
+						if (tfPasswd.length() > 0) {
+							user.setPassword(tfPasswd);
+//							patientManager.updatePassword((Patient) user, tfPasswd);
+						}
+						if (tfModifyPatientAddress.getText().length() > 0) {
+							((Patient) user).setAddress(tfModifyPatientAddress.getText());
+//							patientManager.updateAddress((Patient) user, tfModifyPatientAddress.getText());
+						}
+						if (tfModifyPatientPhoneNumber.getText().length() > 0) {
+							if (userDataModificationManager.isPhoneNumber(tfModifyPatientPhoneNumber.getText())) {
+								((Patient) user).setPhoneNumber(tfModifyPatientPhoneNumber.getText());
+//								patientManager.updatePhoneNumber((Patient) user, tfModifyPatientPhoneNumber.getText());
+							} else {
+								JOptionPane.showMessageDialog(null, "Ha introducido un número de teléfono incorrecto",
+										"Error", 0);
+								tfModifyPatientPhoneNumber.setText("");
+								isOk = false;
+							}
+
+						}
+//					} catch (SQLException sqle) {
+//						JOptionPane.showMessageDialog(null,
+//								"Se ha producido un error con la Base de Datos. Imposible modificar datos del usuario.",
+//								"Error", 0);
+//						isOk = false;
+					} catch (Exception e1) {
+						JOptionPane.showMessageDialog(null,
+								"Se ha producido un error. Imposible modificar datos del usuario.", "Error", 0);
+						isOk = false;
+					}
+
+					if (isOk)
+						JOptionPane.showMessageDialog(null, "Información actualizada", "Confirmación", 1);
+			}
+		});
+		btnModifyPatientOk.setBounds(200, 271, 89, 23);
+		panelModifyPatient.add(btnModifyPatientOk);
+
+		btnModifyPatientCancel = new JButton("Cancelar");
+		btnModifyPatientCancel.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent e) {
+				// TODO
+			}
+		});
+		btnModifyPatientCancel.setBounds(350, 271, 89, 23);
+		panelModifyPatient.add(btnModifyPatientCancel);
+
+		btnModifyPatientUnsubscribe = new JButton("Eliminar cuenta");
+		btnModifyPatientUnsubscribe.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent e) {
+				try {
+					patientManager.delete(userDNI);
+					if (null == patientManager.select(userDNI))
+						JOptionPane.showMessageDialog(null, "Cuenta eliminada", "Confirmación", 1);
+				} catch (HeadlessException e1) {
+					JOptionPane.showMessageDialog(null, "Se ha producido un error. Imposible eliminar usuario.",
+							"Error", 0);
+				} catch (SQLException e1) {
+					JOptionPane.showMessageDialog(null,
+							"Se ha producido un error con la Base de Datos. Imposible eliminar usuario.", "Error", 0);
+				} catch (Exception e1) {
+					JOptionPane.showMessageDialog(null, "Se ha producido un error. Imposible eliminar usuario.",
+							"Error", 0);
+				}
+			}
+		});
+		btnModifyPatientUnsubscribe.setBounds(260, 206, 130, 23);
+		panelModifyPatient.add(btnModifyPatientUnsubscribe);
+
+//		Modify Sanitarian panel
+		panelModifySanitarian = new JPanel();
+		panelModifySanitarian.setBackground(new Color(0, 128, 192));
+		panelModifySanitarian.setBounds(543, 0, 73, 351);
+		frame.getContentPane().add(panelModifySanitarian);
+		panelModifySanitarian.setLayout(null);
+		panelModifySanitarian.setVisible(false);
+
+		JLabel lblModifySanitarian = new JLabel("Modificación de datos");
+		lblModifySanitarian.setHorizontalAlignment(SwingConstants.CENTER);
+		lblModifySanitarian.setBounds(225, 32, 165, 14);
+		panelModifySanitarian.add(lblModifySanitarian);
+
+		JLabel lblModifySanitarianDNI = new JLabel("DNI:");
+		lblModifySanitarianDNI.setSize(94, 23);
+		lblModifySanitarianDNI.setLocation(106, 102);
+		lblModifySanitarianDNI.setBounds(106, 93, 119, 14);
+		panelModifySanitarian.add(lblModifySanitarianDNI);
+
+		JLabel lblModifySanitarianPassword = new JLabel("Contraseña:");
+		lblModifySanitarianPassword.setBounds(106, 142, 119, 14);
+		panelModifySanitarian.add(lblModifySanitarianPassword);
+
+		tfModifySanitarianDNI = new JTextField();
+		tfModifySanitarianDNI.setEnabled(false);
+		tfModifySanitarianDNI.setEditable(false);
+		tfModifySanitarianDNI.setBounds(225, 90, 183, 20);
+		panelModifySanitarian.add(tfModifySanitarianDNI);
+		tfModifySanitarianDNI.setColumns(10);
+
+		tfModifySanitarianPassword = new JPasswordField();
+		tfModifySanitarianPassword.addCaretListener(new CaretListener() {
+			public void caretUpdate(CaretEvent e) {
+				if (null == tfModifySanitarianPassword)
+					tfModifySanitarianPassword.setText("");
+				String tfPasswd = String.valueOf(tfModifySanitarianPassword.getPassword());
+				btnModifySanitarianOk.setEnabled(userDataModificationManager.enableModifySanitarianOkButton(tfPasswd));
+			}
+		});
+		tfModifySanitarianPassword.addKeyListener(new KeyAdapter() {
+			@Override
+			public void keyTyped(KeyEvent e) {
+				if (tfModifySanitarianPassword.getCaretPosition() >= 50) {
+					e.consume();
+				}
+			}
+		});
+		tfModifySanitarianPassword.setBounds(225, 140, 183, 20);
+		panelModifySanitarian.add(tfModifySanitarianPassword);
+
+		btnModifySanitarianOk = new JButton("Guardar");
+		btnModifySanitarianOk.setEnabled(false);
+		btnModifySanitarianOk.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent e) {
+				String tfPasswd = String.valueOf(tfModifySanitarianPassword.getPassword());
+				if (tfPasswd.length() > 0) {
+					try {
+//						if (user instanceof Doctor)
+//							doctorManager.updatePassword((Doctor) user, tfPasswd);
+
+//						if (user instanceof Nurse)
+//							nurseManager.updatePassword((Nurse) user, tfPasswd);
+//					} catch (SQLException e1) {
+//						JOptionPane.showMessageDialog(null,
+//								"Se ha producido un error con la Base de Datos. Imposible modificar datos del usuario.",
+//								"Error", 0);
+					} catch (Exception e1) {
+						JOptionPane.showMessageDialog(null,
+								"Se ha producido un error. Imposible modificar datos del usuario.", "Error", 0);
+
+					}
+				}
+				JOptionPane.showMessageDialog(null, "Información actualizada", "Confirmación", 1);
+			}
+		});
+		btnModifySanitarianOk.setBounds(200, 271, 89, 23);
+		panelModifySanitarian.add(btnModifySanitarianOk);
+
+		btnModifySanitarianCancel = new JButton("Cancelar");
+		btnModifySanitarianCancel.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent e) {
+				// TODO
+			}
+		});
+		btnModifySanitarianCancel.setBounds(350, 271, 89, 23);
+		panelModifySanitarian.add(btnModifySanitarianCancel);
+
+		btnModifySanitarianUnsubscribe = new JButton("Eliminar cuenta");
+		btnModifySanitarianUnsubscribe.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent e) {
+				try {
+//					if (user instanceof Doctor)
+//						doctorManager.delete(userDNI);
+
+//					if (user instanceof Nurse)
+//						nurseManager.delete(userDNI);
+
+//				} catch (SQLException e1) {
+//					JOptionPane.showMessageDialog(null,
+//							"Se ha producido un error con la Base de Datos. Imposible eliminar usuario.", "Error", 0);
+				} catch (Exception e1) {
+					JOptionPane.showMessageDialog(null, "Se ha producido un error. Imposible eliminar usuario.",
+							"Error", 0);
+				}
+				JOptionPane.showMessageDialog(null, "Cuenta eliminada", "Confirmación", 1);
+			}
+		});
+		btnModifySanitarianUnsubscribe.setBounds(260, 195, 130, 23);
+		panelModifySanitarian.add(btnModifySanitarianUnsubscribe);
 		
+//		panel SelectAppointmentAmbulatoryType
+		panelSelectAppointmentAmbulatoryType = new JPanel();
+		panelSelectAppointmentAmbulatoryType.setBackground(new Color(0, 128, 192));
+		panelSelectAppointmentAmbulatoryType.setBounds(0, 0, 616, 351);
+		frame.getContentPane().add(panelSelectAppointmentAmbulatoryType);
+		panelSelectAppointmentAmbulatoryType.setLayout(null);
+		
+		JLabel lblSelectAmbulatory = new JLabel("Seleccione un ambulatorio");
+		lblSelectAmbulatory.setBounds(155, 112, 129, 13);
+		panelSelectAppointmentAmbulatoryType.add(lblSelectAmbulatory);
+		
+		JComboBox cbAmbulatory = new JComboBox();
+		cbAmbulatory.setBounds(295, 108, 134, 21);
+		panelSelectAppointmentAmbulatoryType.add(cbAmbulatory);
+		
+		JLabel lblSelectSanitarian = new JLabel("Seleccione tipo de consulta");
+		lblSelectSanitarian.setBounds(153, 170, 276, 13);
+		panelSelectAppointmentAmbulatoryType.add(lblSelectSanitarian);
+		
+		JRadioButton rdbtnSelectDoctor = new JRadioButton("Medicina");
+		rdbtnSelectDoctor.setBounds(181, 189, 103, 21);
+		panelSelectAppointmentAmbulatoryType.add(rdbtnSelectDoctor);
+		
+		rdbtnSelectNurse = new JRadioButton("Enfermería");
+		rdbtnSelectNurse.setBounds(315, 189, 103, 21);
+		panelSelectAppointmentAmbulatoryType.add(rdbtnSelectNurse);
+		
+		btnOkSelectAppointmentAmbulatoryType = new JButton("Cancelar");
+		btnOkSelectAppointmentAmbulatoryType.setBounds(326, 271, 85, 21);
+		panelSelectAppointmentAmbulatoryType.add(btnOkSelectAppointmentAmbulatoryType);
+		
+		btnCancelSelectAppointmentAmbulatoryType = new JButton("Siguiente");
+		btnCancelSelectAppointmentAmbulatoryType.setBounds(204, 271, 85, 21);
+		panelSelectAppointmentAmbulatoryType.add(btnCancelSelectAppointmentAmbulatoryType);
+		panelSelectAppointmentAmbulatoryType.setVisible(false);
+
 	}
 }

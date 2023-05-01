@@ -1,0 +1,4 @@
+WorkingDay [id=1, date=2023-04-05, startTime=08:00, endTime=15:00, sanitarians=null, timeSlots=null]
+WorkingDay [id=2, date=2023-04-20, startTime=08:00, endTime=15:00, sanitarians=null, timeSlots=null]
+WorkingDay [id=3, date=2023-04-28, startTime=08:00, endTime=15:00, sanitarians=null, timeSlots=null]
+WorkingDay [id=4, date=2023-05-04, startTime=08:00, endTime=15:00, sanitarians=null, timeSlots=null]

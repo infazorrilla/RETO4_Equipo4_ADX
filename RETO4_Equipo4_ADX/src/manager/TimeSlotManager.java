@@ -17,6 +17,12 @@ public class TimeSlotManager extends AbstractManager<TimeSlot> {
 
 	public static final String TIMESLOT_TABLE = "franja";
 
+	/**
+	 * Returns one TimeSlot from the DB by its id
+	 * 
+	 * @param id int
+	 * @return TimeSlot object
+	 */
 	@Override
 	public TimeSlot select(int id) throws SQLException, Exception {
 		TimeSlot ret = null;
@@ -32,7 +38,6 @@ public class TimeSlotManager extends AbstractManager<TimeSlot> {
 			connection = DriverManager.getConnection(BBDDUtils.URL_LOCAL, BBDDUtils.USER_LOCAL, BBDDUtils.PASS_LOCAL);
 			statement = connection.createStatement();
 			resultSet = statement.executeQuery(sql);
-
 			while (resultSet.next()) {
 				if (null == ret)
 					ret = new TimeSlot();
@@ -44,7 +49,6 @@ public class TimeSlotManager extends AbstractManager<TimeSlot> {
 				ret.setStartTime(startTime);
 				ret.setEndTime(endTime);
 			}
-
 		} catch (SQLException sqle) {
 		} catch (Exception e) {
 		} finally {
@@ -70,6 +74,11 @@ public class TimeSlotManager extends AbstractManager<TimeSlot> {
 		return ret;
 	}
 
+	/**
+	 * Returns a list of all the TimeSlots from the DB
+	 * 
+	 * @return an ArrayList of TimeSlots
+	 */
 	@Override
 	public List<TimeSlot> select() throws SQLException, Exception {
 		ArrayList<TimeSlot> ret = null;
@@ -81,7 +90,6 @@ public class TimeSlotManager extends AbstractManager<TimeSlot> {
 		ResultSet resultSet = null;
 
 		try {
-
 			Class.forName(BBDDUtils.DRIVER_LOCAL);
 			connection = DriverManager.getConnection(BBDDUtils.URL_LOCAL, BBDDUtils.USER_LOCAL, BBDDUtils.PASS_LOCAL);
 			statement = connection.createStatement();
@@ -91,7 +99,7 @@ public class TimeSlotManager extends AbstractManager<TimeSlot> {
 				if (null == ret)
 					ret = new ArrayList<TimeSlot>();
 
-				int id = resultSet.getInt("id");
+				int id = resultSet.getInt("idFranja");
 				LocalTime startTime = LocalTime.parse(resultSet.getString("horaInicio"));
 				LocalTime endTime = LocalTime.parse(resultSet.getString("horaFin"));
 
@@ -128,6 +136,11 @@ public class TimeSlotManager extends AbstractManager<TimeSlot> {
 		return ret;
 	}
 
+	/**
+	 * Inserts one TimeSlot into the DB
+	 * 
+	 * @param one object TimeSlot
+	 */
 	@Override
 	public void insert(TimeSlot timeSlot) throws SQLException, Exception {
 		Connection connection = null;
@@ -138,8 +151,8 @@ public class TimeSlotManager extends AbstractManager<TimeSlot> {
 			statement = connection.createStatement();
 			Class.forName(BBDDUtils.DRIVER_LOCAL);
 
-			String sql = "insert into " + TIMESLOT_TABLE + " (horaInicio, horaFin) values ('" + timeSlot.getStartTime()
-					+ "', '" + timeSlot.getEndTime() + "')";
+			String sql = "insert into " + TIMESLOT_TABLE + " (idFranja, horaInicio, horaFin) values ('"
+					+ timeSlot.getId() + "', '" + timeSlot.getStartTime() + "', '" + timeSlot.getEndTime() + "')";
 
 			statement.executeUpdate(sql);
 
@@ -161,6 +174,11 @@ public class TimeSlotManager extends AbstractManager<TimeSlot> {
 		}
 	}
 
+	/**
+	 * Updates ''horaInicio' of a TimeSlot from the DB at '11:00' by its id
+	 * 
+	 * @param one object TimeSlot
+	 */
 	@Override
 	public void update(TimeSlot timeSlot) throws SQLException, Exception {
 		Connection connection = null;
@@ -199,6 +217,11 @@ public class TimeSlotManager extends AbstractManager<TimeSlot> {
 		}
 	}
 
+	/**
+	 * Deletes the row in 'Franja' table of the DB by its id
+	 * 
+	 * @param id int
+	 */
 	@Override
 	public void delete(int id) throws SQLException, Exception {
 		Connection connection = null;
