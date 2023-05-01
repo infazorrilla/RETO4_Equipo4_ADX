@@ -11,6 +11,7 @@ public class Doctor extends Sanitarian implements Serializable {
 	private String speciality;
 	private boolean mir;
 
+	!CAMBIOS AQUÍ
 	// CONSTRUCTOR | USING FIELD
 	public Doctor(int staffNum, float salary, String type, ArrayList<Appointment> appointments,
 			ArrayList<WorkingDaySanitarian> workingDay, Ambulatory ambulatory, String speciality, boolean mir) {

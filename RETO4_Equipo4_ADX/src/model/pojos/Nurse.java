@@ -11,6 +11,7 @@ public class Nurse extends Sanitarian implements Serializable {
 	private String category;
 	private boolean eir;
 
+	! CAMBIOS AQUÍ
 	// CONSTRUCTOR | USING FIELDS //
 	public Nurse(int staffNum, float salary, String type, ArrayList<Appointment> appointments,
 			ArrayList<WorkingDaySanitarian> workingDay, Ambulatory ambulatory, String category, boolean eir) {
