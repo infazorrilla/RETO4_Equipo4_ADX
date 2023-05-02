@@ -11,25 +11,10 @@ public class Nurse extends Sanitarian implements Serializable {
 	private String category;
 	private boolean eir;
 
-	! CAMBIOS AQUÍ
-	// CONSTRUCTOR | USING FIELDS //
-	public Nurse(int staffNum, float salary, String type, ArrayList<Appointment> appointments,
-			ArrayList<WorkingDaySanitarian> workingDay, Ambulatory ambulatory, String category, boolean eir) {
-		super(staffNum, salary, type, appointments, workingDay, ambulatory);
+	// CONSTRUCTOR | ONLY WITH THE ATTRIBUTES OF THE POJO NURSE //
+	public Nurse(String category, boolean eir) {
 		this.category = category;
 		this.eir = eir;
-	}
-
-	// CONSTRUCTOR | FROM SUPERCLASS //
-	public Nurse() {
-		super();
-		// TODO Auto-generated constructor stub
-	}
-
-	public Nurse(int staffNum, float salary, String type, ArrayList<Appointment> appointments,
-			ArrayList<WorkingDaySanitarian> workingDay, Ambulatory ambulatory) {
-		super(staffNum, salary, type, appointments, workingDay, ambulatory);
-		// TODO Auto-generated constructor stub
 	}
 
 	// GETTERS AND SETTERS //
