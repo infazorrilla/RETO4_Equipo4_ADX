@@ -22,7 +22,7 @@ public class PatientManager  {
 	public Patient select(String dni) throws SQLException, Exception {
 		Patient ret = null;
 
-		String sql = "select * from " + PATIENT_TABLE + " where dniPaciente=" + dni;
+		String sql = "select * from paciente p join usuario u on p.dniPaciente=u.dni  where dniPaciente=" + dni;
 
 		Connection connection = null;
 		Statement statement = null;
@@ -86,7 +86,7 @@ public class PatientManager  {
 	public List<Patient> select() throws SQLException, Exception {
 		ArrayList<Patient> ret = null;
 
-		String sql = "select * from " + PATIENT_TABLE;
+		String sql = "select * from paciente p join usuario u on p.dniPaciente=u.dni";
 
 		Connection connection = null;
 		Statement statement = null;

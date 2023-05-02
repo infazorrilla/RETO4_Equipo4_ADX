@@ -3,13 +3,13 @@ package model.pojos;
 import java.util.ArrayList;
 import java.util.Objects;
 
-public class AppointmentWorkingDayTimeSlot {
+public class AppointmentWorkingDayTimeSlotManager {
 
 	private ArrayList<Appointment> appointment = null;
 	private WorkingDay workingDay;
 	private TimeSlot timeSlot;
 
-	public AppointmentWorkingDayTimeSlot(ArrayList<Appointment> appointment, WorkingDay workingDay, TimeSlot timeSlot) {
+	public AppointmentWorkingDayTimeSlotManager(ArrayList<Appointment> appointment, WorkingDay workingDay, TimeSlot timeSlot) {
 		super();
 		this.appointment = appointment;
 		this.workingDay = workingDay;
@@ -53,7 +53,7 @@ public class AppointmentWorkingDayTimeSlot {
 			return false;
 		if (getClass() != obj.getClass())
 			return false;
-		AppointmentWorkingDayTimeSlot other = (AppointmentWorkingDayTimeSlot) obj;
+		AppointmentWorkingDayTimeSlotManager other = (AppointmentWorkingDayTimeSlotManager) obj;
 		return Objects.equals(appointment, other.appointment) && Objects.equals(timeSlot, other.timeSlot)
 				&& Objects.equals(workingDay, other.workingDay);
 	}
