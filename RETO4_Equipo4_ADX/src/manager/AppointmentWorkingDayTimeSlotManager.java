@@ -15,13 +15,13 @@ import model.pojos.Appointment;
 import model.pojos.Patient;
 import model.utils.BBDDUtils;
 
-public class AppointmentWorkingDayTimeSlot  {
+public class AppointmentWorkingDayTimeSlotManager  {
 
 	public static final String AWT = "citaJornadaFranja";
 	
 
-	public AppointmentWorkingDayTimeSlot select(int id) throws SQLException, Exception {
-		AppointmentWorkingDayTimeSlot ret = null;
+	public AppointmentWorkingDayTimeSlotManager select(int id) throws SQLException, Exception {
+		AppointmentWorkingDayTimeSlotManager ret = null;
 
 		String sql = "select * from " + AWT + " where idCita=" + id;
 
@@ -37,7 +37,7 @@ public class AppointmentWorkingDayTimeSlot  {
 
 			while (resultSet.next()) {
 				if (null == ret)
-					ret = new AppointmentWorkingDayTimeSlot();
+					ret = new AppointmentWorkingDayTimeSlotManager();
 
 				
 			}
@@ -67,8 +67,8 @@ public class AppointmentWorkingDayTimeSlot  {
 	}
 
 	
-	public List<AppointmentWorkingDayTimeSlot> select() throws SQLException, Exception {
-		ArrayList<AppointmentWorkingDayTimeSlot> ret = null;
+	public List<AppointmentWorkingDayTimeSlotManager> select() throws SQLException, Exception {
+		ArrayList<AppointmentWorkingDayTimeSlotManager> ret = null;
 
 		String sql = "select * from " + AWT;
 
@@ -85,29 +85,10 @@ public class AppointmentWorkingDayTimeSlot  {
 		
 		while (resultSet.next()) {
 			if (null == ret)
-				ret = new ArrayList<AppointmentWorkingDayTimeSlot>();
+				ret = new ArrayList<AppointmentWorkingDayTimeSlotManager>();
 				
 			
-				String phoneNumber = resultSet.getString("telefono");
-				String address = resultSet.getString("direccion");
-				String dni = resultSet.getString("dniPaciente");
-				String name = resultSet.getString("nombre");
-				String surname = resultSet.getString("apellido");
-				String gender = resultSet.getString("genero");
-				Date birthDate = resultSet.getDate("fechaNac");
-				String password = resultSet.getString("contrasena");
 				
-				Patient patient= new Patient();
-				patient.setPhoneNumber(phoneNumber);
-				patient.setAddress(address);
-				patient.setDni(dni);
-				patient.setName(name);
-				patient.setSurname(surname);
-				patient.setGender(gender);
-				patient.setBirthDate(birthDate);
-				patient.setPassword(password);
-				
-			ret.add(patient);
 		}
 
 		} catch (SQLException sqle) {

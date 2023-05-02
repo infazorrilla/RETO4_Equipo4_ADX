@@ -11,7 +11,7 @@ import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
 
-import model.pojos.Appointment;
+
 import model.pojos.Patient;
 import model.utils.BBDDUtils;
 
@@ -43,7 +43,7 @@ public class PatientManager  {
 				String address = resultSet.getString("direccion");
 				String name = resultSet.getString("nombre");
 				String surname = resultSet.getString("apellido");
-				String gender = resultSet.getString("genero");
+				String gender = resultSet.getString("sexo");
 				Date birthDate = resultSet.getDate("fechaNac");
 				String password = resultSet.getString("contrasena");
 				
@@ -109,7 +109,7 @@ public class PatientManager  {
 				String dni = resultSet.getString("dniPaciente");
 				String name = resultSet.getString("nombre");
 				String surname = resultSet.getString("apellido");
-				String gender = resultSet.getString("genero");
+				String gender = resultSet.getString("sexo");
 				Date birthDate = resultSet.getDate("fechaNac");
 				String password = resultSet.getString("contrasena");
 				
