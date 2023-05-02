@@ -9,11 +9,13 @@ import java.awt.event.KeyEvent;
 import java.sql.SQLException;
 
 import javax.swing.JButton;
+import javax.swing.JComboBox;
 import javax.swing.JFrame;
 import javax.swing.JLabel;
 import javax.swing.JOptionPane;
 import javax.swing.JPanel;
 import javax.swing.JPasswordField;
+import javax.swing.JRadioButton;
 import javax.swing.JTextField;
 import javax.swing.SwingConstants;
 import javax.swing.event.CaretEvent;
@@ -27,14 +29,9 @@ import model.pojos.Doctor;
 import model.pojos.Nurse;
 import model.pojos.Patient;
 import model.pojos.User;
-import javax.swing.JComboBox;
-import javax.swing.JRadioButton;
-import javax.swing.JFormattedTextField;
-import java.awt.event.ItemListener;
-import java.awt.event.ItemEvent;
 
 public class ViewAmaia {
-	private PatientManager patientManager;
+//	private PatientManager patientManager;
 //	private DoctorManager doctorManager;
 //	private NurseManager nurseManager;
 	private UserDataModificationManager userDataModificationManager;
@@ -69,7 +66,7 @@ public class ViewAmaia {
 	 * Create the application.
 	 */
 	public ViewAmaia() {
-		patientManager = new PatientManager();
+//		patientManager = new PatientManager();
 //		doctorManager = new DoctorManager();
 //		nurseManager = new NurseManager();
 		userDataModificationManager = new UserDataModificationManager();
@@ -127,8 +124,8 @@ public class ViewAmaia {
 
 				if (user instanceof Patient) {
 					tfModifyPatientDNI.setText(userDNI);
-//					panelModifyPatient.setVisible(true);
-					panelSelectAppointmentAmbulatoryType.setVisible(true);
+					panelModifyPatient.setVisible(true);
+//					panelSelectAppointmentAmbulatoryType.setVisible(true);
 				}
 
 				if (user instanceof Doctor) {
@@ -168,7 +165,7 @@ public class ViewAmaia {
 //		Modify Patient panel
 		panelModifyPatient = new JPanel();
 		panelModifyPatient.setBackground(new Color(0, 128, 192));
-		panelModifyPatient.setBounds(543, 0, 73, 351);
+		panelModifyPatient.setBounds(0, 0, 616, 351);
 		frame.getContentPane().add(panelModifyPatient);
 		panelModifyPatient.setLayout(null);
 		panelModifyPatient.setVisible(false);
@@ -292,16 +289,16 @@ public class ViewAmaia {
 					try {
 						if (tfPasswd.length() > 0) {
 							user.setPassword(tfPasswd);
-//							patientManager.updatePassword((Patient) user, tfPasswd);
+							userDataModificationManager.updatePatientPassword((Patient) user, tfPasswd);
 						}
 						if (tfModifyPatientAddress.getText().length() > 0) {
 							((Patient) user).setAddress(tfModifyPatientAddress.getText());
-//							patientManager.updateAddress((Patient) user, tfModifyPatientAddress.getText());
+							userDataModificationManager.updatePatientAddress((Patient) user, tfModifyPatientAddress.getText());
 						}
 						if (tfModifyPatientPhoneNumber.getText().length() > 0) {
 							if (userDataModificationManager.isPhoneNumber(tfModifyPatientPhoneNumber.getText())) {
 								((Patient) user).setPhoneNumber(tfModifyPatientPhoneNumber.getText());
-//								patientManager.updatePhoneNumber((Patient) user, tfModifyPatientPhoneNumber.getText());
+								userDataModificationManager.updatePatientPhoneNumber((Patient) user, tfModifyPatientPhoneNumber.getText());
 							} else {
 								JOptionPane.showMessageDialog(null, "Ha introducido un número de teléfono incorrecto",
 										"Error", 0);
@@ -310,11 +307,11 @@ public class ViewAmaia {
 							}
 
 						}
-//					} catch (SQLException sqle) {
-//						JOptionPane.showMessageDialog(null,
-//								"Se ha producido un error con la Base de Datos. Imposible modificar datos del usuario.",
-//								"Error", 0);
-//						isOk = false;
+					} catch (SQLException sqle) {
+						JOptionPane.showMessageDialog(null,
+								"Se ha producido un error con la Base de Datos. Imposible modificar datos del usuario.",
+								"Error", 0);
+						isOk = false;
 					} catch (Exception e1) {
 						JOptionPane.showMessageDialog(null,
 								"Se ha producido un error. Imposible modificar datos del usuario.", "Error", 0);
@@ -341,8 +338,8 @@ public class ViewAmaia {
 		btnModifyPatientUnsubscribe.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
 				try {
-					patientManager.delete(userDNI);
-					if (null == patientManager.select(userDNI))
+					userDataModificationManager.deletePatient(userDNI);
+					if (null == userDataModificationManager.selectPatient(userDNI))
 						JOptionPane.showMessageDialog(null, "Cuenta eliminada", "Confirmación", 1);
 				} catch (HeadlessException e1) {
 					JOptionPane.showMessageDialog(null, "Se ha producido un error. Imposible eliminar usuario.",
@@ -362,7 +359,7 @@ public class ViewAmaia {
 //		Modify Sanitarian panel
 		panelModifySanitarian = new JPanel();
 		panelModifySanitarian.setBackground(new Color(0, 128, 192));
-		panelModifySanitarian.setBounds(543, 0, 73, 351);
+		panelModifySanitarian.setBounds(0, 0, 616, 351);
 		frame.getContentPane().add(panelModifySanitarian);
 		panelModifySanitarian.setLayout(null);
 		panelModifySanitarian.setVisible(false);
@@ -416,15 +413,15 @@ public class ViewAmaia {
 				String tfPasswd = String.valueOf(tfModifySanitarianPassword.getPassword());
 				if (tfPasswd.length() > 0) {
 					try {
-//						if (user instanceof Doctor)
-//							doctorManager.updatePassword((Doctor) user, tfPasswd);
+						if (user instanceof Doctor)
+							userDataModificationManager.updateDoctorPassword((Doctor) user, tfPasswd);
 
-//						if (user instanceof Nurse)
-//							nurseManager.updatePassword((Nurse) user, tfPasswd);
-//					} catch (SQLException e1) {
-//						JOptionPane.showMessageDialog(null,
-//								"Se ha producido un error con la Base de Datos. Imposible modificar datos del usuario.",
-//								"Error", 0);
+						if (user instanceof Nurse)
+							userDataModificationManager.updateNursePassword((Nurse) user, tfPasswd);
+					} catch (SQLException e1) {
+						JOptionPane.showMessageDialog(null,
+								"Se ha producido un error con la Base de Datos. Imposible modificar datos del usuario.",
+								"Error", 0);
 					} catch (Exception e1) {
 						JOptionPane.showMessageDialog(null,
 								"Se ha producido un error. Imposible modificar datos del usuario.", "Error", 0);
@@ -450,15 +447,15 @@ public class ViewAmaia {
 		btnModifySanitarianUnsubscribe.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
 				try {
-//					if (user instanceof Doctor)
-//						doctorManager.delete(userDNI);
+					if (user instanceof Doctor)
+						userDataModificationManager.deleteDoctor(userDNI);
 
-//					if (user instanceof Nurse)
-//						nurseManager.delete(userDNI);
+					if (user instanceof Nurse)
+						userDataModificationManager.deleteNurse(userDNI);
 
-//				} catch (SQLException e1) {
-//					JOptionPane.showMessageDialog(null,
-//							"Se ha producido un error con la Base de Datos. Imposible eliminar usuario.", "Error", 0);
+				} catch (SQLException e1) {
+					JOptionPane.showMessageDialog(null,
+							"Se ha producido un error con la Base de Datos. Imposible eliminar usuario.", "Error", 0);
 				} catch (Exception e1) {
 					JOptionPane.showMessageDialog(null, "Se ha producido un error. Imposible eliminar usuario.",
 							"Error", 0);
