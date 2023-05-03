@@ -17,7 +17,7 @@ import model.pojos.WorkingDay;
 
 class WorkingDayManagerTest {
 
-	private final int COLUMN_NUMBER = 4;
+	private final int COLUMN_NUMBER = 6;
 	WorkingDayManager workingDayManager = new WorkingDayManager();
 
 	@Test
@@ -100,28 +100,28 @@ class WorkingDayManagerTest {
 	
 	@Test
 	void testUpdate() {
-		WorkingDay newWorkingDay = new WorkingDay();
-		newWorkingDay.setId(666);
-		Date date = null;
-		String sDate = "2023-07-07";
-		try {
-			date = new SimpleDateFormat("yyyy-MM-dd").parse(sDate);
-		} catch (ParseException e) {
-			e.printStackTrace();
-		}
-		newWorkingDay.setDate(date);
-		newWorkingDay.setStartTime(LocalTime.parse("08:00:00"));
-		newWorkingDay.setEndTime(LocalTime.parse("15:00:00"));
-		try {
-			workingDayManager.insert(newWorkingDay);
-		} catch (SQLException sqle) {
-			sqle.printStackTrace();
-		} catch (Exception e1) {
-			e1.printStackTrace();
-		}
+//		WorkingDay newWorkingDay = new WorkingDay();
+//		newWorkingDay.setId(666);
+//		Date date = null;
+//		String sDate = "2023-07-07";
+//		try {
+//			date = new SimpleDateFormat("yyyy-MM-dd").parse(sDate);
+//		} catch (ParseException e) {
+//			e.printStackTrace();
+//		}
+//		newWorkingDay.setDate(date);
+//		newWorkingDay.setStartTime(LocalTime.parse("08:00:00"));
+//		newWorkingDay.setEndTime(LocalTime.parse("15:00:00"));
+//		try {
+//			workingDayManager.insert(newWorkingDay);
+//		} catch (SQLException sqle) {
+//			sqle.printStackTrace();
+//		} catch (Exception e1) {
+//			e1.printStackTrace();
+//		}
 		
 		WorkingDay workingDay = new WorkingDay();
-		workingDay.setId(666);
+		workingDay.setId(999);
 		try {
 			workingDayManager.update(workingDay);
 		} catch (SQLException sqle) {
@@ -132,7 +132,7 @@ class WorkingDayManagerTest {
 		
 		//Expected
 		WorkingDay expected = new WorkingDay();
-		expected.setId(666);
+		expected.setId(999);
 		Date dateExpected = null;
 		String sDateExpected = "2023-07-07";
 		try {
@@ -160,8 +160,6 @@ class WorkingDayManagerTest {
 		
 		assertEquals(expected, result);
 	}
-	
-
 
 
 	

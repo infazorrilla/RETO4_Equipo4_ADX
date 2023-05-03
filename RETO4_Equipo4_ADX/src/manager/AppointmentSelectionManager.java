@@ -1,0 +1,320 @@
+package manager;
+
+import java.sql.CallableStatement;
+import java.sql.Connection;
+import java.sql.DriverManager;
+import java.sql.ResultSet;
+import java.sql.SQLException;
+import java.sql.Statement;
+import java.text.DateFormat;
+import java.text.SimpleDateFormat;
+import java.time.LocalTime;
+import java.util.ArrayList;
+import java.util.Date;
+import java.util.List;
+
+import model.pojos.Ambulatory;
+import model.pojos.Doctor;
+import model.pojos.Nurse;
+import model.pojos.Sanitarian;
+import model.pojos.TimeSlot;
+import model.utils.BBDDUtils;
+
+public class AppointmentSelectionManager {
+
+	public ArrayList<String> selectAmbulatoryNames() throws SQLException, Exception {
+		ArrayList<String> ret = new ArrayList<String>();
+
+		ArrayList<Ambulatory> ambulatories = (ArrayList<Ambulatory>) selectAmbulatories();
+
+		for (Ambulatory ambulatory : ambulatories) {
+			ret.add(ambulatory.getName());
+		}
+
+		return ret;
+	}
+
+	private List<Ambulatory> selectAmbulatories() throws SQLException, Exception {
+		ArrayList<Ambulatory> ret = null;
+
+		String sql = "select * from ambulatorio";
+
+		Connection connection = null;
+		Statement statement = null;
+		ResultSet resultSet = null;
+
+		try {
+			Class.forName(BBDDUtils.DRIVER_LOCAL);
+			connection = DriverManager.getConnection(BBDDUtils.URL_LOCAL, BBDDUtils.USER_LOCAL, BBDDUtils.PASS_LOCAL);
+			statement = connection.createStatement();
+			resultSet = statement.executeQuery(sql);
+
+			while (resultSet.next()) {
+				if (null == ret)
+					ret = new ArrayList<Ambulatory>();
+
+				int id = resultSet.getInt("idAmbulatorio");
+				String name = resultSet.getString("nombre");
+				String address = resultSet.getString("direccion");
+				String phoneNumber = resultSet.getString("telefono");
+
+				Ambulatory ambulatory = new Ambulatory();
+				ambulatory.setId(id);
+				ambulatory.setName(name);
+				ambulatory.setAddress(address);
+				ambulatory.setPhoneNumber(phoneNumber);
+
+				ret.add(ambulatory);
+			}
+
+		} catch (SQLException sqle) {
+		} catch (Exception e) {
+		} finally {
+			try {
+				if (resultSet != null)
+					resultSet.close();
+			} catch (Exception e) {
+			}
+			;
+			try {
+				if (statement != null)
+					statement.close();
+			} catch (Exception e) {
+			}
+			;
+			try {
+				if (connection != null)
+					connection.close();
+			} catch (Exception e) {
+			}
+			;
+		}
+		return ret;
+	}
+
+	public ArrayList<Date> showAvailableDates(String type, Ambulatory ambulatory) throws SQLException, Exception {
+		ArrayList<Date> ret = null;
+
+		Connection connection = null;
+		ResultSet resultSet = null;
+		CallableStatement stmt = null;
+
+		String query = "{call sacarFechasDisponibles(?,?)}";
+
+		try {
+			Class.forName(BBDDUtils.DRIVER_LOCAL);
+			connection = DriverManager.getConnection(BBDDUtils.URL_LOCAL, BBDDUtils.USER_LOCAL, BBDDUtils.PASS_LOCAL);
+			stmt = connection.prepareCall(query);
+			stmt.setString(1, type);
+			stmt.setInt(2, ambulatory.getId());
+
+			resultSet = stmt.executeQuery();
+
+			while (resultSet.next()) {
+				if (null == ret)
+					ret = new ArrayList<Date>();
+
+				Date date = resultSet.getDate("Fecha");
+
+				ret.add(date);
+			}
+		} catch (SQLException sqle) {
+		} catch (Exception e) {
+		} finally {
+			try {
+				if (resultSet != null)
+					resultSet.close();
+			} catch (Exception e) {
+			}
+			;
+			try {
+				if (stmt != null)
+					stmt.close();
+			} catch (Exception e) {
+			}
+			;
+			try {
+				if (connection != null)
+					connection.close();
+			} catch (Exception e) {
+			}
+			;
+		}
+
+		return ret;
+	}
+
+	public Ambulatory selectAmbulatory(String name) throws SQLException, Exception {
+		Ambulatory ret = null;
+
+		String sql = "select * from ambulatorio where nombre='" + name + "'";
+
+		Connection connection = null;
+		Statement statement = null;
+		ResultSet resultSet = null;
+
+		try {
+			Class.forName(BBDDUtils.DRIVER_LOCAL);
+			connection = DriverManager.getConnection(BBDDUtils.URL_LOCAL, BBDDUtils.USER_LOCAL, BBDDUtils.PASS_LOCAL);
+			statement = connection.createStatement();
+			resultSet = statement.executeQuery(sql);
+			while (resultSet.next()) {
+				if (null == ret)
+					ret = new Ambulatory();
+
+				int id = resultSet.getInt("idAmbulatorio");
+				String address = resultSet.getString("direccion");
+				String phoneNumber = resultSet.getString("telefono");
+
+				ret.setId(id);
+				ret.setName(name);
+				ret.setAddress(address);
+				ret.setPhoneNumber(phoneNumber);
+			}
+		} catch (SQLException sqle) {
+		} catch (Exception e) {
+		} finally {
+			try {
+				if (resultSet != null)
+					resultSet.close();
+			} catch (Exception e) {
+			}
+			;
+			try {
+				if (statement != null)
+					statement.close();
+			} catch (Exception e) {
+			}
+			;
+			try {
+				if (connection != null)
+					connection.close();
+			} catch (Exception e) {
+			}
+			;
+		}
+		return ret;
+	}
+
+	public ArrayList<Integer> showAvailableTimeSlots(String sanitarian, String dateString) throws SQLException, Exception {
+		ArrayList<Integer> ret = null;
+
+		Connection connection = null;
+		ResultSet resultSet = null;
+		CallableStatement stmt = null;
+
+		String query = "{call sacarCitasDisponibles(?,?)}";
+
+
+		try {
+			Class.forName(BBDDUtils.DRIVER_LOCAL);
+			connection = DriverManager.getConnection(BBDDUtils.URL_LOCAL, BBDDUtils.USER_LOCAL, BBDDUtils.PASS_LOCAL);
+			stmt = connection.prepareCall(query);
+			stmt.setString(1, sanitarian);
+			stmt.setString(2, dateString);
+
+			resultSet = stmt.executeQuery();
+
+			while (resultSet.next()) {
+				if (null == ret)
+					ret = new ArrayList<Integer>();
+
+				int id = resultSet.getInt("Franja");
+
+				ret.add(id);
+			}
+		} catch (SQLException sqle) {
+		} catch (Exception e) {
+		} finally {
+			try {
+				if (resultSet != null)
+					resultSet.close();
+			} catch (Exception e) {
+			}
+			;
+			try {
+				if (stmt != null)
+					stmt.close();
+			} catch (Exception e) {
+			}
+			;
+			try {
+				if (connection != null)
+					connection.close();
+			} catch (Exception e) {
+			}
+			;
+		}
+
+		return ret;
+	}
+
+	public ArrayList<Sanitarian> showAvailableSanitarianByDate(String type, String date) {
+		ArrayList<Sanitarian> ret = null;
+
+
+		String sql = "select js.dniSanitario, u.nombre from jornadasanitario js join jornada j on js.idJornada=j.idJornada "
+				+ "join sanitario s on js.dniSanitario=s.dniSanitario join usuario u on s.dniSanitario=u.dni " 
+				+ "WHERE fecha= '" + date + "' and tipo='"
+				+ type + "'";
+
+		Connection connection = null;
+		Statement statement = null;
+		ResultSet resultSet = null;
+
+		try {
+			Class.forName(BBDDUtils.DRIVER_LOCAL);
+			connection = DriverManager.getConnection(BBDDUtils.URL_LOCAL, BBDDUtils.USER_LOCAL, BBDDUtils.PASS_LOCAL);
+			statement = connection.createStatement();
+			resultSet = statement.executeQuery(sql);
+
+			while (resultSet.next()) {
+				if (null == ret)
+					ret = new ArrayList<Sanitarian>();
+
+				String dni = resultSet.getString("dniSanitario");
+				String nombre = resultSet.getString("nombre");
+				Sanitarian sanitarian = null;
+
+				if (type.equalsIgnoreCase("Enfermeria")) {
+					sanitarian = new Nurse();
+					sanitarian.setDni(dni);
+					sanitarian.setName(nombre);
+				}
+				if (type.equalsIgnoreCase("Medicina")) {
+					sanitarian = new Doctor();
+					sanitarian.setDni(dni);
+					sanitarian.setName(nombre);
+				}
+
+				ret.add(sanitarian);
+			}
+
+		} catch (SQLException sqle) {
+		} catch (Exception e) {
+		} finally {
+			try {
+				if (resultSet != null)
+					resultSet.close();
+			} catch (Exception e) {
+			}
+			;
+			try {
+				if (statement != null)
+					statement.close();
+			} catch (Exception e) {
+			}
+			;
+			try {
+				if (connection != null)
+					connection.close();
+			} catch (Exception e) {
+			}
+			;
+		}
+		return ret;
+	}
+	
+	
+
+}
