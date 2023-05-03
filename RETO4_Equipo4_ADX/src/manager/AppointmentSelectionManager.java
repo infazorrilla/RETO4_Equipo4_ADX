@@ -22,6 +22,13 @@ import model.utils.BBDDUtils;
 
 public class AppointmentSelectionManager {
 
+	/**
+	 * Selects all atribute 'nombre' from every row in DB's 'Ambulatorio' table
+	 * 
+	 * @return ArrayList of type String
+	 * @throws SQLException
+	 * @throws Exception
+	 */
 	public ArrayList<String> selectAmbulatoryNames() throws SQLException, Exception {
 		ArrayList<String> ret = new ArrayList<String>();
 
@@ -34,6 +41,13 @@ public class AppointmentSelectionManager {
 		return ret;
 	}
 
+	/**
+	 * Returns every row in 'Ambulatorio' table
+	 * 
+	 * @return ArrayList of type Ambulatory
+	 * @throws SQLException
+	 * @throws Exception
+	 */
 	private List<Ambulatory> selectAmbulatories() throws SQLException, Exception {
 		ArrayList<Ambulatory> ret = null;
 
@@ -92,6 +106,15 @@ public class AppointmentSelectionManager {
 		return ret;
 	}
 
+	/**
+	 * Calls a function created in the DB called 'sacarFechasDisponibles' which
+	 * returns a list of Dates in which sanitarians work in one ambulatory.
+	 * @param type String that means type of sanitarian ('Enfermeria' or 'Medicina')
+	 * @param ambulatory Ambulatory
+	 * @return ArrayList<Date>
+	 * @throws SQLException
+	 * @throws Exception
+	 */
 	public ArrayList<Date> showAvailableDates(String type, Ambulatory ambulatory) throws SQLException, Exception {
 		ArrayList<Date> ret = null;
 
@@ -144,6 +167,13 @@ public class AppointmentSelectionManager {
 		return ret;
 	}
 
+	/**
+	 * Returns one ambulatory's data from the DB by its id
+	 * @param name String. Ambuatory's name
+	 * @return Ambulatory with all the data
+	 * @throws SQLException
+	 * @throws Exception
+	 */
 	public Ambulatory selectAmbulatory(String name) throws SQLException, Exception {
 		Ambulatory ret = null;
 
@@ -196,7 +226,16 @@ public class AppointmentSelectionManager {
 		return ret;
 	}
 
-	public ArrayList<Integer> showAvailableTimeSlots(String sanitarian, String dateString) throws SQLException, Exception {
+	/**
+	 * Calls a function from the DB that returns the ids of the time slots available for one sanitarian in one day
+	 * @param sanitarian String. Sanitarian's dni
+	 * @param dateString date
+	 * @return ArrayList of available TimeSlots
+	 * @throws SQLException
+	 * @throws Exception
+	 */
+	public ArrayList<Integer> showAvailableTimeSlots(String sanitarian, String dateString)
+			throws SQLException, Exception {
 		ArrayList<Integer> ret = null;
 
 		Connection connection = null;
@@ -204,7 +243,6 @@ public class AppointmentSelectionManager {
 		CallableStatement stmt = null;
 
 		String query = "{call sacarCitasDisponibles(?,?)}";
-
 
 		try {
 			Class.forName(BBDDUtils.DRIVER_LOCAL);
@@ -249,14 +287,18 @@ public class AppointmentSelectionManager {
 		return ret;
 	}
 
+	/**
+	 * Returns Sanitarian of one type who work in a date.
+	 * @param type String. Type of sanitarian ('Enfermeria', 'Medicina')
+	 * @param date String.
+	 * @return
+	 */
 	public ArrayList<Sanitarian> showAvailableSanitarianByDate(String type, String date) {
 		ArrayList<Sanitarian> ret = null;
 
-
 		String sql = "select js.dniSanitario, u.nombre from jornadasanitario js join jornada j on js.idJornada=j.idJornada "
-				+ "join sanitario s on js.dniSanitario=s.dniSanitario join usuario u on s.dniSanitario=u.dni " 
-				+ "WHERE fecha= '" + date + "' and tipo='"
-				+ type + "'";
+				+ "join sanitario s on js.dniSanitario=s.dniSanitario join usuario u on s.dniSanitario=u.dni "
+				+ "WHERE fecha= '" + date + "' and tipo='" + type + "'";
 
 		Connection connection = null;
 		Statement statement = null;
@@ -314,7 +356,5 @@ public class AppointmentSelectionManager {
 		}
 		return ret;
 	}
-	
-	
 
 }
