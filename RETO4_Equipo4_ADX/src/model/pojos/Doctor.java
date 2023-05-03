@@ -22,6 +22,8 @@ public class Doctor extends Sanitarian implements Serializable {
 	public Doctor() {
 	}
 
+	
+
 	// GETTERS AND SETTERS //
 	public String getSpeciality() {
 		return speciality;

@@ -1,6 +1,7 @@
 import java.awt.EventQueue;
 
 import view.View;
+import view.ViewSabi;
 
 public class Main {
 
@@ -12,7 +13,7 @@ public Main() {
 		EventQueue.invokeLater(new Runnable() {
 			public void run() {
 				try {
-					View window = new View();
+					ViewSabi window = new ViewSabi();
 					window.frame.setVisible(true);
 				} catch (Exception e) {
 					e.printStackTrace();
