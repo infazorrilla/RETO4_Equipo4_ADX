@@ -17,6 +17,8 @@ public class Doctor extends Sanitarian implements Serializable {
 		this.mir = mir;
 	}
 
+	
+
 	// GETTERS AND SETTERS //
 	public String getSpeciality() {
 		return speciality;
