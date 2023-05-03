@@ -30,23 +30,19 @@ public class UserDataModificationManager {
 	public User identifyUserType(String userDNI) throws SQLException, Exception {
 
 		User ret = null;
-
-		Doctor doctor = new Doctor();
-		doctor = selectDoctor(userDNI);
+		Doctor doctor = selectDoctor(userDNI);
 		if (null != doctor) {
 			ret = doctor;
-		}
-
-		Nurse nurse = new Nurse();
-		nurse = selectNurse(userDNI);
-		if (null != nurse) {
-			ret = nurse;
-		}
-
-		Patient patient = new Patient();
-		patient = selectPatient(userDNI);
-		if (null != patient) {
-			ret = patient;
+		} else {
+			Nurse nurse = selectNurse(userDNI);
+			if (null != nurse) {
+				ret = nurse;
+			} else {
+				Patient patient = selectPatient(userDNI);
+				if (null != patient) {
+					ret = patient;
+				}
+			}
 		}
 		return ret;
 	}
