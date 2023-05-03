@@ -6,14 +6,21 @@ import java.util.Objects;
 
 public abstract class Sanitarian extends User implements Serializable {
 
+	// RUBRICA | SPRINT 1 | INDIVIDUAL
+	/**
+	 * POJO has the right data types, implements Serializable, has Getters&Setters,
+	 * HasCode, Compare and ToString || You have to be up to date and your methods
+	 * right.
+	 */
 	private static final long serialVersionUID = -6651744658859466141L;
 
+	// VARIABLES //
 	protected int staffNum;
 	protected float salary;
 	protected String type;
 	protected ArrayList<Appointment> appointments = null;
 	protected ArrayList<WorkingDaySanitarian> workingDay = null;
-	protected Ambulatory ambulatory;
+	protected Ambulatory ambulatory; // Object
 
 	// CONSTRUCTOR | USING FIELDS //
 	public Sanitarian(int staffNum, float salary, String type, ArrayList<Appointment> appointments,

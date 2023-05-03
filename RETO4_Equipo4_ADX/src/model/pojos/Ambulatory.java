@@ -1,9 +1,20 @@
 package model.pojos;
 
+import java.io.Serializable;
 import java.util.Objects;
 
-public class Ambulatory {
+public class Ambulatory implements Serializable {
 
+	// RUBRICA | SPRINT 1 | INDIVIDUAL
+	/**
+	 * POJO has the right data types, implements Serializable, has Getters&Setters,
+	 * HasCode, Compare and ToString || You have to be up to date and your methods
+	 * right.
+	 */
+
+	private static final long serialVersionUID = -6651744658859466141L;
+
+	// VARIABLES //
 	private int id;
 	private String name;
 	private String phoneNumber;
