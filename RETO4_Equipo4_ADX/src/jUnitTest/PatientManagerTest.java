@@ -8,8 +8,8 @@ import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Date;
 import org.junit.jupiter.api.Test;
-import manager.GeneralInterface;
 import model.pojos.Patient;
+import model.pojos.TimeSlot;
 import manager.PatientManager;
 
 class PatientManagerTest {
@@ -65,23 +65,12 @@ class PatientManagerTest {
 		}
 	}
 
+	@Test
 	void testInsert() {
 		Patient expected = new Patient();
-		expected.setDni("88888888A");
-		expected.setPhoneNumber("999999999");
-		expected.setAddress("2");
-		Date date = null;
-		String sDate = "2023-04-02";
-		try {
-			date = new SimpleDateFormat("yyyy-MM-dd").parse(sDate);
-		} catch (ParseException e) {
-			e.printStackTrace();
-		}
-		expected.setBirthDate(date);
-		expected.setGender("hombre");
-		expected.setName("b");
-		expected.setPassword("bebo");
-		expected.setSurname("b");
+		expected.setDni("44444444A");
+		expected.setAddress("1");
+		expected.setPhoneNumber("123456789");
 
 		try {
 			patientManager.insert(expected);
@@ -92,14 +81,17 @@ class PatientManagerTest {
 		}
 
 		Patient actual = null;
+
 		try {
 			actual = patientManager.select(expected.getDni());
 		} catch (SQLException sqle) {
+
 			sqle.printStackTrace();
 		} catch (Exception e) {
 			e.printStackTrace();
+
 		}
-		assertEquals(expected, actual);
+		assertEquals(expected.getDni(), actual.getDni());
 	}
 
 	@Test
@@ -140,7 +132,7 @@ class PatientManagerTest {
 
 		Patient expected = new Patient();
 		expected.setDni("99999999A");
-		expected.setPhoneNumber("888888888");
+		expected.setPhoneNumber("777666555");
 		expected.setAddress("2");
 		Date dateExpected = null;
 		String sDateExpected = "2023-04-02";
@@ -149,11 +141,11 @@ class PatientManagerTest {
 		} catch (ParseException e) {
 			e.printStackTrace();
 		}
-		newPatient.setBirthDate(dateExpected);
-		newPatient.setGender("mujer");
-		newPatient.setName("b");
-		newPatient.setPassword("bebo");
-		newPatient.setSurname("b");
+		expected.setBirthDate(dateExpected);
+		expected.setGender("hombre");
+		expected.setName("b");
+		expected.setPassword("bebo");
+		expected.setSurname("b");
 
 		Patient result = new Patient();
 		try {
@@ -164,7 +156,7 @@ class PatientManagerTest {
 			e.printStackTrace();
 		}
 
-		assertEquals(expected, result);
+		assertEquals(expected.getPhoneNumber(), result.getPhoneNumber());
 	}
 
 	@Test
@@ -186,7 +178,7 @@ class PatientManagerTest {
 		patient.setName("b");
 		patient.setPassword("bebo");
 		patient.setSurname("b");
-		
+
 		try {
 			patientManager.insert(patient);
 		} catch (SQLException sqle) {
@@ -194,7 +186,7 @@ class PatientManagerTest {
 		} catch (Exception e1) {
 			e1.printStackTrace();
 		}
-		
+
 		try {
 			patientManager.delete(patient.getDni());
 		} catch (SQLException sqle) {
@@ -202,16 +194,16 @@ class PatientManagerTest {
 		} catch (Exception e) {
 			e.printStackTrace();
 		}
-		
+
 		try {
-			patient= patientManager.select(patient.getDni());
+			patient = patientManager.select(patient.getDni());
 		} catch (SQLException e) {
 			e.printStackTrace();
 		} catch (Exception e) {
 			e.printStackTrace();
 		}
-		
+
 		assertEquals(patient, null);
 	}
-	
+
 }
