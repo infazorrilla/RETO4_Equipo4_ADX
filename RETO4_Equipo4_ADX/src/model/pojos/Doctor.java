@@ -1,20 +1,25 @@
 package model.pojos;
 
 import java.io.Serializable;
-import java.util.ArrayList;
 import java.util.Objects;
 
 public class Doctor extends Sanitarian implements Serializable {
 
+	// RUBRICA | SPRINT 1 | INDIVIDUAL
+	/**
+	 * POJO has the right data types, implements Serializable, has Getters&Setters,
+	 * HasCode, Compare and ToString || You have to be up to date and your methods
+	 * right.
+	 */
+
 	private static final long serialVersionUID = -6651744658859466141L;
 
+	// VARIABLES //
 	private String speciality;
 	private boolean mir;
 
-	// CONSTRUCTOR | ONLY WITH THE ATTRIBUTES OF THE POJO DOCTOR //
-	public Doctor(String speciality, boolean mir) {
-		this.speciality = speciality;
-		this.mir = mir;
+	// CONSTRUCTOR | EMPTY //
+	public Doctor() {
 	}
 
 	// GETTERS AND SETTERS //
