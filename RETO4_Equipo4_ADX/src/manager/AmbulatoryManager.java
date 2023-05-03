@@ -10,65 +10,77 @@ import java.util.ArrayList;
 import java.util.List;
 
 import model.pojos.Ambulatory;
+import model.pojos.Appointment;
 import model.utils.BBDDUtils;
 
-public class AmbulatoryManager {
+public class AmbulatoryManager extends AbstractManager<Ambulatory> {
 
-	// CRUD: Create, Read, Update and Delete
+	// RUBRICA | SPRINT 2 | INDIVIDUAL
+	// Management of the Table:
+	/**
+	 * Select: The equivalent of the operation “select * from table” | Insert:
+	 * Insert a new entry in the table | Update: Update an entry in the table |
+	 * Delete: Delete an entry in the table by its Id | Common errors have to be
+	 * reported: empty table, does not exist, I could not delete, etc.
+	 */
+	// Complex operations
+	/**
+	 * At least one non-elementary operation is performed on the table chosen by the
+	 * student | An operation that affects several tables, for example
+	 */
 
 	public static final String AMBULATORY_TABLE = "ambulatorio";
 
-	// CREATE = INSERT
-	public void create(Ambulatory ambulatory) throws SQLException, Exception {
+	@Override
+	public Ambulatory select(int id) throws SQLException, Exception {
+		Ambulatory ret = null;
 
-		// Connection with the BD
+		String sql = "select * from " + AMBULATORY_TABLE + " where id=" + id;
+
 		Connection connection = null;
-
-		// SQL statement to BD
 		Statement statement = null;
+		ResultSet resultSet = null;
 
 		try {
-			// The Driver that we are going to use
 			Class.forName(BBDDUtils.DRIVER_LOCAL);
-
-			// We open the connection with the BD
 			connection = DriverManager.getConnection(BBDDUtils.URL_LOCAL, BBDDUtils.USER_LOCAL, BBDDUtils.PASS_LOCAL);
-
-			// We are going to throw the statement
 			statement = connection.createStatement();
+			resultSet = statement.executeQuery(sql);
 
-			// SQL structure
-			String sql = "insert into " + AMBULATORY_TABLE + " (id) VALUES ('" + ambulatory.getId() + "')";
+			while (resultSet.next()) {
+				if (null == ret)
+					ret = new Ambulatory();
 
-			// We execute
-			statement.executeUpdate(sql);
+				ret.setId(id);
 
+			}
 		} catch (SQLException sqle) {
-			System.out.println("Error with the BD - " + sqle.getMessage());
 		} catch (Exception e) {
-			System.out.println("General Error - " + e.getMessage());
 		} finally {
-			// We close in reverse of how we open them
+			try {
+				if (resultSet != null)
+					resultSet.close();
+			} catch (Exception e) {
+			}
+			;
 			try {
 				if (statement != null)
 					statement.close();
 			} catch (Exception e) {
-				// Don't care
 			}
 			;
 			try {
 				if (connection != null)
 					connection.close();
 			} catch (Exception e) {
-				// Don't care
 			}
 			;
 		}
-
+		return ret;
 	}
 
-	// READ = SELECT
-	public List<Ambulatory> read() throws SQLException, Exception {
+	@Override
+	public List<Ambulatory> select() throws SQLException, Exception {
 		// Returns all rows of the ambulatory table
 		// If there is nothing, it returns NULL
 
@@ -152,7 +164,55 @@ public class AmbulatoryManager {
 		return ret;
 	}
 
-	// UPDATE
+	@Override
+	public void insert(Ambulatory ambulatory) throws SQLException, Exception {
+		// Connection with the BD
+		Connection connection = null;
+
+		// SQL statement to BD
+		Statement statement = null;
+
+		try {
+			// The Driver that we are going to use
+			Class.forName(BBDDUtils.DRIVER_LOCAL);
+
+			// We open the connection with the BD
+			connection = DriverManager.getConnection(BBDDUtils.URL_LOCAL, BBDDUtils.USER_LOCAL, BBDDUtils.PASS_LOCAL);
+
+			// We are going to throw the statement
+			statement = connection.createStatement();
+
+			// SQL structure
+			String sql = "insert into " + AMBULATORY_TABLE + " (id) VALUES ('" + ambulatory.getId() + "')";
+
+			// We execute
+			statement.executeUpdate(sql);
+
+		} catch (SQLException sqle) {
+			System.out.println("Error with the BD - " + sqle.getMessage());
+		} catch (Exception e) {
+			System.out.println("General Error - " + e.getMessage());
+		} finally {
+			// We close in reverse of how we open them
+			try {
+				if (statement != null)
+					statement.close();
+			} catch (Exception e) {
+				// Don't care
+			}
+			;
+			try {
+				if (connection != null)
+					connection.close();
+			} catch (Exception e) {
+				// Don't care
+			}
+			;
+		}
+
+	}
+
+	@Override
 	public void update(Ambulatory ambulatory) throws SQLException, Exception {
 
 		// Connection with the BD
@@ -203,7 +263,7 @@ public class AmbulatoryManager {
 
 	}
 
-	// DELETE
+	@Override
 	public void delete(int id) throws SQLException, Exception {
 
 		// Connection with the BD
