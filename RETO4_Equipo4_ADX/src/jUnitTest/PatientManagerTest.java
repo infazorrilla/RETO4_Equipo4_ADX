@@ -68,9 +68,22 @@ class PatientManagerTest {
 	@Test
 	void testInsert() {
 		Patient expected = new Patient();
-		expected.setDni("44444444A");
+		expected.setDni("31513221A");
 		expected.setAddress("1");
 		expected.setPhoneNumber("123456789");
+		expected.setName("Peru");
+		expected.setSurname("Garcia");
+		expected.setPassword("12345");
+		expected.setGender("hombre");
+		Date date = null;
+		String sDate = "2023-04-02";
+		try {
+			date = new SimpleDateFormat("yyyy-MM-dd").parse(sDate);
+		} catch (ParseException e) {
+			e.printStackTrace();
+		}
+		expected.setBirthDate(date);
+		
 
 		try {
 			patientManager.insert(expected);
