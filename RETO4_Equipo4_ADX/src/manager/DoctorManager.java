@@ -283,7 +283,7 @@ public class DoctorManager extends AbstractManager<Doctor> {
 	}
 
 	@Override
-	public void delete(int id) throws SQLException, Exception {
+	public void delete(int staffNum) throws SQLException, Exception {
 		// Connection with the BD
 		Connection connection = null;
 
@@ -298,7 +298,7 @@ public class DoctorManager extends AbstractManager<Doctor> {
 			connection = DriverManager.getConnection(BBDDUtils.URL_LOCAL, BBDDUtils.USER_LOCAL, BBDDUtils.PASS_LOCAL);
 
 			// SQL structure
-			String sql = "delete from " + SANITARIAN_TABLE + " where dniSanitario = '" + id;
+			String sql = "delete from " + SANITARIAN_TABLE + " where numPersonal = '" + staffNum;
 			preparedStatement = connection.prepareStatement(sql);
 
 			// We execute
