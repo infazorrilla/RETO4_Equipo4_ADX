@@ -168,9 +168,9 @@ public class AppointmentManager extends AbstractManager<Appointment> {
 			statement = connection.createStatement();
 			Class.forName(BBDDUtils.DRIVER_LOCAL);
 
-			String sql = "insert into cita (idCita) values ('" + appointment.getPatient().getDni()
+			String sql = "insert into cita ( dniPaciente, dniSanitario, idAmbulatorio) values ('" + appointment.getPatient().getDni()
 					+ "', '" + appointment.getSanitarian().getDni() + "', '" + appointment.getAmbulatory().getId()
-					+ "', '" + appointment.getId() + "')";
+					+ "')";
 
 			statement.executeUpdate(sql);
 

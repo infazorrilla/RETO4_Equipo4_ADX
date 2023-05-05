@@ -6,7 +6,10 @@ import java.sql.SQLException;
 import java.util.ArrayList;
 import org.junit.jupiter.api.Test;
 import manager.AppointmentManager;
+import model.pojos.Ambulatory;
 import model.pojos.Appointment;
+import model.pojos.Doctor;
+import model.pojos.Patient;
 import model.pojos.Sanitarian;
 
 
@@ -52,7 +55,18 @@ class AppointmentManagerTest {
 	@Test
 	void testInsert() {
 		Appointment expected = new Appointment();
-		expected.setId(8);
+		expected.setId(9);
+		
+		Ambulatory ambulatory = new Ambulatory();
+		Sanitarian sanitarian = new Doctor();
+		Patient patient = new Patient();
+		patient.setDni("00000000A");
+		sanitarian.setDni("11111111A");
+		ambulatory.setId(1);
+		expected.setPatient(patient);
+		expected.setSanitarian(sanitarian);
+		expected.setAmbulatory(ambulatory);
+		
 		
 		try {
 			appointmentManager.insert(expected);

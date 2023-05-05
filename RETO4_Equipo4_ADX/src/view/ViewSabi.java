@@ -22,6 +22,7 @@ import manager.AmbulatoryManager;
 import manager.DoctorManager;
 import manager.NurseManager;
 import manager.PatientManager;
+import manager.RegistrationManager;
 import model.pojos.Ambulatory;
 import model.pojos.Doctor;
 import model.pojos.Nurse;
@@ -34,6 +35,7 @@ public class ViewSabi {
 	private DoctorManager doctorManager;
 	private NurseManager nurseManager;
 	private AmbulatoryManager ambulatoryManager;
+	private RegistrationManager registrationManager;
 
 	public JFrame frame;
 	private JPanel panelLogin;
@@ -80,6 +82,7 @@ public class ViewSabi {
 		doctorManager = new DoctorManager();
 		nurseManager = new NurseManager();
 		ambulatoryManager = new AmbulatoryManager();
+		registrationManager = new RegistrationManager();
 		initialize();
 	}
 
@@ -471,7 +474,7 @@ public class ViewSabi {
 				doctor.setMir(true);
 				doctor.setType("Medicina");
 				doctor.setSpeciality(textFieldSpecialityDoctor.getText());
-				ambulatoryManager.select();
+				registrationManager.select();
 				doctor.setAmbulatory((String) comboBoxAmbulatoryDoctor.getSelectedItem());
 
 				try {
@@ -505,7 +508,7 @@ public class ViewSabi {
 		ArrayList<Ambulatory> ambulatories = new ArrayList<Ambulatory>();
 	
 		try {
-			ambulatories = (ArrayList<Ambulatory>) ambulatoryManager.select();
+			ambulatories = (ArrayList<Ambulatory>) registrationManager.select();
 		} catch (SQLException e3) {
 			JOptionPane.showMessageDialog(btnAceptarRegistro, "Error Base De Datos", "Aviso", 2);
 			e3.printStackTrace();
@@ -682,11 +685,19 @@ public class ViewSabi {
 		JComboBox<String> comboBoxAmbulatoryNurse = new JComboBox<String>();
 		comboBoxAmbulatoryNurse.setBounds(461, 231, 108, 22);
 		panelRegistrationNurse.add(comboBoxAmbulatoryNurse);
-		comboBoxAmbulatoryNurse.addItem("1");
-		comboBoxAmbulatoryNurse.addItem("2");
-		comboBoxAmbulatoryNurse.addItem("3");
-		comboBoxAmbulatoryNurse.addItem("4");
-		comboBoxAmbulatoryNurse.addItem("5");
+		try {
+			ambulatories = (ArrayList<Ambulatory>) registrationManager.select();
+		} catch (SQLException e3) {
+			JOptionPane.showMessageDialog(btnAceptarRegistro, "Error Base De Datos", "Aviso", 2);
+			e3.printStackTrace();
+		} catch (Exception e3) {
+			JOptionPane.showMessageDialog(btnAceptarRegistro, "Errorª", "Aviso", 2);
+			e3.printStackTrace();
+		}
+		for(Ambulatory ambulatory: ambulatories) {
+			comboBoxAmbulatoryNurse.addItem(ambulatory.getName());
+			
+		}
 
 	}
 }

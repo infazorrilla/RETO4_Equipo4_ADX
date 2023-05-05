@@ -18,7 +18,7 @@ public class PatientManager {
 
 	public static final String PATIENT_TABLE = "paciente";
 
-	public Patient selectPatient(String dni) throws SQLException, Exception {
+	public Patient select(String dni) throws SQLException, Exception {
 		Patient ret = null;
 
 		String sql = "select * from paciente where dniPaciente= '" + dni + "'";
