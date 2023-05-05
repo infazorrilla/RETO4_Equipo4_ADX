@@ -10,19 +10,15 @@ public class Patient extends User implements Serializable {
 
 	private String phoneNumber;
 	private String address;
+	private boolean blocked;
 	private ArrayList<Appointment> appointments = null;
 
-	
-
-	public Patient(String phoneNumber, String address, ArrayList<Appointment> appointments) {
+	public Patient(String phoneNumber, String address, boolean blocked, ArrayList<Appointment> appointments) {
 		super();
 		this.phoneNumber = phoneNumber;
 		this.address = address;
+		this.blocked = blocked;
 		this.appointments = appointments;
-	}
-
-	public Patient() {
-		// TODO Auto-generated constructor stub
 	}
 
 	public String getPhoneNumber() {
@@ -41,6 +37,14 @@ public class Patient extends User implements Serializable {
 		this.address = address;
 	}
 
+	public boolean isBlocked() {
+		return blocked;
+	}
+
+	public void setBlocked(boolean blocked) {
+		this.blocked = blocked;
+	}
+
 	public ArrayList<Appointment> getAppointments() {
 		return appointments;
 	}
@@ -57,7 +61,7 @@ public class Patient extends User implements Serializable {
 	public int hashCode() {
 		final int prime = 31;
 		int result = super.hashCode();
-		result = prime * result + Objects.hash(address, appointments, phoneNumber);
+		result = prime * result + Objects.hash(address, appointments, blocked, phoneNumber);
 		return result;
 	}
 
@@ -71,14 +75,14 @@ public class Patient extends User implements Serializable {
 			return false;
 		Patient other = (Patient) obj;
 		return Objects.equals(address, other.address) && Objects.equals(appointments, other.appointments)
-				&& Objects.equals(phoneNumber, other.phoneNumber);
+				&& blocked == other.blocked && Objects.equals(phoneNumber, other.phoneNumber);
 	}
 
 	@Override
 	public String toString() {
-		return "Patient [phoneNumber=" + phoneNumber + ", address=" + address + ", appointments=" + appointments
-				+ ", dni=" + dni + ", name=" + name + ", surname=" + surname + ", gender=" + gender + ", birthDate="
-				+ birthDate + ", password=" + password + "]";
+		return "Patient [phoneNumber=" + phoneNumber + ", address=" + address + ", blocked=" + blocked
+				+ ", appointments=" + appointments + ", dni=" + dni + ", name=" + name + ", surname=" + surname
+				+ ", gender=" + gender + ", birthDate=" + birthDate + ", password=" + password + "]";
 	}
 
 }
