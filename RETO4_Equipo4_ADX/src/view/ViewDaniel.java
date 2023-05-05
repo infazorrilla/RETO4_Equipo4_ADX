@@ -55,8 +55,8 @@ import javax.swing.ImageIcon;
 
 public class ViewDaniel {
 //	private PatientManager patientManager;
-	private DoctorManager doctorManager;
-	private NurseManager nurseManager;
+//	private DoctorManager doctorManager;
+//	private NurseManager nurseManager;
 	private UserDataModificationManager userDataModificationManager;
 	private AppointmentSelectionManager appointmentSelectionManager;
 	private TimeSlotManager timeSlotManager;
@@ -101,8 +101,8 @@ public class ViewDaniel {
 	 */
 	public ViewDaniel() {
 //		patientManager = new PatientManager();
-		doctorManager = new DoctorManager();
-		nurseManager = new NurseManager();
+//		doctorManager = new DoctorManager();
+//		nurseManager = new NurseManager();
 		userDataModificationManager = new UserDataModificationManager();
 		appointmentSelectionManager = new AppointmentSelectionManager();
 		timeSlotManager = new TimeSlotManager();
