@@ -189,7 +189,7 @@ public class ViewAmaia {
 					
 
 					for (Patient patient : patients) {
-							model.addRow(new String[] { patient.getDni(), patient.getName(),
+							model.addRow(new String[] { patient.getDni(), patient.getName(), patient.getSurname(),
 									blockDesblockPatientManager.patientState(patient.isBlocked()) });
 					}
 
@@ -564,7 +564,7 @@ public class ViewAmaia {
 
 		tableBlockPatients = new JTable();
 		tableBlockPatients
-				.setModel(new DefaultTableModel(new Object[][] {}, new String[] { "DNI", "Nombre", "Estado" }));
+				.setModel(new DefaultTableModel(new Object[][] {}, new String[] { "DNI", "Nombre", "Apellido", "Estado" }));
 		scrollPane.setViewportView(tableBlockPatients);
 		tableBlockPatients.setDefaultEditor(Object.class, null);
 		tableBlockPatients.addMouseListener((MouseListener) new MouseAdapter() {
