@@ -17,6 +17,8 @@ import javax.swing.JPanel;
 import javax.swing.JPasswordField;
 import javax.swing.JTextField;
 
+import manager.DoctorManager;
+import manager.NurseManager;
 import manager.PatientManager;
 import model.pojos.Doctor;
 import model.pojos.Nurse;
@@ -26,6 +28,8 @@ import java.awt.Font;
 public class ViewSabi {
 	
 	private PatientManager patientManager;
+	private DoctorManager doctorManager;
+	private NurseManager nurseManager;
 
 	public JFrame frame;
 	private JPanel panelLogin;
@@ -463,7 +467,7 @@ public class ViewSabi {
 				doctor.setSpeciality(textFieldSpecialityDoctor.getText());
 				
 				try {
-					patientManager.insert(doctor);
+					doctorManager.insert(doctor);
 				} catch (SQLException e1) {
 					JOptionPane.showMessageDialog(btnAceptarRegistro, "Error Base De Datos", "Aviso", 2);
 					e1.printStackTrace();
@@ -606,7 +610,7 @@ public class ViewSabi {
 				nurse.setCategory(textFieldCategoryNurse.getText());
 				
 				try {
-					patientManager.insert(nurse);
+					nurseManager.insert(nurse);
 				} catch (SQLException e1) {
 					JOptionPane.showMessageDialog(btnAceptarRegistro, "Error Base De Datos", "Aviso", 2);
 					e1.printStackTrace();
