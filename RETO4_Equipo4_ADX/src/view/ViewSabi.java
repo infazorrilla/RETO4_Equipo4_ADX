@@ -475,7 +475,7 @@ public class ViewSabi {
 				doctor.setType("Medicina");
 				doctor.setSpeciality(textFieldSpecialityDoctor.getText());
 				registrationManager.select();
-				doctor.setAmbulatory((String) comboBoxAmbulatoryDoctor.getSelectedItem());
+				doctor.setAmbulatory((String) comboBoxAmbulatoryDoctor.getSelectedItem()); 
 
 				try {
 					doctorManager.insert(doctor);
