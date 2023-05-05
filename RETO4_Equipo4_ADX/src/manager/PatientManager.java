@@ -18,10 +18,10 @@ public class PatientManager {
 
 	public static final String PATIENT_TABLE = "paciente";
 
-	public Patient select(String dni) throws SQLException, Exception {
+	public Patient selectPatient(String dni) throws SQLException, Exception {
 		Patient ret = null;
 
-		String sql = "select * from paciente p join usuario u on p.dniPaciente=u.dni  where dniPaciente= '" + dni + "'";
+		String sql = "select * from paciente where dniPaciente= '" + dni + "'";
 
 		Connection connection = null;
 		Statement statement = null;
@@ -32,29 +32,24 @@ public class PatientManager {
 			connection = DriverManager.getConnection(BBDDUtils.URL_LOCAL, BBDDUtils.USER_LOCAL, BBDDUtils.PASS_LOCAL);
 			statement = connection.createStatement();
 			resultSet = statement.executeQuery(sql);
-
 			while (resultSet.next()) {
 				if (null == ret)
 					ret = new Patient();
 
 				String phoneNumber = resultSet.getString("telefono");
 				String address = resultSet.getString("direccion");
-				String name = resultSet.getString("nombre");
-				String surname = resultSet.getString("apellido");
-				String gender = resultSet.getString("sexo");
-				Date birthDate = resultSet.getDate("fechaNac");
-				String password = resultSet.getString("contrasena");
+				String blocked = resultSet.getString("bloqueado");
 
 				ret.setDni(dni);
 				ret.setPhoneNumber(phoneNumber);
 				ret.setAddress(address);
-				ret.setName(name);
-				ret.setSurname(surname);
-				ret.setGender(gender);
-				ret.setBirthDate(birthDate);
-				ret.setPassword(password);
-
+				if(blocked.equals("true")) {
+					ret.setBlocked(true);
+				}else {
+					ret.setBlocked(false);
+				}
 			}
+
 		} catch (SQLException sqle) {
 		} catch (Exception e) {
 		} finally {
@@ -108,6 +103,7 @@ public class PatientManager {
 				String gender = resultSet.getString("sexo");
 				Date birthDate = resultSet.getDate("fechaNac");
 				String password = resultSet.getString("contrasena");
+				String blocked = resultSet.getString("bloqueado");
 
 				Patient patient = new Patient();
 				patient.setPhoneNumber(phoneNumber);
@@ -118,8 +114,17 @@ public class PatientManager {
 				patient.setGender(gender);
 				patient.setBirthDate(birthDate);
 				patient.setPassword(password);
-
+				
+				
+				if(blocked.equals("true")) {
+					patient.setBlocked(true);
+				}else {
+					patient.setBlocked(false);
+				}
+				
 				ret.add(patient);
+				
+				
 			}
 
 		} catch (SQLException sqle) {
