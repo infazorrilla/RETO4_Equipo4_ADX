@@ -35,7 +35,13 @@ public class LoginManager {
 
 			if (resultSet.next()) {
 				if (userType instanceof Patient) {
-					convertion = 1;
+					Patient patient = new Patient();
+					if (patient.isBlocked() == true) {
+						convertion = 3;
+					} else {
+						convertion = 1;
+					}
+
 				}
 
 				if (userType instanceof Doctor) {

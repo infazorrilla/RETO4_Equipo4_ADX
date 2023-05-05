@@ -53,6 +53,7 @@ import java.awt.event.ItemListener;
 import java.awt.event.ItemEvent;
 import javax.swing.ImageIcon;
 import java.awt.Toolkit;
+import java.awt.Font;
 
 public class ViewDaniel {
 //	private PatientManager patientManager;
@@ -95,7 +96,7 @@ public class ViewDaniel {
 	private JComboBox<String> cbSelectAppointmentDate;
 	private JComboBox<String> cbSelectAppointmentSanitarian;
 	private JButton btnNewButton;
-	private JPanel panelWellcome;
+	private JPanel panelSanitarian;
 	private JLabel lblCross;
 
 	/**
@@ -169,7 +170,11 @@ public class ViewDaniel {
 				case 2:
 					JOptionPane.showMessageDialog(null, "ACCEDIENDO COMO EMPLEADO"); // ADMIN
 					panelLogin.setVisible(false);
+					panelSanitarian.setVisible(true);
 					// accessFromSanitarian();
+					break;
+				case 3:
+					JOptionPane.showMessageDialog(null, "USUARIO BLOQUEADO"); // PATIENT BLOCKED
 					break;
 				default:
 					JOptionPane.showMessageDialog(null, "USUARIO O CONTRSEÑA INCORRETO");
@@ -232,6 +237,41 @@ public class ViewDaniel {
 		lblOsasunbide.setIcon(new ImageIcon(ViewDaniel.class.getResource("/view/images/Letters.jpg")));
 		lblOsasunbide.setBounds(0, 105, 140, 140);
 		panelLogin.add(lblOsasunbide);
+
+//		PANEL | SANIATARIAN
+		panelSanitarian = new JPanel();
+		panelSanitarian.setBackground(new Color(16, 169, 121));
+		panelSanitarian.setBounds(0, 0, 616, 351);
+		frame.getContentPane().add(panelSanitarian);
+		panelSanitarian.setLayout(null);
+
+		JLabel lblCrossPanelSanitarian = new JLabel("");
+		lblCrossPanelSanitarian
+				.setIcon(new ImageIcon(ViewDaniel.class.getResource("/view/images/OsasunbideCross.jpg")));
+		lblCrossPanelSanitarian.setBounds(476, 105, 140, 140);
+		panelSanitarian.add(lblCrossPanelSanitarian);
+
+		JLabel lblLettersPanelSanitarian = new JLabel("");
+		lblLettersPanelSanitarian.setIcon(new ImageIcon(ViewDaniel.class.getResource("/view/images/Letters.jpg")));
+		lblLettersPanelSanitarian.setBounds(0, 105, 140, 140);
+		panelSanitarian.add(lblLettersPanelSanitarian);
+
+		JLabel lblNewLabel = new JLabel("EMPLEADO");
+		lblNewLabel.setForeground(new Color(255, 255, 255));
+		lblNewLabel.setFont(new Font("Verdana", Font.BOLD, 18));
+		lblNewLabel.setHorizontalAlignment(SwingConstants.CENTER);
+		lblNewLabel.setBounds(187, 168, 242, 14);
+		panelSanitarian.add(lblNewLabel);
+
+		JButton btnLogOutPanelSanitarian = new JButton("LOGOUT");
+		btnLogOutPanelSanitarian.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent e) {
+				panelSanitarian.setVisible(false);
+				panelLogin.setVisible(true);
+			}
+		});
+		btnLogOutPanelSanitarian.setBounds(268, 193, 89, 23);
+		panelSanitarian.add(btnLogOutPanelSanitarian);
 
 //		Modify Patient panel
 		panelModifyPatient = new JPanel();
