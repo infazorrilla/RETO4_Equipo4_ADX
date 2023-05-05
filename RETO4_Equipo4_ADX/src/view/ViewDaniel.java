@@ -52,6 +52,7 @@ import javax.swing.JScrollPane;
 import java.awt.event.ItemListener;
 import java.awt.event.ItemEvent;
 import javax.swing.ImageIcon;
+import java.awt.Toolkit;
 
 public class ViewDaniel {
 //	private PatientManager patientManager;
@@ -95,6 +96,7 @@ public class ViewDaniel {
 	private JComboBox<String> cbSelectAppointmentSanitarian;
 	private JButton btnNewButton;
 	private JPanel panelWellcome;
+	private JLabel lblCross;
 
 	/**
 	 * Create the application.
@@ -111,6 +113,8 @@ public class ViewDaniel {
 
 	private void initialize() {
 		frame = new JFrame();
+		frame.setIconImage(
+				Toolkit.getDefaultToolkit().getImage(ViewDaniel.class.getResource("/view/images/OsasunbideLogo.jpg")));
 
 		frame.setBounds(100, 100, 632, 390);
 		frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
@@ -120,7 +124,7 @@ public class ViewDaniel {
 
 //		LOGING | PANEL
 		panelLogin = new JPanel();
-		panelLogin.setBackground(new Color(0, 128, 192));
+		panelLogin.setBackground(new Color(16, 169, 121));
 		panelLogin.setBounds(0, 0, 344, 601);
 		frame.getContentPane().add(panelLogin);
 		panelLogin.setLayout(null);
@@ -159,10 +163,12 @@ public class ViewDaniel {
 				switch (verifiedUser) {
 				case 1:
 					JOptionPane.showMessageDialog(null, "ACCEDIENDO COMO PACIENTE");
+					panelLogin.setVisible(false);
 					// accessFromPatient();
 					break;
 				case 2:
 					JOptionPane.showMessageDialog(null, "ACCEDIENDO COMO EMPLEADO"); // ADMIN
+					panelLogin.setVisible(false);
 					// accessFromSanitarian();
 					break;
 				default:
@@ -193,7 +199,7 @@ public class ViewDaniel {
 					panelModifySanitarian.setVisible(true);
 				}
 
-				panelLogin.setVisible(false);
+				// panelLogin.setVisible(false);
 			}
 		});
 		btnLoginOk.setBounds(204, 245, 89, 23);
@@ -216,6 +222,16 @@ public class ViewDaniel {
 		});
 		btnLoginResgistration.setBounds(442, 10, 154, 37);
 		panelLogin.add(btnLoginResgistration);
+
+		lblCross = new JLabel("");
+		lblCross.setIcon(new ImageIcon(ViewDaniel.class.getResource("/view/images/OsasunbideCross.jpg")));
+		lblCross.setBounds(476, 105, 140, 140);
+		panelLogin.add(lblCross);
+
+		JLabel lblOsasunbide = new JLabel("");
+		lblOsasunbide.setIcon(new ImageIcon(ViewDaniel.class.getResource("/view/images/Letters.jpg")));
+		lblOsasunbide.setBounds(0, 105, 140, 140);
+		panelLogin.add(lblOsasunbide);
 
 //		Modify Patient panel
 		panelModifyPatient = new JPanel();
