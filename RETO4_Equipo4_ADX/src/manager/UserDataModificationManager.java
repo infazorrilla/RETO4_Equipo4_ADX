@@ -327,6 +327,8 @@ public class UserDataModificationManager {
 			preparedStatement = connection.prepareStatement(sql);
 
 			preparedStatement.executeUpdate();
+			
+//			deleteUser(dni);
 
 		} catch (SQLException sqle) {
 		} catch (Exception e) {
@@ -366,6 +368,8 @@ public class UserDataModificationManager {
 			preparedStatement = connection.prepareStatement(sql);
 
 			preparedStatement.executeUpdate();
+			
+			deleteUser(dni);
 
 		} catch (SQLException sqle) {
 		} catch (Exception e) {
@@ -474,7 +478,7 @@ public class UserDataModificationManager {
 	 * @param id int
 	 * @return Doctor object
 	 */
-	private Nurse selectNurse(String dni) throws SQLException, Exception {
+	public Nurse selectNurse(String dni) throws SQLException, Exception {
 		Nurse ret = null;
 
 		String sql = "select * from sanitario s join usuario u on s.dniSanitario=u.dni where dniSanitario= '" + dni
@@ -639,6 +643,44 @@ public class UserDataModificationManager {
 
 			Class.forName(BBDDUtils.DRIVER_LOCAL);
 			String sql = "delete from paciente where dniPaciente = '" + dni + "'";
+			preparedStatement = connection.prepareStatement(sql);
+
+			preparedStatement.executeUpdate();
+			
+//			deleteUser(dni);
+
+		} catch (SQLException sqle) {
+		} catch (Exception e) {
+		} finally {
+			try {
+				if (preparedStatement != null)
+					preparedStatement.close();
+			} catch (Exception e) {
+			}
+			;
+			try {
+				if (connection != null)
+					connection.close();
+			} catch (Exception e) {
+			}
+			;
+		}
+	}
+	
+	/**
+	 * Deletes the row in DB's 'Usuario' table by dni
+	 * @param dni String
+	 */
+	private void deleteUser(String dni) {
+		Connection connection = null;
+		PreparedStatement preparedStatement = null;
+
+		try {
+			connection = DriverManager.getConnection(BBDDUtils.URL_LOCAL, BBDDUtils.USER_LOCAL, BBDDUtils.PASS_LOCAL);
+			preparedStatement = null;
+
+			Class.forName(BBDDUtils.DRIVER_LOCAL);
+			String sql = "delete from usuario where dni = '" + dni + "'";
 			preparedStatement = connection.prepareStatement(sql);
 
 			preparedStatement.executeUpdate();

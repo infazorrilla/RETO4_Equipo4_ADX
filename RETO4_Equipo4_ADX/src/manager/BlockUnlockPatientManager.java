@@ -17,6 +17,11 @@ import model.utils.BBDDUtils;
 
 public class BlockUnlockPatientManager {
 
+	/**
+	 * Returns an arrayList of patients who have appointments in one ambulatory (selected by ambulatory's id)
+	 * @param id int
+	 * @return ArrayList<Patient>
+	 */
 	public ArrayList<Patient> showPatientByAmbulatoryId(int id) {
 		ArrayList<Patient> ret = null;
 
@@ -72,6 +77,11 @@ public class BlockUnlockPatientManager {
 		return ret;
 	}
 
+	/**
+	 * Returns "Bloqueado/a" boolean if true and "Desbloqueado/a" if false
+	 * @param blocked boolean
+	 * @return String
+	 */
 	public String patientState(boolean blocked) {
 		String ret;
 
@@ -84,6 +94,10 @@ public class BlockUnlockPatientManager {
 		return ret;
 	}
 
+	/**
+	 * Sets 'true' in 'Paciente' table's 'bloqueado'.
+	 * @param patient Patient
+	 */
 	public void blockPatient(Patient patient) {
 		Connection connection = null;
 		PreparedStatement preparedStatement = null;
@@ -120,6 +134,10 @@ public class BlockUnlockPatientManager {
 
 	}
 
+	/**
+	 * Sets 'false' in 'Paciente' table's 'bloqueado'.
+	 * @param patient Patient
+	 */
 	public void unlockPatient(Patient patient) {
 		Connection connection = null;
 		PreparedStatement preparedStatement = null;

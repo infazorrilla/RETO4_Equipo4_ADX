@@ -702,7 +702,6 @@ public class ViewAmaia {
 					JOptionPane.showMessageDialog(null, "Se ha producido un error.", "Error", 0);
 				}
 
-				cbSelectAppointmentDate.addItem("");
 				for (Date date : dates) {
 					cbSelectAppointmentDate.addItem(date.toString());
 				}
