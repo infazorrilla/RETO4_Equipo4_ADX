@@ -21,6 +21,10 @@ public class Patient extends User implements Serializable {
 		this.appointments = appointments;
 	}
 
+	public Patient() {
+		// TODO Auto-generated constructor stub
+	}
+
 	public String getPhoneNumber() {
 		return phoneNumber;
 	}
