@@ -6,6 +6,9 @@ import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.awt.event.KeyAdapter;
 import java.awt.event.KeyEvent;
+import java.awt.event.MouseAdapter;
+import java.awt.event.MouseEvent;
+import java.awt.event.MouseListener;
 import java.sql.SQLException;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
@@ -30,6 +33,7 @@ import javax.swing.event.CaretListener;
 import javax.swing.table.DefaultTableModel;
 
 import manager.AppointmentSelectionManager;
+import manager.BlockUnlockPatientManager;
 import manager.PatientManager;
 import manager.TimeSlotManager;
 import manager.UserDataModificationManager;
@@ -55,6 +59,7 @@ public class ViewAmaia {
 //	private NurseManager nurseManager;
 	private UserDataModificationManager userDataModificationManager;
 	private AppointmentSelectionManager appointmentSelectionManager;
+	private BlockUnlockPatientManager blockDesblockPatientManager;
 	private TimeSlotManager timeSlotManager;
 	private String userDNI;
 	private User user;
@@ -90,6 +95,9 @@ public class ViewAmaia {
 	private JComboBox<String> cbSelectAppointmentDate;
 	private JComboBox<String> cbSelectAppointmentSanitarian;
 	private JButton btnNewButton;
+	private JPanel panelBlockPatient;
+	private JTable tableBlockPatients;
+	private JButton btnBlockPatientOk;
 
 	/**
 	 * Create the application.
@@ -100,6 +108,7 @@ public class ViewAmaia {
 //		nurseManager = new NurseManager();
 		userDataModificationManager = new UserDataModificationManager();
 		appointmentSelectionManager = new AppointmentSelectionManager();
+		blockDesblockPatientManager = new BlockUnlockPatientManager();
 		timeSlotManager = new TimeSlotManager();
 		initialize();
 	}
@@ -161,12 +170,55 @@ public class ViewAmaia {
 
 				if (user instanceof Doctor) {
 					tfModifySanitarianDNI.setText(userDNI);
-					panelModifySanitarian.setVisible(true);
+//					panelModifySanitarian.setVisible(true);
+
+					// Panel Block Patient
+					panelBlockPatient.setVisible(true);
+					ArrayList<Patient> patients = null;
+					try {
+						patients = blockDesblockPatientManager.showPatientByAmbulatoryId(
+								userDataModificationManager.selectDoctor(userDNI).getAmbulatory().getId());
+					} catch (SQLException e2) {
+						JOptionPane.showMessageDialog(null, "Se ha producido un error con la BBDD.", "Error", 0);
+					} catch (Exception e2) {
+						JOptionPane.showMessageDialog(null, "Se ha producido un error.", "Error", 0);
+
+					}
+					DefaultTableModel model = (DefaultTableModel) tableBlockPatients.getModel();
+					model.setRowCount(0);
+					
+
+					for (Patient patient : patients) {
+							model.addRow(new String[] { patient.getDni(), patient.getName(),
+									blockDesblockPatientManager.patientState(patient.isBlocked()) });
+					}
+
 				}
 
 				if (user instanceof Nurse) {
 					tfModifySanitarianDNI.setText(userDNI);
-					panelModifySanitarian.setVisible(true);
+//					panelModifySanitarian.setVisible(true);
+					
+					// Panel Block Patient
+					panelBlockPatient.setVisible(true);
+					ArrayList<Patient> patients = null;
+					try {
+						patients = blockDesblockPatientManager.showPatientByAmbulatoryId(
+								userDataModificationManager.selectDoctor(userDNI).getAmbulatory().getId());
+					} catch (SQLException e2) {
+						JOptionPane.showMessageDialog(null, "Se ha producido un error con la BBDD.", "Error", 0);
+					} catch (Exception e2) {
+						JOptionPane.showMessageDialog(null, "Se ha producido un error.", "Error", 0);
+
+					}
+					DefaultTableModel model = (DefaultTableModel) tableBlockPatients.getModel();
+					model.setRowCount(0);
+					
+
+					for (Patient patient : patients) {
+							model.addRow(new String[] { patient.getDni(), patient.getName(),
+									blockDesblockPatientManager.patientState(patient.isBlocked()) });
+					}
 				}
 
 				panelLogin.setVisible(false);
@@ -498,6 +550,71 @@ public class ViewAmaia {
 		});
 		btnModifySanitarianUnsubscribe.setBounds(260, 195, 130, 23);
 		panelModifySanitarian.add(btnModifySanitarianUnsubscribe);
+
+//		panel BlockPatient
+		panelBlockPatient = new JPanel();
+		panelBlockPatient.setBackground(new Color(0, 128, 192));
+		panelBlockPatient.setBounds(0, 0, 616, 351);
+		frame.getContentPane().add(panelBlockPatient);
+		panelBlockPatient.setLayout(null);
+
+		JScrollPane scrollPane = new JScrollPane();
+		scrollPane.setBounds(99, 77, 443, 173);
+		panelBlockPatient.add(scrollPane);
+
+		tableBlockPatients = new JTable();
+		tableBlockPatients
+				.setModel(new DefaultTableModel(new Object[][] {}, new String[] { "DNI", "Nombre", "Estado" }));
+		scrollPane.setViewportView(tableBlockPatients);
+		tableBlockPatients.setDefaultEditor(Object.class, null);
+		tableBlockPatients.addMouseListener((MouseListener) new MouseAdapter() {
+			public void mouseClicked(MouseEvent e) {
+				int fila = tableBlockPatients.getSelectedRow();
+				String patientDni = (String) tableBlockPatients.getValueAt(fila, 0);
+				Patient patient = null;
+				try {
+					patient = userDataModificationManager.selectPatient(patientDni);
+					if (false == patient.isBlocked()) {
+						btnBlockPatientOk.setText("Bloquear");
+					} else {
+						btnBlockPatientOk.setText("Desbloquear");
+					}
+				} catch (SQLException e1) {
+				} catch (Exception e1) {
+				}
+			}
+		});
+
+		btnBlockPatientOk = new JButton("Bloquear");
+		btnBlockPatientOk.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent e) {
+				int fila = tableBlockPatients.getSelectedRow();
+				String patientDni = (String) tableBlockPatients.getValueAt(fila, 0);
+				Patient patient = null;
+				try {
+					patient = userDataModificationManager.selectPatient(patientDni);
+					if (false == patient.isBlocked()) {
+						blockDesblockPatientManager.blockPatient(patient);
+						JOptionPane.showMessageDialog(null, "Paciente bloqueado/a", "Confirmación", 1);
+					} else {
+						blockDesblockPatientManager.unlockPatient(patient);
+						JOptionPane.showMessageDialog(null, "Paciente desbloqueado/a", "Confirmación", 1);
+					}
+				} catch (SQLException e1) {
+					JOptionPane.showMessageDialog(null, "Se ha producido un error con la Base de Datos.", "Error", 0);
+				} catch (Exception e1) {
+					JOptionPane.showMessageDialog(null, "Se ha producido un error.", "Error", 0);
+				}
+
+			}
+		});
+		btnBlockPatientOk.setBounds(194, 279, 85, 21);
+		panelBlockPatient.add(btnBlockPatientOk);
+
+		JButton btnBlockPatienCancel = new JButton("Cancelar");
+		btnBlockPatienCancel.setBounds(332, 279, 85, 21);
+		panelBlockPatient.add(btnBlockPatienCancel);
+		panelBlockPatient.setVisible(false);
 
 //		panel SelectAppointmentAmbulatoryType
 		panelSelectAppointmentAmbulatoryType = new JPanel();

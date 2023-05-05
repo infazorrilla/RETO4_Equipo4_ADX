@@ -391,7 +391,7 @@ public class UserDataModificationManager {
 	 * @param id int
 	 * @return Doctor object
 	 */
-	private Doctor selectDoctor(String dni) throws SQLException, Exception {
+	public Doctor selectDoctor(String dni) throws SQLException, Exception {
 		Doctor ret = null;
 
 		String sql = "select * from sanitario s join usuario u on s.dniSanitario=u.dni where dniSanitario= '" + dni
@@ -560,7 +560,7 @@ public class UserDataModificationManager {
 	public Patient selectPatient(String dni) throws SQLException, Exception {
 		Patient ret = null;
 
-		String sql = "select * from paciente where dniPaciente= '" + dni + "'";
+		String sql = "select * from paciente p join usuario u on p.dniPaciente=u.dni  where dniPaciente= '" + dni + "'";
 
 		Connection connection = null;
 		Statement statement = null;
@@ -577,10 +577,26 @@ public class UserDataModificationManager {
 
 				String phoneNumber = resultSet.getString("telefono");
 				String address = resultSet.getString("direccion");
+				String name = resultSet.getString("nombre");
+				String surname = resultSet.getString("apellido");
+				String gender = resultSet.getString("sexo");
+				Date birthDate = resultSet.getDate("fechaNac");
+				String password = resultSet.getString("contrasena");
+				String blocked = resultSet.getString("bloqueado");
 
 				ret.setDni(dni);
 				ret.setPhoneNumber(phoneNumber);
 				ret.setAddress(address);
+				ret.setName(name);
+				ret.setSurname(surname);
+				ret.setGender(gender);
+				ret.setBirthDate(birthDate);
+				ret.setPassword(password);
+				if(blocked.equalsIgnoreCase("true")) {
+					ret.setBlocked(true);
+				}else {
+					ret.setBlocked(false);
+				}
 			}
 
 		} catch (SQLException sqle) {
