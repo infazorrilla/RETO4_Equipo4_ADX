@@ -13,15 +13,16 @@ public class Main {
 
 	}
 
-	public static void main(String[] args) throws SQLException, Exception {
+	public static void main(String[] args) {
 
 		// SABI - WINDOW //
 		EventQueue.invokeLater(new Runnable() {
 			public void run() {
 				try {
-					// ViewSabi window = new ViewSabi();
-					// ViewAmaia window = new ViewAmaia();
-					ViewDaniel window = new ViewDaniel();
+//					ViewSabi window = new ViewSabi();
+//					ViewAmaia window = new ViewAmaia();
+//					ViewDaniel window = new ViewDaniel();
+					View window = new View();
 					window.frame.setVisible(true);
 				} catch (Exception e) {
 					e.printStackTrace();

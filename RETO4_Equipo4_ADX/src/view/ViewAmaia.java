@@ -1,6 +1,7 @@
 package view;
 
 import java.awt.Color;
+import java.awt.Font;
 import java.awt.HeadlessException;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
@@ -18,6 +19,7 @@ import java.util.Enumeration;
 
 import javax.swing.AbstractButton;
 import javax.swing.ButtonGroup;
+import javax.swing.ImageIcon;
 import javax.swing.JButton;
 import javax.swing.JComboBox;
 import javax.swing.JFrame;
@@ -98,6 +100,10 @@ public class ViewAmaia {
 	private JPanel panelBlockPatient;
 	private JTable tableBlockPatients;
 	private JButton btnBlockPatientOk;
+	private JButton btnBlockAmbulatoryPatient;
+	private JButton btntodo1;
+	private JButton btntodo2;
+	private JButton btnModifySanitarianData;
 
 	/**
 	 * Create the application.
@@ -123,7 +129,7 @@ public class ViewAmaia {
 //		Login panel
 		panelLogin = new JPanel();
 		panelLogin.setBackground(new Color(0, 128, 192));
-		panelLogin.setBounds(0, 0, 616, 351);
+		panelLogin.setBounds(545, 0, 71, 351);
 		frame.getContentPane().add(panelLogin);
 		panelLogin.setLayout(null);
 		panelLogin.setVisible(true);
@@ -444,7 +450,7 @@ public class ViewAmaia {
 //		Modify Sanitarian panel
 		panelModifySanitarian = new JPanel();
 		panelModifySanitarian.setBackground(new Color(0, 128, 192));
-		panelModifySanitarian.setBounds(491, 0, 125, 351);
+		panelModifySanitarian.setBounds(576, 0, 40, 351);
 		frame.getContentPane().add(panelModifySanitarian);
 		panelModifySanitarian.setLayout(null);
 		panelModifySanitarian.setVisible(false);
@@ -554,7 +560,7 @@ public class ViewAmaia {
 //		panel BlockPatient
 		panelBlockPatient = new JPanel();
 		panelBlockPatient.setBackground(new Color(0, 128, 192));
-		panelBlockPatient.setBounds(0, 0, 616, 351);
+		panelBlockPatient.setBounds(535, 0, 81, 351);
 		frame.getContentPane().add(panelBlockPatient);
 		panelBlockPatient.setLayout(null);
 
@@ -605,7 +611,7 @@ public class ViewAmaia {
 				} catch (Exception e1) {
 					JOptionPane.showMessageDialog(null, "Se ha producido un error.", "Error", 0);
 				}
-
+				tableBlockPatients.repaint();
 			}
 		});
 		btnBlockPatientOk.setBounds(194, 279, 85, 21);
@@ -619,7 +625,7 @@ public class ViewAmaia {
 //		panel SelectAppointmentAmbulatoryType
 		panelSelectAppointmentAmbulatoryType = new JPanel();
 		panelSelectAppointmentAmbulatoryType.setBackground(new Color(0, 128, 192));
-		panelSelectAppointmentAmbulatoryType.setBounds(0, 0, 616, 351);
+		panelSelectAppointmentAmbulatoryType.setBounds(535, 0, 81, 351);
 		frame.getContentPane().add(panelSelectAppointmentAmbulatoryType);
 		panelSelectAppointmentAmbulatoryType.setLayout(null);
 		panelSelectAppointmentAmbulatoryType.setVisible(false);
@@ -726,7 +732,7 @@ public class ViewAmaia {
 //		panel SelectAppointmentDateTimeSlot
 		panelSelectAppointmentDateTimeSlot = new JPanel();
 		panelSelectAppointmentDateTimeSlot.setBackground(new Color(0, 128, 192));
-		panelSelectAppointmentDateTimeSlot.setBounds(0, 0, 616, 351);
+		panelSelectAppointmentDateTimeSlot.setBounds(557, 0, 59, 351);
 		frame.getContentPane().add(panelSelectAppointmentDateTimeSlot);
 		panelSelectAppointmentDateTimeSlot.setLayout(null);
 		panelSelectAppointmentDateTimeSlot.setVisible(false);
@@ -820,6 +826,9 @@ public class ViewAmaia {
 		});
 		btnNewButton.setBounds(49, 91, 89, 23);
 		panelSelectAppointmentDateTimeSlot.add(btnNewButton);
+		
+		
+		
 
 	}
 }
