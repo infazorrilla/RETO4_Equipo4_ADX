@@ -98,6 +98,11 @@ public class ViewDaniel {
 	private JButton btnNewButton;
 	private JPanel panelSanitarian;
 	private JLabel lblCross;
+	private JPanel panelPatient;
+	private JLabel lblCrossPanelPatient;
+	private JLabel lblLettersPanelSanitarian_1;
+	private JLabel lblPatientTitule;
+	private JButton btnLogOutPanelPatient;
 
 	/**
 	 * Create the application.
@@ -164,14 +169,11 @@ public class ViewDaniel {
 				switch (verifiedUser) {
 				case 1:
 					JOptionPane.showMessageDialog(null, "ACCEDIENDO COMO PACIENTE");
-					panelLogin.setVisible(false);
-					// accessFromPatient();
+					accessPatient();
 					break;
 				case 2:
 					JOptionPane.showMessageDialog(null, "ACCEDIENDO COMO EMPLEADO"); // ADMIN
-					panelLogin.setVisible(false);
-					panelSanitarian.setVisible(true);
-					// accessFromSanitarian();
+					accessSanitarian();
 					break;
 				case 3:
 					JOptionPane.showMessageDialog(null, "USUARIO BLOQUEADO"); // PATIENT BLOCKED
@@ -256,22 +258,54 @@ public class ViewDaniel {
 		lblLettersPanelSanitarian.setBounds(0, 105, 140, 140);
 		panelSanitarian.add(lblLettersPanelSanitarian);
 
-		JLabel lblNewLabel = new JLabel("EMPLEADO");
-		lblNewLabel.setForeground(new Color(255, 255, 255));
-		lblNewLabel.setFont(new Font("Verdana", Font.BOLD, 18));
-		lblNewLabel.setHorizontalAlignment(SwingConstants.CENTER);
-		lblNewLabel.setBounds(187, 168, 242, 14);
-		panelSanitarian.add(lblNewLabel);
+		JLabel lblPatient = new JLabel("EMPLEADO");
+		lblPatient.setForeground(new Color(255, 255, 255));
+		lblPatient.setFont(new Font("Verdana", Font.BOLD, 18));
+		lblPatient.setHorizontalAlignment(SwingConstants.CENTER);
+		lblPatient.setBounds(187, 168, 242, 14);
+		panelSanitarian.add(lblPatient);
 
 		JButton btnLogOutPanelSanitarian = new JButton("LOGOUT");
 		btnLogOutPanelSanitarian.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
-				panelSanitarian.setVisible(false);
-				panelLogin.setVisible(true);
+				accessLogin();
 			}
 		});
 		btnLogOutPanelSanitarian.setBounds(268, 193, 89, 23);
 		panelSanitarian.add(btnLogOutPanelSanitarian);
+
+//		PANEL | PATIENT
+		panelPatient = new JPanel();
+		panelPatient.setBackground(new Color(16, 169, 121));
+		panelPatient.setBounds(0, 0, 616, 351);
+		frame.getContentPane().add(panelPatient);
+		panelPatient.setLayout(null);
+
+		lblCrossPanelPatient = new JLabel("");
+		lblCrossPanelPatient.setIcon(new ImageIcon(ViewDaniel.class.getResource("/view/images/OsasunbideCross.jpg")));
+		lblCrossPanelPatient.setBounds(476, 105, 140, 140);
+		panelPatient.add(lblCrossPanelPatient);
+
+		lblLettersPanelSanitarian_1 = new JLabel("");
+		lblLettersPanelSanitarian_1.setIcon(new ImageIcon(ViewDaniel.class.getResource("/view/images/Letters.jpg")));
+		lblLettersPanelSanitarian_1.setBounds(0, 105, 140, 140);
+		panelPatient.add(lblLettersPanelSanitarian_1);
+
+		lblPatientTitule = new JLabel("PACIENTE");
+		lblPatientTitule.setHorizontalAlignment(SwingConstants.CENTER);
+		lblPatientTitule.setForeground(Color.WHITE);
+		lblPatientTitule.setFont(new Font("Verdana", Font.BOLD, 18));
+		lblPatientTitule.setBounds(187, 168, 242, 14);
+		panelPatient.add(lblPatientTitule);
+
+		btnLogOutPanelPatient = new JButton("LOGOUT");
+		btnLogOutPanelPatient.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent e) {
+				accessLogin();
+			}
+		});
+		btnLogOutPanelPatient.setBounds(264, 193, 89, 23);
+		panelPatient.add(btnLogOutPanelPatient);
 
 //		Modify Patient panel
 		panelModifyPatient = new JPanel();
@@ -784,6 +818,41 @@ public class ViewDaniel {
 		});
 		btnNewButton.setBounds(49, 91, 89, 23);
 		panelSelectAppointmentDateTimeSlot.add(btnNewButton);
+
+	}
+
+	// METHODS TO CHANGE BETWEEN PANELS
+
+	private void accessLogin() {
+		panelLogin.setVisible(true);
+		panelSanitarian.setVisible(false);
+		panelPatient.setVisible(false);
+		panelModifyPatient.setVisible(false);
+		panelModifySanitarian.setVisible(false);
+		panelSelectAppointmentAmbulatoryType.setVisible(false);
+		panelSelectAppointmentDateTimeSlot.setVisible(false);
+
+	}
+
+	private void accessSanitarian() {
+		panelLogin.setVisible(false);
+		panelSanitarian.setVisible(true);
+		panelPatient.setVisible(false);
+		panelModifyPatient.setVisible(false);
+		panelModifySanitarian.setVisible(false);
+		panelSelectAppointmentAmbulatoryType.setVisible(false);
+		panelSelectAppointmentDateTimeSlot.setVisible(false);
+
+	}
+
+	private void accessPatient() {
+		panelLogin.setVisible(false);
+		panelSanitarian.setVisible(false);
+		panelPatient.setVisible(true);
+		panelModifyPatient.setVisible(false);
+		panelModifySanitarian.setVisible(false);
+		panelSelectAppointmentAmbulatoryType.setVisible(false);
+		panelSelectAppointmentDateTimeSlot.setVisible(false);
 
 	}
 }
