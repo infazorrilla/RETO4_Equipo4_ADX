@@ -21,7 +21,7 @@ public class Main {
 				try {
 					// ViewSabi window = new ViewSabi();
 					// ViewAmaia window = new ViewAmaia();
-					ViewSabi window = new ViewSabi();
+					ViewDaniel window = new ViewDaniel();
 					window.frame.setVisible(true);
 				} catch (Exception e) {
 					e.printStackTrace();

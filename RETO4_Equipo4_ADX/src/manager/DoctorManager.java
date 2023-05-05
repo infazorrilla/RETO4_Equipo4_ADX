@@ -33,10 +33,10 @@ public class DoctorManager extends AbstractManager<Doctor> {
 	public static final String SANITARIAN_TABLE = "sanitario";
 
 	@Override
-	public Doctor select(int id) throws SQLException, Exception {
+	public Doctor select(int staffNum) throws SQLException, Exception {
 		Doctor ret = null;
 
-		String sql = "select * from " + SANITARIAN_TABLE + " where id=" + id + "' and tipo='Medicina'";
+		String sql = "select * from " + SANITARIAN_TABLE + " where numPersonal =" + staffNum + "' and tipo='Medicina'";
 
 		Connection connection = null;
 		Statement statement = null;
@@ -52,7 +52,7 @@ public class DoctorManager extends AbstractManager<Doctor> {
 				if (null == ret)
 					ret = new Doctor();
 
-				ret.setStaffNum(id);
+				ret.setStaffNum(staffNum);
 
 			}
 		} catch (SQLException sqle) {
@@ -88,7 +88,7 @@ public class DoctorManager extends AbstractManager<Doctor> {
 		ArrayList<Doctor> ret = null;
 
 		// SQL we want to launch
-		String sql = "select * from" + SANITARIAN_TABLE;
+		String sql = "SELECT * from " + SANITARIAN_TABLE + " WHERE tipo";
 
 		// The connection with BBDD
 		Connection connection = null;
@@ -120,18 +120,13 @@ public class DoctorManager extends AbstractManager<Doctor> {
 				Doctor doctor = new Doctor();
 
 				// We take out the columns of the RS
-				String dni = resultSet.getString("dni");
+				String dni = resultSet.getString("dniSanitario");
 				int staffNum = resultSet.getInt("numPersonal");
 				float salary = resultSet.getFloat("salario");
 				int idAmbulatory = resultSet.getInt("idAmbulatorio");
 				String type = resultSet.getString("tipo");
 				String speciality = resultSet.getString("especialidad");
-				String mir = resultSet.getString("MIR");
-				String name = resultSet.getString("nombre");
-				String surname = resultSet.getString("apellido");
-				String gender = resultSet.getString("sexo");
-				Date birthDate = resultSet.getDate("fechaNac");
-				String password = resultSet.getString("contrasena");
+				Boolean mir = resultSet.getBoolean("MIR");
 
 				// We put the data into Doctor
 				Ambulatory ambulatory = new Ambulatory();
@@ -143,16 +138,11 @@ public class DoctorManager extends AbstractManager<Doctor> {
 				doctor.setAmbulatory(ambulatory);
 				doctor.setType(type);
 				doctor.setSpeciality(speciality);
-				if (mir.equalsIgnoreCase("true")) {
+				if (mir) {
 					doctor.setMir(true);
 				} else {
 					doctor.setMir(false);
 				}
-				doctor.setName(name);
-				doctor.setSurname(surname);
-				doctor.setGender(gender);
-				doctor.setBirthDate(birthDate);
-				doctor.setPassword(password);
 
 				// We save it in ret
 				ret.add(doctor);
