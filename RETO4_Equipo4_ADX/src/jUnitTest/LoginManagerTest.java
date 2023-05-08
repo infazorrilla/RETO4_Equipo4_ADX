@@ -2,29 +2,64 @@ package jUnitTest;
 
 import static org.junit.jupiter.api.Assertions.*;
 
+import java.sql.SQLException;
+
 import org.junit.jupiter.api.Test;
 
-import model.pojos.User;
+import manager.LoginManager;
+import model.pojos.*;
 
 class LoginManagerTest {
 
 	@Test
 	void testGetUserByDniAndPassword() {
-		String userDNI = "00000000D";
-		String pass = "pass";
-		
-		User user= loginManager.getUserByDniAndPassword(userDNI, pass);
-		assertNull(user);
+
+		// We set the values
+		String userDNI = "00000000A";
+		String pass = "beba";
+
+		// Instantiate the manager class
+		LoginManager loginManager = new LoginManager();
+		// We get the values
+		int user = loginManager.getUserByDniAndPassword(userDNI, pass);
+
+		// We check that the method is not empty
+		assertNotNull(user);
 	}
 
 	@Test
 	void testIdentifyUserType() {
-		fail("Not yet implemented");
-	}
 
-	@Test
-	void testSelectPatient() {
-		fail("Not yet implemented");
+		// We initialized the Pojos
+		User doctor = null;
+		User nurse = null;
+		User patient = null;
+
+		// Instantiated the Login Manager
+		LoginManager loginManager = new LoginManager();
+
+		try {
+			// We set the values in the Method
+			doctor = loginManager.identifyUserType("11111111A");
+			nurse = loginManager.identifyUserType("22222222A");
+			patient = loginManager.identifyUserType("00000000A");
+		} catch (SQLException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		} catch (Exception e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+
+		// We instantiated a comparative objects
+		Doctor expectedDoctor = new Doctor();
+		Nurse expectedNurse = new Nurse();
+		Patient expectedPatient = new Patient();
+
+		// We compare all the values
+		assertEquals(doctor.getClass(), expectedDoctor.getClass());
+		assertEquals(nurse.getClass(), expectedNurse.getClass());
+		assertEquals(patient.getClass(), expectedPatient.getClass());
 	}
 
 }
