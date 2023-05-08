@@ -96,7 +96,15 @@ class AppointmentSelectionManagerTest {
 	@Test
 	void testShowAvailableSanitarianByDate() {
 		ArrayList<Sanitarian> test = new ArrayList<Sanitarian>();
-		test = manager.showAvailableSanitarianByDate("Enfermeria", "2023-04-05");
+		try {
+			test = manager.showAvailableSanitarianByDate("Enfermeria", "2023-04-05");
+		} catch (SQLException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		} catch (Exception e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
 
 		assertEquals(2, test.size());
 	}

@@ -20,7 +20,16 @@ class BlockUnlockPatientManagerTest {
 
 	@Test
 	void testShowPatientByAmbulatoryId() {
-		ArrayList<Patient> patients = manager.showPatientByAmbulatoryId(1);
+		ArrayList<Patient> patients = null;
+		try {
+			patients = manager.showPatientByAmbulatoryId(1);
+		} catch (SQLException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		} catch (Exception e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
 
 		assertEquals(2, patients.size());
 	}
@@ -53,7 +62,15 @@ class BlockUnlockPatientManagerTest {
 			e.printStackTrace();
 		}
 
-		manager.blockPatient(patient);
+		try {
+			manager.blockPatient(patient);
+		} catch (SQLException e1) {
+			// TODO Auto-generated catch block
+			e1.printStackTrace();
+		} catch (Exception e1) {
+			// TODO Auto-generated catch block
+			e1.printStackTrace();
+		}
 		
 		try {
 			patient = userDataModificationManager.selectPatient("00000000A");
@@ -82,7 +99,15 @@ class BlockUnlockPatientManagerTest {
 			e.printStackTrace();
 		}
 
-		manager.unlockPatient(patient);
+		try {
+			manager.unlockPatient(patient);
+		} catch (SQLException e1) {
+			// TODO Auto-generated catch block
+			e1.printStackTrace();
+		} catch (Exception e1) {
+			// TODO Auto-generated catch block
+			e1.printStackTrace();
+		}
 		
 		try {
 			patient = userDataModificationManager.selectPatient("00000000A");
