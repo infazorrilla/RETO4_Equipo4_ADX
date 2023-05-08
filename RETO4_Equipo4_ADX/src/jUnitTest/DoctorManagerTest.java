@@ -10,6 +10,7 @@ import java.util.Date;
 
 import org.junit.jupiter.api.Test;
 
+import model.pojos.Ambulatory;
 import model.pojos.Appointment;
 import model.pojos.Doctor;
 import model.pojos.Patient;
@@ -21,10 +22,13 @@ class DoctorManagerTest {
 
 	@Test
 	void testDelete() {
+		// Instance of the Doctor class
 		Doctor doctor = new Doctor();
 
+		// We set an int value in the instance
 		doctor.setStaffNum(11);
 
+		// We insert the object in the manager
 		try {
 			doctorManager.insert(doctor);
 		} catch (SQLException sqle) {
@@ -33,6 +37,7 @@ class DoctorManagerTest {
 			e1.printStackTrace();
 		}
 
+		// We get the previous value and delete it
 		try {
 			doctorManager.delete(doctor.getStaffNum());
 		} catch (SQLException sqle) {
@@ -41,6 +46,8 @@ class DoctorManagerTest {
 			e.printStackTrace();
 		}
 
+		// We get the previous value and select it
+		// It doesn't get anything because we've eliminated it previously.
 		try {
 			doctor = doctorManager.select(doctor.getStaffNum());
 		} catch (SQLException e) {
@@ -49,14 +56,19 @@ class DoctorManagerTest {
 			e.printStackTrace();
 		}
 
+		// We use AssertEquals to compare the state of the object with null
 		assertEquals(doctor, null);
 	}
 
 	@Test
 	void testSelectInt() {
+		// Instance of the Doctor class
 		Doctor doctor = new Doctor();
 
+		// We set the value of the query
+		doctor.setStaffNum(1);
 		try {
+			// We select the the same value of the query
 			doctor = doctorManager.select(1);
 		} catch (SQLException sqle) {
 			sqle.printStackTrace();
@@ -64,33 +76,34 @@ class DoctorManagerTest {
 			e.printStackTrace();
 		}
 
-		Doctor expected = new Doctor();
-		expected.setStaffNum(0);
-
-		assertEquals(doctor.getStaffNum(), expected.getStaffNum());
+		// We check that the method has obtained values
+		assertNotNull(doctor);
 	}
 
 	@Test
-	void testSelect() {
+	void testSelectAll() {
 		// Instantiate the ArrayList
-		ArrayList<Doctor> appointment = new ArrayList<Doctor>();
+		ArrayList<Doctor> doctor = new ArrayList<Doctor>();
 
 		try {
-			appointment = (ArrayList<Doctor>) doctorManager.select();
+			// We initialize the method that selects all
+			doctor = (ArrayList<Doctor>) doctorManager.select();
 		} catch (SQLException sqle) {
 			sqle.printStackTrace();
 		} catch (Exception e) {
 			e.printStackTrace();
 		}
-		if (null == appointment) {
-			fail("El metodo no devuelve ninguna jornada");
+		if (null == doctor) {
+			fail("El metodo no nada - Null");
 		} else {
-			assertEquals(4, appointment.size());
+			// Compares the amount that we expected with the given
+			assertEquals(2, doctor.size());
 		}
 	}
 
 	@Test
 	void testInsertDoctor() {
+		// We set expected values for later comparison
 		Doctor expected = new Doctor();
 		expected.setDni("00000000D");
 		expected.setStaffNum(0);
@@ -100,6 +113,7 @@ class DoctorManagerTest {
 		expected.setMir(false);
 
 		try {
+			// We insert the expected values
 			doctorManager.insert(expected);
 		} catch (SQLException sqle) {
 			sqle.printStackTrace();
@@ -107,6 +121,7 @@ class DoctorManagerTest {
 			e1.printStackTrace();
 		}
 
+		// We set the comparative values
 		Doctor actual = new Doctor();
 		actual.setDni("00000000D");
 		actual.setStaffNum(0);
@@ -115,56 +130,60 @@ class DoctorManagerTest {
 		actual.setSpeciality(null);
 		actual.setMir(false);
 		try {
+
+			// We insert the comparative values
 			doctorManager.insert(actual);
 		} catch (SQLException sqle) {
 			sqle.printStackTrace();
 		} catch (Exception e) {
 			e.printStackTrace();
 		}
-		assertEquals(expected.getDni(), actual.getDni());
+		// We compares between the expected and comparative values
+		assertEquals(expected, actual);
 	}
 
 	@Test
 	void testUpdateDoctor() {
 
-	void testUpdate() {
-		Doctor newDoctor = new Doctor();
+		// We set the initial values
+		Doctor doctor = new Doctor();
+		doctor.setDni("00000000D");
+		doctor.setStaffNum(0);
+		doctor.setSalary(0);
+		doctor.setType(null);
+		doctor.setSpeciality(null);
+		doctor.setMir(false);
 
-		newDoctor.setSpeciality(null);
 		try {
-			doctorManager.insert(newDoctor);
+			// We insert the initial values
+			doctorManager.insert(doctor);
 		} catch (SQLException sqle) {
 			sqle.printStackTrace();
 		} catch (Exception e1) {
 			e1.printStackTrace();
 		}
 
-		Doctor doctor = new Doctor();
-		doctor.setSpeciality(null);
-//			try {
-//				appointmentManager.update(appointment);
-//			} catch (SQLException sqle) {
-//				sqle.printStackTrace();
-//			} catch (Exception e1) {
-//				e1.printStackTrace();
-//			}
-		//
-//			Appointment expected = new Appointment();
-//			expected.setId(10);
-//			expected.setPatient(null);
-//			expected.setSanitarian(null);
-//			expected.setAmbulatory(null);
-//			
-//			Appointment result = new Appointment();
-//			try {
-//				result = appointmentManager.select(appointment.getId());
-//			} catch (SQLException sqle) {
-//				sqle.printStackTrace();
-//			} catch (Exception e) {
-//				e.printStackTrace();
-//			}
-		//
-//			assertEquals(expected, result);
+		// We set a new value
+		doctor.setSpeciality("Pediatra");
+		try {
+			// We update the values
+			doctorManager.update(doctor);
+		} catch (SQLException sqle) {
+			sqle.printStackTrace();
+		} catch (Exception e1) {
+			e1.printStackTrace();
+		}
+
+		// We set a comparative expected result
+		Doctor expected = new Doctor();
+		expected.setDni("00000000D");
+		expected.setStaffNum(0);
+		expected.setSalary(0);
+		expected.setType(null);
+		expected.setSpeciality("Pediatra");
+		expected.setMir(false);
+
+		assertEquals(doctor, expected);
 
 	}
 

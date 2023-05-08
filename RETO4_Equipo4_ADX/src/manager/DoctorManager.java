@@ -7,7 +7,6 @@ import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.sql.Statement;
 import java.util.ArrayList;
-import java.util.Date;
 import java.util.List;
 
 import model.pojos.Ambulatory;
@@ -36,27 +35,47 @@ public class DoctorManager extends AbstractManager<Doctor> {
 	public Doctor select(int staffNum) throws SQLException, Exception {
 		Doctor ret = null;
 
-		String sql = "select * from " + SANITARIAN_TABLE + " where numPersonal =" + staffNum + "' and tipo='Medicina'";
+//		String sql = "select * from " + SANITARIAN_TABLE + " where numPersonal = " + staffNum
+//				+ "' and tipo = 'Medicina'";
+		String sql = "SELECT * FROM `sanitario` WHERE numPersonal = ? AND tipo = 'Medicina';";
 
 		Connection connection = null;
-		Statement statement = null;
+		PreparedStatement preparedStatement = null;
 		ResultSet resultSet = null;
 
 		try {
 			Class.forName(BBDDUtils.DRIVER_LOCAL);
 			connection = DriverManager.getConnection(BBDDUtils.URL_LOCAL, BBDDUtils.USER_LOCAL, BBDDUtils.PASS_LOCAL);
-			statement = connection.createStatement();
-			resultSet = statement.executeQuery(sql);
+			preparedStatement = connection.prepareStatement(sql);
+			preparedStatement.setInt(1, staffNum);
+			resultSet = preparedStatement.executeQuery();
 
 			while (resultSet.next()) {
 				if (null == ret)
 					ret = new Doctor();
 
-				ret.setStaffNum(staffNum);
+				// We put the data into Doctor
+				int idAmbulatory = resultSet.getInt("idAmbulatorio");
+				Ambulatory ambulatory = new Ambulatory();
+				ambulatory.setId(idAmbulatory);
+
+				ret.setDni(resultSet.getString("dniSanitario"));
+				ret.setStaffNum(resultSet.getInt("numPersonal"));
+				ret.setSalary(resultSet.getFloat("salario"));
+				ret.setAmbulatory(ambulatory);
+				ret.setType(resultSet.getString("tipo"));
+				ret.setSpeciality(resultSet.getString("especialidad"));
+				if (resultSet.getBoolean("MIR")) {
+					ret.setMir(true);
+				} else {
+					ret.setMir(false);
+				}
 
 			}
 		} catch (SQLException sqle) {
+			System.out.println("Error con la BBDD - " + sqle.getMessage());
 		} catch (Exception e) {
+			System.out.println("Error generico - " + e.getMessage());
 		} finally {
 			try {
 				if (resultSet != null)
@@ -65,8 +84,8 @@ public class DoctorManager extends AbstractManager<Doctor> {
 			}
 			;
 			try {
-				if (statement != null)
-					statement.close();
+				if (preparedStatement != null)
+					preparedStatement.close();
 			} catch (Exception e) {
 			}
 			;
@@ -88,7 +107,7 @@ public class DoctorManager extends AbstractManager<Doctor> {
 		ArrayList<Doctor> ret = null;
 
 		// SQL we want to launch
-		String sql = "SELECT * from " + SANITARIAN_TABLE + " WHERE tipo";
+		String sql = "SELECT * FROM `sanitario` WHERE tipo = 'Medicina'";
 
 		// The connection with BBDD
 		Connection connection = null;

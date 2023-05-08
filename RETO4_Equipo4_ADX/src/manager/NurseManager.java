@@ -34,26 +34,41 @@ public class NurseManager extends AbstractManager<Nurse> {
 	public static final String SANITARIAN_TABLE = "sanitario";
 
 	@Override
-	public Nurse select(int id) throws SQLException, Exception {
+	public Nurse select(int staffNum) throws SQLException, Exception {
 		Nurse ret = null;
 
-		String sql = "select * from " + SANITARIAN_TABLE + " where id=" + id + "' and tipo='Enfermeria'";
+		String sql = "SELECT * FROM `sanitario` WHERE numPersonal = ? AND tipo = 'Enfermeria';";
 
 		Connection connection = null;
-		Statement statement = null;
+		PreparedStatement preparedStatement = null;
 		ResultSet resultSet = null;
 
 		try {
 			Class.forName(BBDDUtils.DRIVER_LOCAL);
 			connection = DriverManager.getConnection(BBDDUtils.URL_LOCAL, BBDDUtils.USER_LOCAL, BBDDUtils.PASS_LOCAL);
-			statement = connection.createStatement();
-			resultSet = statement.executeQuery(sql);
-
+			preparedStatement = connection.prepareStatement(sql);
+			preparedStatement.setInt(1, staffNum);
+			resultSet = preparedStatement.executeQuery();
 			while (resultSet.next()) {
 				if (null == ret)
 					ret = new Nurse();
 
-				ret.setStaffNum(id);
+				// We put the data into Doctor
+				int idAmbulatory = resultSet.getInt("idAmbulatorio");
+				Ambulatory ambulatory = new Ambulatory();
+				ambulatory.setId(idAmbulatory);
+
+				ret.setDni(resultSet.getString("dniSanitario"));
+				ret.setStaffNum(resultSet.getInt("numPersonal"));
+				ret.setSalary(resultSet.getFloat("salario"));
+				ret.setAmbulatory(ambulatory);
+				ret.setType(resultSet.getString("tipo"));
+				ret.setCategory(resultSet.getString("categoria"));
+				if (resultSet.getBoolean("EIR")) {
+					ret.setEir(true);
+				} else {
+					ret.setEir(false);
+				}
 
 			}
 		} catch (SQLException sqle) {
@@ -66,8 +81,8 @@ public class NurseManager extends AbstractManager<Nurse> {
 			}
 			;
 			try {
-				if (statement != null)
-					statement.close();
+				if (preparedStatement != null)
+					preparedStatement.close();
 			} catch (Exception e) {
 			}
 			;
@@ -89,7 +104,7 @@ public class NurseManager extends AbstractManager<Nurse> {
 		ArrayList<Nurse> ret = null;
 
 		// SQL we want to launch
-		String sql = "select * from" + SANITARIAN_TABLE;
+		String sql = "SELECT * FROM `sanitario` WHERE tipo = 'Enfermeria'";
 
 		// The connection with BBDD
 		Connection connection = null;
@@ -121,18 +136,13 @@ public class NurseManager extends AbstractManager<Nurse> {
 				Nurse nurse = new Nurse();
 
 				// We take out the columns of the RS
-				String dni = resultSet.getString("dni");
+				String dni = resultSet.getString("dniSanitario");
 				int staffNum = resultSet.getInt("numPersonal");
 				float salary = resultSet.getFloat("salario");
 				int idAmbulatory = resultSet.getInt("idAmbulatorio");
 				String type = resultSet.getString("tipo");
 				String category = resultSet.getString("categoria");
-				String mir = resultSet.getString("MIR");
-				String name = resultSet.getString("nombre");
-				String surname = resultSet.getString("apellido");
-				String gender = resultSet.getString("sexo");
-				Date birthDate = resultSet.getDate("fechaNac");
-				String password = resultSet.getString("contrasena");
+				Boolean eir = resultSet.getBoolean("EIR");
 
 				// We put the data into Doctor
 				Ambulatory ambulatory = new Ambulatory();
@@ -144,16 +154,11 @@ public class NurseManager extends AbstractManager<Nurse> {
 				nurse.setAmbulatory(ambulatory);
 				nurse.setType(type);
 				nurse.setCategory(category);
-				if (mir.equalsIgnoreCase("true")) {
+				if (eir) {
 					nurse.setEir(true);
 				} else {
 					nurse.setEir(false);
 				}
-				nurse.setName(name);
-				nurse.setSurname(surname);
-				nurse.setGender(gender);
-				nurse.setBirthDate(birthDate);
-				nurse.setPassword(password);
 
 				// We save it in ret
 				ret.add(nurse);
@@ -295,7 +300,7 @@ public class NurseManager extends AbstractManager<Nurse> {
 	}
 
 	@Override
-	public void delete(int id) throws SQLException, Exception {
+	public void delete(int staffNum) throws SQLException, Exception {
 		// Connection with the BD
 		Connection connection = null;
 
@@ -310,7 +315,7 @@ public class NurseManager extends AbstractManager<Nurse> {
 			connection = DriverManager.getConnection(BBDDUtils.URL_LOCAL, BBDDUtils.USER_LOCAL, BBDDUtils.PASS_LOCAL);
 
 			// SQL structure
-			String sql = "delete from " + SANITARIAN_TABLE + " where dniSanitario = '" + id;
+			String sql = "delete from " + SANITARIAN_TABLE + " where numPersonal = '" + staffNum;
 			preparedStatement = connection.prepareStatement(sql);
 
 			// We execute
