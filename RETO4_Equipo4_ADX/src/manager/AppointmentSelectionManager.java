@@ -82,7 +82,9 @@ public class AppointmentSelectionManager {
 			}
 
 		} catch (SQLException sqle) {
+			throw sqle;
 		} catch (Exception e) {
+			throw e;
 		} finally {
 			try {
 				if (resultSet != null)
@@ -142,7 +144,9 @@ public class AppointmentSelectionManager {
 				ret.add(date);
 			}
 		} catch (SQLException sqle) {
+			throw sqle;
 		} catch (Exception e) {
+			throw e;
 		} finally {
 			try {
 				if (resultSet != null)
@@ -202,7 +206,9 @@ public class AppointmentSelectionManager {
 				ret.setPhoneNumber(phoneNumber);
 			}
 		} catch (SQLException sqle) {
+			throw sqle;
 		} catch (Exception e) {
+			throw e;
 		} finally {
 			try {
 				if (resultSet != null)
@@ -262,7 +268,9 @@ public class AppointmentSelectionManager {
 				ret.add(id);
 			}
 		} catch (SQLException sqle) {
+			throw sqle;
 		} catch (Exception e) {
+			throw e;
 		} finally {
 			try {
 				if (resultSet != null)
@@ -292,8 +300,9 @@ public class AppointmentSelectionManager {
 	 * @param type String. Type of sanitarian ('Enfermeria', 'Medicina')
 	 * @param date String.
 	 * @return
+	 * @throws SQLException, Exception 
 	 */
-	public ArrayList<Sanitarian> showAvailableSanitarianByDate(String type, String date) {
+	public ArrayList<Sanitarian> showAvailableSanitarianByDate(String type, String date) throws SQLException, Exception {
 		ArrayList<Sanitarian> ret = null;
 
 		String sql = "select js.dniSanitario, u.nombre from jornadasanitario js join jornada j on js.idJornada=j.idJornada "
@@ -333,7 +342,9 @@ public class AppointmentSelectionManager {
 			}
 
 		} catch (SQLException sqle) {
+			throw sqle;
 		} catch (Exception e) {
+			throw e;
 		} finally {
 			try {
 				if (resultSet != null)

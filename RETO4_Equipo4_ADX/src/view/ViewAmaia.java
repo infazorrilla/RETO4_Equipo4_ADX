@@ -82,7 +82,6 @@ public class ViewAmaia {
 	private JButton btnLoginOk;
 	private JButton btnLoginCancel;
 	private JButton btnLoginResgistration;
-	private JTextField tfModifyPatientDNI;
 	private JTextField tfModifySanitarianDNI;
 	private JPasswordField tfModifySanitarianPassword;
 	private JButton btnModifySanitarianOk;
@@ -104,6 +103,8 @@ public class ViewAmaia {
 	private JButton btntodo1;
 	private JButton btntodo2;
 	private JButton btnModifySanitarianData;
+	private JTable tablePatientData;
+	private JScrollPane scrollPane_1;
 
 	/**
 	 * Create the application.
@@ -129,7 +130,7 @@ public class ViewAmaia {
 //		Login panel
 		panelLogin = new JPanel();
 		panelLogin.setBackground(new Color(0, 128, 192));
-		panelLogin.setBounds(545, 0, 71, 351);
+		panelLogin.setBounds(0, 0, 616, 351);
 		frame.getContentPane().add(panelLogin);
 		panelLogin.setLayout(null);
 		panelLogin.setVisible(true);
@@ -169,9 +170,22 @@ public class ViewAmaia {
 				}
 
 				if (user instanceof Patient) {
-					tfModifyPatientDNI.setText(userDNI);
 //					panelModifyPatient.setVisible(true);
 					panelSelectAppointmentAmbulatoryType.setVisible(true);
+
+					// Panel Modify Patient
+					tablePatientData.setModel(
+							new DefaultTableModel(new Object[][] {}, new String[] { "", ""}));
+					
+					DefaultTableModel model = (DefaultTableModel) tablePatientData.getModel();
+					model.setRowCount(0);
+
+					model.addRow(new String[] { "DNI", user.getDni()});
+					model.addRow(new String[] { "Nombre", user.getName()});
+					model.addRow(new String[] { "Apellido", user.getSurname()});
+					model.addRow(new String[] { "Fecha de nacimiento", user.getBirthDate().toString()});
+					model.addRow(new String[] { "Dirección", ((Patient) user).getAddress()});
+					model.addRow(new String[] { "Teléfono", ((Patient) user).getPhoneNumber()});
 				}
 
 				if (user instanceof Doctor) {
@@ -192,11 +206,10 @@ public class ViewAmaia {
 					}
 					DefaultTableModel model = (DefaultTableModel) tableBlockPatients.getModel();
 					model.setRowCount(0);
-					
 
 					for (Patient patient : patients) {
-							model.addRow(new String[] { patient.getDni(), patient.getName(), patient.getSurname(),
-									blockDesblockPatientManager.patientState(patient.isBlocked()) });
+						model.addRow(new String[] { patient.getDni(), patient.getName(), patient.getSurname(),
+								blockDesblockPatientManager.patientState(patient.isBlocked()) });
 					}
 
 				}
@@ -204,7 +217,7 @@ public class ViewAmaia {
 				if (user instanceof Nurse) {
 					tfModifySanitarianDNI.setText(userDNI);
 //					panelModifySanitarian.setVisible(true);
-					
+
 					// Panel Block Patient
 					panelBlockPatient.setVisible(true);
 					ArrayList<Patient> patients = null;
@@ -219,11 +232,10 @@ public class ViewAmaia {
 					}
 					DefaultTableModel model = (DefaultTableModel) tableBlockPatients.getModel();
 					model.setRowCount(0);
-					
 
 					for (Patient patient : patients) {
-							model.addRow(new String[] { patient.getDni(), patient.getName(),
-									blockDesblockPatientManager.patientState(patient.isBlocked()) });
+						model.addRow(new String[] { patient.getDni(), patient.getName(),
+								blockDesblockPatientManager.patientState(patient.isBlocked()) });
 					}
 				}
 
@@ -254,40 +266,27 @@ public class ViewAmaia {
 //		Modify Patient panel
 		panelModifyPatient = new JPanel();
 		panelModifyPatient.setBackground(new Color(0, 128, 192));
-		panelModifyPatient.setBounds(527, 0, 89, 351);
+		panelModifyPatient.setBounds(0, 0, 616, 351);
 		frame.getContentPane().add(panelModifyPatient);
 		panelModifyPatient.setLayout(null);
 		panelModifyPatient.setVisible(false);
 
 		JLabel lblModifyPatient = new JLabel("Modificación de datos");
 		lblModifyPatient.setHorizontalAlignment(SwingConstants.CENTER);
-		lblModifyPatient.setBounds(225, 32, 165, 14);
+		lblModifyPatient.setBounds(336, 32, 165, 14);
 		panelModifyPatient.add(lblModifyPatient);
 
-		JLabel lblModifyPatientDNI = new JLabel("DNI:");
-		lblModifyPatientDNI.setSize(94, 23);
-		lblModifyPatientDNI.setLocation(106, 102);
-		lblModifyPatientDNI.setBounds(106, 93, 119, 14);
-		panelModifyPatient.add(lblModifyPatientDNI);
-
 		JLabel lblModifyPatientAddress = new JLabel("Dirección:");
-		lblModifyPatientAddress.setBounds(106, 118, 127, 14);
+		lblModifyPatientAddress.setBounds(301, 97, 89, 14);
 		panelModifyPatient.add(lblModifyPatientAddress);
 
 		JLabel lblModifyPatientPhoneNumber = new JLabel("Teléfono:");
-		lblModifyPatientPhoneNumber.setBounds(104, 143, 119, 14);
+		lblModifyPatientPhoneNumber.setBounds(301, 127, 81, 14);
 		panelModifyPatient.add(lblModifyPatientPhoneNumber);
 
 		JLabel lblModifyPatientPassword = new JLabel("Contraseña:");
-		lblModifyPatientPassword.setBounds(106, 168, 119, 14);
+		lblModifyPatientPassword.setBounds(301, 157, 81, 14);
 		panelModifyPatient.add(lblModifyPatientPassword);
-
-		tfModifyPatientDNI = new JTextField();
-		tfModifyPatientDNI.setEnabled(false);
-		tfModifyPatientDNI.setEditable(false);
-		tfModifyPatientDNI.setBounds(225, 90, 183, 20);
-		panelModifyPatient.add(tfModifyPatientDNI);
-		tfModifyPatientDNI.setColumns(10);
 
 		tfModifyPatientPassword = new JPasswordField();
 		tfModifyPatientPassword.addCaretListener(new CaretListener() {
@@ -311,7 +310,7 @@ public class ViewAmaia {
 				}
 			}
 		});
-		tfModifyPatientPassword.setBounds(225, 165, 183, 20);
+		tfModifyPatientPassword.setBounds(398, 155, 183, 20);
 		panelModifyPatient.add(tfModifyPatientPassword);
 
 		tfModifyPatientAddress = new JTextField();
@@ -337,7 +336,7 @@ public class ViewAmaia {
 			}
 		});
 		tfModifyPatientAddress.setColumns(10);
-		tfModifyPatientAddress.setBounds(225, 115, 183, 20);
+		tfModifyPatientAddress.setBounds(398, 95, 183, 20);
 		panelModifyPatient.add(tfModifyPatientAddress);
 
 		tfModifyPatientPhoneNumber = new JTextField();
@@ -366,7 +365,7 @@ public class ViewAmaia {
 			}
 		});
 		tfModifyPatientPhoneNumber.setColumns(10);
-		tfModifyPatientPhoneNumber.setBounds(225, 140, 183, 20);
+		tfModifyPatientPhoneNumber.setBounds(398, 125, 183, 20);
 		panelModifyPatient.add(tfModifyPatientPhoneNumber);
 
 		btnModifyPatientOk = new JButton("Guardar");
@@ -444,8 +443,19 @@ public class ViewAmaia {
 				}
 			}
 		});
-		btnModifyPatientUnsubscribe.setBounds(260, 206, 130, 23);
+		btnModifyPatientUnsubscribe.setBounds(398, 202, 183, 23);
 		panelModifyPatient.add(btnModifyPatientUnsubscribe);
+		
+		scrollPane_1 = new JScrollPane();
+		scrollPane_1.setBounds(10, 84, 268, 103);
+		panelModifyPatient.add(scrollPane_1);
+
+		tablePatientData = new JTable();
+		tablePatientData.setEnabled(false);
+		tablePatientData.setRowSelectionAllowed(false);
+		scrollPane_1.setViewportView(tablePatientData);
+		tablePatientData.setDefaultEditor(Object.class, null);
+
 
 //		Modify Sanitarian panel
 		panelModifySanitarian = new JPanel();
@@ -569,8 +579,8 @@ public class ViewAmaia {
 		panelBlockPatient.add(scrollPane);
 
 		tableBlockPatients = new JTable();
-		tableBlockPatients
-				.setModel(new DefaultTableModel(new Object[][] {}, new String[] { "DNI", "Nombre", "Apellido", "Estado" }));
+		tableBlockPatients.setModel(
+				new DefaultTableModel(new Object[][] {}, new String[] { "DNI", "Nombre", "Apellido", "Estado" }));
 		scrollPane.setViewportView(tableBlockPatients);
 		tableBlockPatients.setDefaultEditor(Object.class, null);
 		tableBlockPatients.addMouseListener((MouseListener) new MouseAdapter() {
@@ -780,11 +790,17 @@ public class ViewAmaia {
 			public void actionPerformed(ActionEvent e) {
 				String dateString = cbSelectAppointmentDate.getSelectedItem().toString();
 
-				ArrayList<Sanitarian> sanitarians = appointmentSelectionManager
-						.showAvailableSanitarianByDate(wantedSanitarian, dateString);
-
-				for (Sanitarian sanitarian : sanitarians) {
-					cbSelectAppointmentSanitarian.addItem(sanitarian.getName());
+				ArrayList<Sanitarian> sanitarians;
+				try {
+					sanitarians = appointmentSelectionManager.showAvailableSanitarianByDate(wantedSanitarian,
+							dateString);
+					for (Sanitarian sanitarian : sanitarians) {
+						cbSelectAppointmentSanitarian.addItem(sanitarian.getName());
+					}
+				} catch (SQLException e1) {
+					JOptionPane.showMessageDialog(null, "Se ha producido un error con la Base de Datos.", "Error", 0);
+				} catch (Exception e1) {
+					JOptionPane.showMessageDialog(null, "Se ha producido un error.", "Error", 0);
 				}
 			}
 		});
@@ -826,9 +842,6 @@ public class ViewAmaia {
 		});
 		btnNewButton.setBounds(49, 91, 89, 23);
 		panelSelectAppointmentDateTimeSlot.add(btnNewButton);
-		
-		
-		
 
 	}
 }

@@ -21,8 +21,9 @@ public class BlockUnlockPatientManager {
 	 * Returns an arrayList of patients who have appointments in one ambulatory (selected by ambulatory's id)
 	 * @param id int
 	 * @return ArrayList<Patient>
+	 * @throws SQLException, Exception 
 	 */
-	public ArrayList<Patient> showPatientByAmbulatoryId(int id) {
+	public ArrayList<Patient> showPatientByAmbulatoryId(int id) throws SQLException, Exception {
 		ArrayList<Patient> ret = null;
 
 		String sql = "select ci.dniPaciente from citajornadafranja c " + "join jornada j on  c.idJornada=j.idJornada "
@@ -53,7 +54,9 @@ public class BlockUnlockPatientManager {
 			}
 
 		} catch (SQLException sqle) {
+			throw sqle;
 		} catch (Exception e) {
+			throw e;
 		} finally {
 			try {
 				if (resultSet != null)
@@ -97,8 +100,9 @@ public class BlockUnlockPatientManager {
 	/**
 	 * Sets 'true' in 'Paciente' table's 'bloqueado'.
 	 * @param patient Patient
+	 * @throws SQLException, Exception 
 	 */
-	public void blockPatient(Patient patient) {
+	public void blockPatient(Patient patient) throws SQLException, Exception {
 		Connection connection = null;
 		PreparedStatement preparedStatement = null;
 
@@ -116,7 +120,9 @@ public class BlockUnlockPatientManager {
 			preparedStatement.executeUpdate();
 
 		} catch (SQLException sqle) {
+			throw sqle;
 		} catch (Exception e) {
+			throw e;
 		} finally {
 			try {
 				if (preparedStatement != null)
@@ -137,8 +143,9 @@ public class BlockUnlockPatientManager {
 	/**
 	 * Sets 'false' in 'Paciente' table's 'bloqueado'.
 	 * @param patient Patient
+	 * @throws SQLException, Exception 
 	 */
-	public void unlockPatient(Patient patient) {
+	public void unlockPatient(Patient patient) throws SQLException, Exception {
 		Connection connection = null;
 		PreparedStatement preparedStatement = null;
 
@@ -156,7 +163,9 @@ public class BlockUnlockPatientManager {
 			preparedStatement.executeUpdate();
 
 		} catch (SQLException sqle) {
+			throw sqle;
 		} catch (Exception e) {
+			throw e;
 		} finally {
 			try {
 				if (preparedStatement != null)

@@ -50,7 +50,9 @@ public class TimeSlotManager extends AbstractManager<TimeSlot> {
 				ret.setEndTime(endTime);
 			}
 		} catch (SQLException sqle) {
+			throw sqle;
 		} catch (Exception e) {
+			throw e;
 		} finally {
 			try {
 				if (resultSet != null)
@@ -112,7 +114,9 @@ public class TimeSlotManager extends AbstractManager<TimeSlot> {
 			}
 
 		} catch (SQLException sqle) {
+			throw sqle;
 		} catch (Exception e) {
+			throw e;
 		} finally {
 			try {
 				if (resultSet != null)
@@ -157,7 +161,9 @@ public class TimeSlotManager extends AbstractManager<TimeSlot> {
 			statement.executeUpdate(sql);
 
 		} catch (SQLException sqle) {
+			throw sqle;
 		} catch (Exception e) {
+			throw e;
 		} finally {
 			try {
 				if (statement != null)
@@ -200,7 +206,9 @@ public class TimeSlotManager extends AbstractManager<TimeSlot> {
 			preparedStatement.executeUpdate();
 
 		} catch (SQLException sqle) {
+			throw sqle;
 		} catch (Exception e) {
+			throw e;
 		} finally {
 			try {
 				if (preparedStatement != null)
@@ -238,7 +246,9 @@ public class TimeSlotManager extends AbstractManager<TimeSlot> {
 			preparedStatement.executeUpdate();
 
 		} catch (SQLException sqle) {
+			throw sqle;
 		} catch (Exception e) {
+			throw e;
 		} finally {
 			try {
 				if (preparedStatement != null)

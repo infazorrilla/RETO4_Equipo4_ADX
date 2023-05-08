@@ -130,7 +130,9 @@ public class UserDataModificationManager {
 			preparedStatement.executeUpdate();
 
 		} catch (SQLException sqle) {
+			throw sqle;
 		} catch (Exception e) {
+			throw e;
 		} finally {
 			try {
 				if (preparedStatement != null)
@@ -170,7 +172,9 @@ public class UserDataModificationManager {
 			preparedStatement.executeUpdate();
 
 		} catch (SQLException sqle) {
+			throw sqle;
 		} catch (Exception e) {
+			throw e;
 		} finally {
 			try {
 				if (preparedStatement != null)
@@ -210,7 +214,9 @@ public class UserDataModificationManager {
 			preparedStatement.executeUpdate();
 
 		} catch (SQLException sqle) {
+			throw sqle;
 		} catch (Exception e) {
+			throw e;
 		} finally {
 			try {
 				if (preparedStatement != null)
@@ -250,7 +256,9 @@ public class UserDataModificationManager {
 			preparedStatement.executeUpdate();
 
 		} catch (SQLException sqle) {
+			throw sqle;
 		} catch (Exception e) {
+			throw e;
 		} finally {
 			try {
 				if (preparedStatement != null)
@@ -290,7 +298,9 @@ public class UserDataModificationManager {
 			preparedStatement.executeUpdate();
 
 		} catch (SQLException sqle) {
+			throw sqle;
 		} catch (Exception e) {
+			throw e;
 		} finally {
 			try {
 				if (preparedStatement != null)
@@ -331,7 +341,9 @@ public class UserDataModificationManager {
 //			deleteUser(dni);
 
 		} catch (SQLException sqle) {
+			throw sqle;
 		} catch (Exception e) {
+			throw e;
 		} finally {
 			try {
 				if (preparedStatement != null)
@@ -372,7 +384,9 @@ public class UserDataModificationManager {
 			deleteUser(dni);
 
 		} catch (SQLException sqle) {
+			throw sqle;
 		} catch (Exception e) {
+			throw e;
 		} finally {
 			try {
 				if (preparedStatement != null)
@@ -448,7 +462,9 @@ public class UserDataModificationManager {
 			}
 
 		} catch (SQLException sqle) {
+			throw sqle;
 		} catch (Exception e) {
+			throw e;
 		} finally {
 			try {
 				if (resultSet != null)
@@ -531,7 +547,9 @@ public class UserDataModificationManager {
 			}
 
 		} catch (SQLException sqle) {
+			throw sqle;
 		} catch (Exception e) {
+			throw e;
 		} finally {
 			try {
 				if (resultSet != null)
@@ -604,7 +622,9 @@ public class UserDataModificationManager {
 			}
 
 		} catch (SQLException sqle) {
+			throw sqle;
 		} catch (Exception e) {
+			throw e;
 		} finally {
 			try {
 				if (resultSet != null)
@@ -650,7 +670,9 @@ public class UserDataModificationManager {
 //			deleteUser(dni);
 
 		} catch (SQLException sqle) {
+			throw sqle;
 		} catch (Exception e) {
+			throw e;
 		} finally {
 			try {
 				if (preparedStatement != null)
@@ -670,8 +692,9 @@ public class UserDataModificationManager {
 	/**
 	 * Deletes the row in DB's 'Usuario' table by dni
 	 * @param dni String
+	 * @throws SQLException, Excepcion 
 	 */
-	private void deleteUser(String dni) {
+	private void deleteUser(String dni) throws SQLException, Exception {
 		Connection connection = null;
 		PreparedStatement preparedStatement = null;
 
@@ -686,7 +709,9 @@ public class UserDataModificationManager {
 			preparedStatement.executeUpdate();
 
 		} catch (SQLException sqle) {
+			throw sqle;
 		} catch (Exception e) {
+			throw e;
 		} finally {
 			try {
 				if (preparedStatement != null)

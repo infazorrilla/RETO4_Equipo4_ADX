@@ -56,7 +56,9 @@ public class WorkingDayManager extends AbstractManager<WorkingDay> {
 			}
 
 		} catch (SQLException sqle) {
+			throw sqle;
 		} catch (Exception e) {
+			throw e;
 		} finally {
 			try {
 				if (resultSet != null)
@@ -121,7 +123,9 @@ public class WorkingDayManager extends AbstractManager<WorkingDay> {
 			}
 
 		} catch (SQLException sqle) {
+			throw sqle;
 		} catch (Exception e) {
+			throw e;
 		} finally {
 			try {
 				if (resultSet != null)
@@ -172,7 +176,9 @@ public class WorkingDayManager extends AbstractManager<WorkingDay> {
 			statement.executeUpdate(sql);
 
 		} catch (SQLException sqle) {
+			throw sqle;
 		} catch (Exception e) {
+			throw e;
 		} finally {
 			try {
 				if (statement != null)
@@ -215,7 +221,9 @@ public class WorkingDayManager extends AbstractManager<WorkingDay> {
 			preparedStatement.executeUpdate();
 
 		} catch (SQLException sqle) {
+			throw sqle;
 		} catch (Exception e) {
+			throw e;
 		} finally {
 			try {
 				if (preparedStatement != null)
@@ -252,7 +260,9 @@ public class WorkingDayManager extends AbstractManager<WorkingDay> {
 			preparedStatement.executeUpdate();
 
 		} catch (SQLException sqle) {
+			throw sqle;
 		} catch (Exception e) {
+			throw e;
 		} finally {
 			try {
 				if (preparedStatement != null)
