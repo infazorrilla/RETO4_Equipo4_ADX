@@ -183,6 +183,162 @@ public class View {
 		frame.getContentPane().setLayout(null);
 		frame.setResizable(false); // fixed dimensions
 		frame.setLocationRelativeTo(null); // central position on the screen
+						
+						//		LOGIN | PANEL
+								panelLogin = new JPanel();
+								panelLogin.setBackground(new Color(16, 169, 121));
+								panelLogin.setBounds(0, 0, 344, 601);
+								frame.getContentPane().add(panelLogin);
+								panelLogin.setLayout(null);
+								panelLogin.setVisible(true);
+								
+										JLabel lblLogin = new JLabel("Inicio de sesión");
+										panelLogin.setBounds(0, 0, 616, 351);
+										panelLogin.add(lblLogin);
+										
+												JButton btnLoginResgistrationPatient = new JButton("Registro Paciente");
+												btnLoginResgistrationPatient.setBackground(new Color(16, 169, 121));
+												btnLoginResgistrationPatient.setFont(new Font("Tahoma", Font.BOLD, 12));
+												btnLoginResgistrationPatient.setForeground(new Color(255, 255, 255));
+												btnLoginResgistrationPatient.addActionListener(new ActionListener() {
+													public void actionPerformed(ActionEvent e) {
+														panelLogin.setVisible(false);
+														panelRegistrationPatient.setVisible(true);
+													}
+												});
+												btnLoginResgistrationPatient.setBounds(231, 245, 154, 23);
+												panelLogin.add(btnLoginResgistrationPatient);
+												
+														btnRegistroSanitarian = new JButton("Registro Sanitario");
+														btnRegistroSanitarian.setBackground(new Color(16, 169, 121));
+														btnRegistroSanitarian.setFont(new Font("Tahoma", Font.BOLD, 12));
+														btnRegistroSanitarian.setForeground(new Color(255, 255, 255));
+														btnRegistroSanitarian.addActionListener(new ActionListener() {
+															public void actionPerformed(ActionEvent e) {
+																panelLogin.setVisible(false);
+																panelRegistrationPatient.setVisible(false);
+																panelNurseOrDoctor.setVisible(true);
+																panelRegistrationDoctor.setVisible(false);
+																panelRegistrationNurse.setVisible(false);
+															}
+														});
+														btnRegistroSanitarian.setBounds(231, 279, 154, 23);
+														panelLogin.add(btnRegistroSanitarian);
+														
+																lblCross = new JLabel("");
+																lblCross.setIcon(new ImageIcon(View.class.getResource("/view/images/OsasunbideCross.jpg")));
+																lblCross.setBounds(476, 105, 140, 140);
+																panelLogin.add(lblCross);
+																
+																		JLabel lblOsasunbide = new JLabel("");
+																		lblOsasunbide.setIcon(new ImageIcon(View.class.getResource("/view/images/Letters.jpg")));
+																		lblOsasunbide.setBounds(0, 105, 140, 140);
+																		panelLogin.add(lblOsasunbide);
+																		
+																		JPanel panel = new JPanel();
+																		panel.setBackground(new Color(255, 255, 255));
+																		panel.setBounds(180, 74, 237, 157);
+																		panelLogin.add(panel);
+																		panel.setLayout(null);
+																		
+																				JLabel lblLoginDNI = new JLabel("DNI:");
+																				lblLoginDNI.setBounds(41, 11, 33, 17);
+																				panel.add(lblLoginDNI);
+																				lblLoginDNI.setBackground(new Color(0, 0, 0));
+																				lblLoginDNI.setForeground(new Color(16, 169, 121));
+																				lblLoginDNI.setFont(new Font("Tahoma", Font.BOLD, 14));
+																				
+																						JLabel lblLoginPassword = new JLabel("Contraseña:");
+																						lblLoginPassword.setBounds(41, 60, 122, 14);
+																						panel.add(lblLoginPassword);
+																						lblLoginPassword.setFont(new Font("Tahoma", Font.BOLD, 14));
+																						lblLoginPassword.setForeground(new Color(16, 169, 121));
+																						
+																								btnLoginOk = new JButton("Aceptar");
+																								btnLoginOk.setForeground(new Color(255, 255, 255));
+																								btnLoginOk.setBackground(new Color(16, 169, 121));
+																								btnLoginOk.setBounds(22, 123, 89, 23);
+																								panel.add(btnLoginOk);
+																								
+																										btnLoginCancel = new JButton("Cancelar");
+																										btnLoginCancel.setForeground(new Color(255, 255, 255));
+																										btnLoginCancel.setBackground(new Color(16, 169, 121));
+																										btnLoginCancel.setBounds(121, 123, 89, 23);
+																										panel.add(btnLoginCancel);
+																										
+																												JPasswordField tfLoginPassword = new JPasswordField();
+																												tfLoginPassword.setBounds(41, 81, 171, 20);
+																												panel.add(tfLoginPassword);
+																												
+																														JTextField tfLoginUser = new JTextField();
+																														tfLoginUser.setBounds(41, 29, 171, 20);
+																														panel.add(tfLoginUser);
+																														tfLoginUser.setColumns(10);
+																														btnLoginCancel.addActionListener(new ActionListener() {
+																															public void actionPerformed(ActionEvent e) {
+																																tfLoginUser.setText("");
+																																tfLoginPassword.setText("");
+																															}
+																														});
+																														btnLoginOk.addActionListener(new ActionListener() {
+																															public void actionPerformed(ActionEvent e) {
+																																userDNI = tfLoginUser.getText();
+																																// LOGING CHECK
+																																String pass = new String(tfLoginPassword.getPassword());
+
+																																try {
+																																	user = userDataModificationManager.identifyUserType(userDNI);
+																																} catch (SQLException e2) {
+																																	JOptionPane.showMessageDialog(null, e2.getMessage(), "Error", 0);
+																																} catch (Exception e2) {
+																																	JOptionPane.showMessageDialog(null, e2.getMessage(), "Error", 0);
+																																}
+
+																																int verifiedUser = new LoginManager().getUserByDniAndPassword(userDNI, pass);
+
+																																switch (verifiedUser) {
+																																case 1:
+																																	JOptionPane.showMessageDialog(null, "ACCEDIENDO COMO PACIENTE");
+																																	panelLogin.setVisible(false);
+																																	panelPatient.setVisible(true);
+																																	tfModifyPatientDNI.setText(userDNI);
+																																	break;
+																																case 2:
+																																	JOptionPane.showMessageDialog(null, "ACCEDIENDO COMO EMPLEADO"); // ADMIN
+																																	panelLogin.setVisible(false);
+																																	panelSanitarian.setVisible(true);
+																																	tfModifySanitarianDNI.setText(userDNI);
+																																	break;
+																																case 3:
+																																	JOptionPane.showMessageDialog(null, "USUARIO BLOQUEADO"); // PATIENT BLOCKED
+																																	break;
+																																default:
+																																	JOptionPane.showMessageDialog(null, "USUARIO O CONTRSEÑA INCORRETO");
+																																	tfLoginPassword.setText("");
+																																}
+
+																																if (user instanceof Sanitarian) {
+																																	panelBlockPatient.setVisible(true);
+																																	ArrayList<Patient> patients = null;
+																																	try {
+																																		patients = blockUnlockPatientManager.showPatientByAmbulatoryId(
+																																				userDataModificationManager.selectDoctor(userDNI).getAmbulatory().getId());
+																																	} catch (SQLException e2) {
+																																		JOptionPane.showMessageDialog(null, "Se ha producido un error con la BBDD.", "Error", 0);
+																																	} catch (Exception e2) {
+																																		JOptionPane.showMessageDialog(null, "Se ha producido un error.", "Error", 0);
+
+																																	}
+																																	DefaultTableModel model = (DefaultTableModel) tableBlockPatients.getModel();
+																																	model.setRowCount(0);
+
+																																	for (Patient patient : patients) {
+																																		model.addRow(new String[] { patient.getDni(), patient.getName(), patient.getSurname(),
+																																				blockUnlockPatientManager.patientState(patient.isBlocked()) });
+																																	}
+																																}
+																															}
+																														});
 				
 				//		PANEL | REGISTRATION: SANITARIAN
 						panelNurseOrDoctor = new JPanel();
@@ -216,341 +372,206 @@ public class View {
 										btnSelectNurse.setBounds(310, 128, 100, 40);
 										panelNurseOrDoctor.add(btnSelectNurse);
 										
-												JLabel lblNewLabel = new JLabel("Seleccione el tipo de Sanitario:");
-												lblNewLabel.setForeground(new Color(255, 255, 255));
-												lblNewLabel.setHorizontalAlignment(SwingConstants.CENTER);
-												lblNewLabel.setFont(new Font("Tahoma", Font.BOLD, 18));
-												lblNewLabel.setBounds(158, 77, 300, 40);
-												panelNurseOrDoctor.add(lblNewLabel);
+												JLabel lblTitleNurseOrDoctor = new JLabel("Seleccione el tipo de Sanitario:");
+												lblTitleNurseOrDoctor.setForeground(new Color(255, 255, 255));
+												lblTitleNurseOrDoctor.setHorizontalAlignment(SwingConstants.CENTER);
+												lblTitleNurseOrDoctor.setFont(new Font("Tahoma", Font.BOLD, 18));
+												lblTitleNurseOrDoctor.setBounds(158, 77, 300, 40);
+												panelNurseOrDoctor.add(lblTitleNurseOrDoctor);
 												
-												JLabel lblNurse = new JLabel("");
-												lblNurse.setIcon(new ImageIcon(View.class.getResource("/view/images/NurseIcon.jpg")));
-												lblNurse.setBounds(310, 179, 140, 140);
-												panelNurseOrDoctor.add(lblNurse);
+												JLabel lblNurseIcon = new JLabel("");
+												lblNurseIcon.setIcon(new ImageIcon(View.class.getResource("/view/images/NurseIcon.jpg")));
+												lblNurseIcon.setBounds(310, 179, 140, 140);
+												panelNurseOrDoctor.add(lblNurseIcon);
 												
-												JLabel lblNurse_1 = new JLabel("");
-												lblNurse_1.setIcon(new ImageIcon(View.class.getResource("/view/images/DoctorIcon.jpg")));
-												lblNurse_1.setBounds(136, 179, 140, 140);
-												panelNurseOrDoctor.add(lblNurse_1);
+												JLabel lblDoctorIcon = new JLabel("");
+												lblDoctorIcon.setIcon(new ImageIcon(View.class.getResource("/view/images/DoctorIcon.jpg")));
+												lblDoctorIcon.setBounds(136, 179, 140, 140);
+												panelNurseOrDoctor.add(lblDoctorIcon);
 												
-												JLabel lblNurse_1_1 = new JLabel("");
-												lblNurse_1_1.setIcon(new ImageIcon(View.class.getResource("/view/images/Letters.jpg")));
-												lblNurse_1_1.setBounds(0, 105, 140, 140);
-												panelNurseOrDoctor.add(lblNurse_1_1);
+												JLabel lblLettersNurseOrDoctor = new JLabel("");
+												lblLettersNurseOrDoctor.setIcon(new ImageIcon(View.class.getResource("/view/images/Letters.jpg")));
+												lblLettersNurseOrDoctor.setBounds(0, 105, 140, 140);
+												panelNurseOrDoctor.add(lblLettersNurseOrDoctor);
 												
-												JLabel lblNurse_1_1_1 = new JLabel("");
-												lblNurse_1_1_1.setIcon(new ImageIcon(View.class.getResource("/view/images/OsasunbideCross.jpg")));
-												lblNurse_1_1_1.setBounds(476, 105, 140, 140);
-												panelNurseOrDoctor.add(lblNurse_1_1_1);
+												JLabel lblCrossNurseOrDoctor = new JLabel("");
+												lblCrossNurseOrDoctor.setIcon(new ImageIcon(View.class.getResource("/view/images/OsasunbideCross.jpg")));
+												lblCrossNurseOrDoctor.setBounds(476, 105, 140, 140);
+												panelNurseOrDoctor.add(lblCrossNurseOrDoctor);
 		
-		//		LOGIN | PANEL
-				panelLogin = new JPanel();
-				panelLogin.setBackground(new Color(16, 169, 121));
-				panelLogin.setBounds(0, 0, 344, 601);
-				frame.getContentPane().add(panelLogin);
-				panelLogin.setLayout(null);
-				panelLogin.setVisible(true);
+		//		PANEL | REGISTRATION: PATIENT
+				panelRegistrationPatient = new JPanel();
+				panelRegistrationPatient.setBounds(0, 0, 616, 351);
+				panelRegistrationPatient.setBackground(new Color(16, 169, 121));
+				frame.getContentPane().add(panelRegistrationPatient);
+				panelRegistrationPatient.setLayout(null);
+				panelRegistrationPatient.setVisible(false);
 				
-						JLabel lblLogin = new JLabel("Inicio de sesión");
-						panelLogin.setBounds(0, 0, 616, 351);
-						panelLogin.add(lblLogin);
+						JLabel lblTitleUserSingUp = new JLabel("Registro de usuario Paciente");
+						lblTitleUserSingUp.setHorizontalAlignment(SwingConstants.CENTER);
+						lblTitleUserSingUp.setForeground(new Color(255, 255, 255));
+						lblTitleUserSingUp.setFont(new Font("Tahoma", Font.BOLD, 14));
+						lblTitleUserSingUp.setBounds(235, 82, 224, 20);
+						panelRegistrationPatient.add(lblTitleUserSingUp);
 						
-								JButton btnLoginResgistrationPatient = new JButton("Registro Paciente");
-								btnLoginResgistrationPatient.setBackground(new Color(16, 169, 121));
-								btnLoginResgistrationPatient.setFont(new Font("Tahoma", Font.BOLD, 12));
-								btnLoginResgistrationPatient.setForeground(new Color(255, 255, 255));
-								btnLoginResgistrationPatient.addActionListener(new ActionListener() {
-									public void actionPerformed(ActionEvent e) {
-										panelLogin.setVisible(false);
-										panelRegistrationPatient.setVisible(true);
-									}
-								});
-								btnLoginResgistrationPatient.setBounds(231, 245, 154, 23);
-								panelLogin.add(btnLoginResgistrationPatient);
+								JLabel lblDniSingUpPatient = new JLabel("DNI:");
+								lblDniSingUpPatient.setForeground(new Color(255, 255, 255));
+								lblDniSingUpPatient.setFont(new Font("Tahoma", Font.BOLD, 12));
+								lblDniSingUpPatient.setBounds(98, 34, 119, 14);
+								panelRegistrationPatient.add(lblDniSingUpPatient);
 								
-										btnRegistroSanitarian = new JButton("Registro Sanitario");
-										btnRegistroSanitarian.setBackground(new Color(16, 169, 121));
-										btnRegistroSanitarian.setFont(new Font("Tahoma", Font.BOLD, 12));
-										btnRegistroSanitarian.setForeground(new Color(255, 255, 255));
-										btnRegistroSanitarian.addActionListener(new ActionListener() {
-											public void actionPerformed(ActionEvent e) {
-												panelLogin.setVisible(false);
-												panelRegistrationPatient.setVisible(false);
-												panelNurseOrDoctor.setVisible(true);
-												panelRegistrationDoctor.setVisible(false);
-												panelRegistrationNurse.setVisible(false);
-											}
-										});
-										btnRegistroSanitarian.setBounds(231, 279, 154, 23);
-										panelLogin.add(btnRegistroSanitarian);
+										JLabel lblNameSingUpPatient = new JLabel("Nombre:");
+										lblNameSingUpPatient.setForeground(new Color(255, 255, 255));
+										lblNameSingUpPatient.setFont(new Font("Tahoma", Font.BOLD, 12));
+										lblNameSingUpPatient.setBounds(98, 69, 119, 14);
+										panelRegistrationPatient.add(lblNameSingUpPatient);
 										
-												lblCross = new JLabel("");
-												lblCross.setIcon(new ImageIcon(View.class.getResource("/view/images/OsasunbideCross.jpg")));
-												lblCross.setBounds(476, 105, 140, 140);
-												panelLogin.add(lblCross);
+												JLabel lblSurnameSingUpPatient = new JLabel("Apellido:");
+												lblSurnameSingUpPatient.setForeground(new Color(255, 255, 255));
+												lblSurnameSingUpPatient.setFont(new Font("Tahoma", Font.BOLD, 12));
+												lblSurnameSingUpPatient.setBounds(98, 104, 119, 14);
+												panelRegistrationPatient.add(lblSurnameSingUpPatient);
 												
-														JLabel lblOsasunbide = new JLabel("");
-														lblOsasunbide.setIcon(new ImageIcon(View.class.getResource("/view/images/Letters.jpg")));
-														lblOsasunbide.setBounds(0, 105, 140, 140);
-														panelLogin.add(lblOsasunbide);
+														JLabel lblGenderSingUpPatient = new JLabel("Sexo:");
+														lblGenderSingUpPatient.setForeground(new Color(255, 255, 255));
+														lblGenderSingUpPatient.setFont(new Font("Tahoma", Font.BOLD, 12));
+														lblGenderSingUpPatient.setBounds(98, 140, 119, 14);
+														panelRegistrationPatient.add(lblGenderSingUpPatient);
 														
-														JPanel panel = new JPanel();
-														panel.setBackground(new Color(255, 255, 255));
-														panel.setBounds(180, 74, 237, 157);
-														panelLogin.add(panel);
-														panel.setLayout(null);
-														
-																JLabel lblLoginDNI = new JLabel("DNI:");
-																lblLoginDNI.setBounds(41, 11, 33, 17);
-																panel.add(lblLoginDNI);
-																lblLoginDNI.setBackground(new Color(0, 0, 0));
-																lblLoginDNI.setForeground(new Color(16, 169, 121));
-																lblLoginDNI.setFont(new Font("Tahoma", Font.BOLD, 14));
+																JLabel lblPassSingUpPatient = new JLabel("Contraseña:");
+																lblPassSingUpPatient.setForeground(new Color(255, 255, 255));
+																lblPassSingUpPatient.setFont(new Font("Tahoma", Font.BOLD, 12));
+																lblPassSingUpPatient.setBounds(98, 175, 119, 14);
+																panelRegistrationPatient.add(lblPassSingUpPatient);
 																
-																		JLabel lblLoginPassword = new JLabel("Contraseña:");
-																		lblLoginPassword.setBounds(41, 60, 122, 14);
-																		panel.add(lblLoginPassword);
-																		lblLoginPassword.setFont(new Font("Tahoma", Font.BOLD, 14));
-																		lblLoginPassword.setForeground(new Color(16, 169, 121));
+																		JTextField textFieldDNIPatient = new JTextField();
+																		textFieldDNIPatient.setBounds(98, 49, 119, 20);
+																		panelRegistrationPatient.add(textFieldDNIPatient);
+																		textFieldDNIPatient.setColumns(10);
 																		
-																				btnLoginOk = new JButton("Aceptar");
-																				btnLoginOk.setForeground(new Color(255, 255, 255));
-																				btnLoginOk.setBackground(new Color(16, 169, 121));
-																				btnLoginOk.setBounds(22, 123, 89, 23);
-																				panel.add(btnLoginOk);
+																				JTextField textFieldNamePatient = new JTextField();
+																				textFieldNamePatient.setBounds(98, 84, 119, 20);
+																				panelRegistrationPatient.add(textFieldNamePatient);
+																				textFieldNamePatient.setColumns(10);
 																				
-																						btnLoginCancel = new JButton("Cancelar");
-																						btnLoginCancel.setForeground(new Color(255, 255, 255));
-																						btnLoginCancel.setBackground(new Color(16, 169, 121));
-																						btnLoginCancel.setBounds(121, 123, 89, 23);
-																						panel.add(btnLoginCancel);
+																						JTextField textFieldSurnamePatient = new JTextField();
+																						textFieldSurnamePatient.setBounds(98, 118, 119, 20);
+																						panelRegistrationPatient.add(textFieldSurnamePatient);
+																						textFieldSurnamePatient.setColumns(10);
 																						
-																								JPasswordField tfLoginPassword = new JPasswordField();
-																								tfLoginPassword.setBounds(41, 81, 171, 20);
-																								panel.add(tfLoginPassword);
+																								JPasswordField textFieldPasswordPatient = new JPasswordField();
+																								textFieldPasswordPatient.setBounds(98, 190, 119, 20);
+																								panelRegistrationPatient.add(textFieldPasswordPatient);
 																								
-																										JTextField tfLoginUser = new JTextField();
-																										tfLoginUser.setBounds(41, 29, 171, 20);
-																										panel.add(tfLoginUser);
-																										tfLoginUser.setColumns(10);
-																										btnLoginCancel.addActionListener(new ActionListener() {
-																											public void actionPerformed(ActionEvent e) {
-																												tfLoginUser.setText("");
-																												tfLoginPassword.setText("");
-																											}
-																										});
-																										btnLoginOk.addActionListener(new ActionListener() {
-																											public void actionPerformed(ActionEvent e) {
-																												userDNI = tfLoginUser.getText();
-																												// LOGING CHECK
-																												String pass = new String(tfLoginPassword.getPassword());
+																										JComboBox<String> comboBoxGenderPatient = new JComboBox<String>();
+																										comboBoxGenderPatient.setBounds(98, 153, 119, 20);
+																										panelRegistrationPatient.add(comboBoxGenderPatient);
+																										comboBoxGenderPatient.addItem("Hombre");
+																										comboBoxGenderPatient.addItem("Mujer");
+																										
+																												JButton btnAceptarRegistro = new JButton("Aceptar");
+																												btnAceptarRegistro.setBackground(new Color(255, 255, 255));
+																												btnAceptarRegistro.setFont(new Font("Tahoma", Font.BOLD, 11));
+																												btnAceptarRegistro.setForeground(new Color(16, 169, 121));
+																												btnAceptarRegistro.addActionListener(new ActionListener() {
+																													public void actionPerformed(ActionEvent e) {
+																														Patient patient = new Patient();
+																														patient.setDni(textFieldDNIPatient.getText().trim());
+																														patient.setName(textFieldNamePatient.getText().trim());
+																														patient.setSurname(textFieldSurnamePatient.getText().trim());
+																														patient.setGender((String) comboBoxGenderPatient.getSelectedItem());
+																														String sDate1 = textFieldBirthDatePatient.getText().trim();
+																														Date date1 = null;
+																														try {
+																															date1 = new SimpleDateFormat("yyyy-MM-dd").parse(sDate1);
+																														} catch (ParseException e2) {
+																															JOptionPane.showMessageDialog(null, "Se ha producido un error.", "Error", 0);
+																														}
+																														patient.setBirthDate(date1);
+																														String password = new String(textFieldPasswordPatient.getPassword());
+																														patient.setPassword(password);
+																														patient.setPhoneNumber(textFieldPhoneNumberPatient.getText().trim());
+																														patient.setAddress(textFieldAddressPatient.getText());
 
-																												try {
-																													user = userDataModificationManager.identifyUserType(userDNI);
-																												} catch (SQLException e2) {
-																													JOptionPane.showMessageDialog(null, e2.getMessage(), "Error", 0);
-																												} catch (Exception e2) {
-																													JOptionPane.showMessageDialog(null, e2.getMessage(), "Error", 0);
-																												}
+																														try {
+																															patientManager.insert(patient);
+																														} catch (SQLException e1) {
+																															JOptionPane.showMessageDialog(null, "Se ha producido un error con la Base de Datos.", "Error", 0);
+																														} catch (Exception e1) {
+																															JOptionPane.showMessageDialog(null, "Se ha producido un error.", "Error", 0);
+																														}
 
-																												int verifiedUser = new LoginManager().getUserByDniAndPassword(userDNI, pass);
-
-																												switch (verifiedUser) {
-																												case 1:
-																													JOptionPane.showMessageDialog(null, "ACCEDIENDO COMO PACIENTE");
-																													panelLogin.setVisible(false);
-																													panelPatient.setVisible(true);
-																													tfModifyPatientDNI.setText(userDNI);
-																													break;
-																												case 2:
-																													JOptionPane.showMessageDialog(null, "ACCEDIENDO COMO EMPLEADO"); // ADMIN
-																													panelLogin.setVisible(false);
-																													panelSanitarian.setVisible(true);
-																													tfModifySanitarianDNI.setText(userDNI);
-																													break;
-																												case 3:
-																													JOptionPane.showMessageDialog(null, "USUARIO BLOQUEADO"); // PATIENT BLOCKED
-																													break;
-																												default:
-																													JOptionPane.showMessageDialog(null, "USUARIO O CONTRSEÑA INCORRETO");
-																													tfLoginPassword.setText("");
-																												}
-
-																												if (user instanceof Sanitarian) {
-																													panelBlockPatient.setVisible(true);
-																													ArrayList<Patient> patients = null;
-																													try {
-																														patients = blockUnlockPatientManager.showPatientByAmbulatoryId(
-																																userDataModificationManager.selectDoctor(userDNI).getAmbulatory().getId());
-																													} catch (SQLException e2) {
-																														JOptionPane.showMessageDialog(null, "Se ha producido un error con la BBDD.", "Error", 0);
-																													} catch (Exception e2) {
-																														JOptionPane.showMessageDialog(null, "Se ha producido un error.", "Error", 0);
-
+																														panelLogin.setVisible(true);
+																														panelRegistrationPatient.setVisible(false);
 																													}
-																													DefaultTableModel model = (DefaultTableModel) tableBlockPatients.getModel();
-																													model.setRowCount(0);
 
-																													for (Patient patient : patients) {
-																														model.addRow(new String[] { patient.getDni(), patient.getName(), patient.getSurname(),
-																																blockUnlockPatientManager.patientState(patient.isBlocked()) });
-																													}
-																												}
-																											}
-																										});
-
-//		PANEL | REGISTRATION: PATIENT
-		panelRegistrationPatient = new JPanel();
-		panelRegistrationPatient.setBounds(0, 0, 616, 351);
-		panelRegistrationPatient.setBackground(new Color(16, 169, 121));
-		frame.getContentPane().add(panelRegistrationPatient);
-		panelRegistrationPatient.setLayout(null);
-		panelRegistrationPatient.setVisible(false);
-
-		JLabel lblRegistroUsuario = new JLabel("Registro de usuario Paciente");
-		lblRegistroUsuario.setHorizontalAlignment(SwingConstants.CENTER);
-		lblRegistroUsuario.setForeground(new Color(255, 255, 255));
-		lblRegistroUsuario.setFont(new Font("Tahoma", Font.BOLD, 20));
-		lblRegistroUsuario.setBounds(143, 34, 330, 20);
-		panelRegistrationPatient.add(lblRegistroUsuario);
-
-		JLabel lblDniRegistro = new JLabel("DNI:");
-		lblDniRegistro.setForeground(new Color(255, 255, 255));
-		lblDniRegistro.setFont(new Font("Tahoma", Font.BOLD, 12));
-		lblDniRegistro.setBounds(29, 93, 119, 14);
-		panelRegistrationPatient.add(lblDniRegistro);
-
-		JLabel lblNameRegister = new JLabel("Nombre:");
-		lblNameRegister.setForeground(new Color(255, 255, 255));
-		lblNameRegister.setFont(new Font("Tahoma", Font.BOLD, 12));
-		lblNameRegister.setBounds(29, 118, 127, 14);
-		panelRegistrationPatient.add(lblNameRegister);
-
-		JLabel lblSurnamePatient = new JLabel("Apellido:");
-		lblSurnamePatient.setForeground(new Color(255, 255, 255));
-		lblSurnamePatient.setFont(new Font("Tahoma", Font.BOLD, 12));
-		lblSurnamePatient.setBounds(29, 143, 119, 14);
-		panelRegistrationPatient.add(lblSurnamePatient);
-
-		JLabel lblGenderPatient = new JLabel("Sexo:");
-		lblGenderPatient.setForeground(new Color(255, 255, 255));
-		lblGenderPatient.setFont(new Font("Tahoma", Font.BOLD, 12));
-		lblGenderPatient.setBounds(29, 168, 127, 14);
-		panelRegistrationPatient.add(lblGenderPatient);
-
-		JLabel lblPasswordPatient = new JLabel("Contraseña:");
-		lblPasswordPatient.setForeground(new Color(255, 255, 255));
-		lblPasswordPatient.setFont(new Font("Tahoma", Font.BOLD, 12));
-		lblPasswordPatient.setBounds(29, 193, 119, 14);
-		panelRegistrationPatient.add(lblPasswordPatient);
-
-		JTextField textFieldDNIPatient = new JTextField();
-		textFieldDNIPatient.setBounds(101, 90, 119, 20);
-		panelRegistrationPatient.add(textFieldDNIPatient);
-		textFieldDNIPatient.setColumns(10);
-
-		JTextField textFieldNamePatient = new JTextField();
-		textFieldNamePatient.setBounds(101, 118, 119, 20);
-		panelRegistrationPatient.add(textFieldNamePatient);
-		textFieldNamePatient.setColumns(10);
-
-		JTextField textFieldSurnamePatient = new JTextField();
-		textFieldSurnamePatient.setBounds(101, 143, 119, 20);
-		panelRegistrationPatient.add(textFieldSurnamePatient);
-		textFieldSurnamePatient.setColumns(10);
-
-		JPasswordField textFieldPasswordPatient = new JPasswordField();
-		textFieldPasswordPatient.setBounds(101, 193, 119, 20);
-		panelRegistrationPatient.add(textFieldPasswordPatient);
-
-		JComboBox<String> comboBoxGenderPatient = new JComboBox<String>();
-		comboBoxGenderPatient.setBounds(101, 168, 119, 18);
-		panelRegistrationPatient.add(comboBoxGenderPatient);
-		comboBoxGenderPatient.addItem("Hombre");
-		comboBoxGenderPatient.addItem("Mujer");
-
-		JButton btnAceptarRegistro = new JButton("Aceptar");
-		btnAceptarRegistro.addActionListener(new ActionListener() {
-			public void actionPerformed(ActionEvent e) {
-				Patient patient = new Patient();
-				patient.setDni(textFieldDNIPatient.getText().trim());
-				patient.setName(textFieldNamePatient.getText().trim());
-				patient.setSurname(textFieldSurnamePatient.getText().trim());
-				patient.setGender((String) comboBoxGenderPatient.getSelectedItem());
-				String sDate1 = textFieldBirthDatePatient.getText().trim();
-				Date date1 = null;
-				try {
-					date1 = new SimpleDateFormat("yyyy-MM-dd").parse(sDate1);
-				} catch (ParseException e2) {
-					JOptionPane.showMessageDialog(null, "Se ha producido un error.", "Error", 0);
-				}
-				patient.setBirthDate(date1);
-				String password = new String(textFieldPasswordPatient.getPassword());
-				patient.setPassword(password);
-				patient.setPhoneNumber(textFieldPhoneNumberPatient.getText().trim());
-				patient.setAddress(textFieldAddressPatient.getText());
-
-				try {
-					patientManager.insert(patient);
-				} catch (SQLException e1) {
-					JOptionPane.showMessageDialog(null, "Se ha producido un error con la Base de Datos.", "Error", 0);
-				} catch (Exception e1) {
-					JOptionPane.showMessageDialog(null, "Se ha producido un error.", "Error", 0);
-				}
-
-				panelLogin.setVisible(true);
-				panelRegistrationPatient.setVisible(false);
-			}
-
-		});
-		btnAceptarRegistro.setBounds(200, 271, 89, 23);
-		panelRegistrationPatient.add(btnAceptarRegistro);
-
-		JButton btnCancelarRegistro = new JButton("Cancelar");
-		btnCancelarRegistro.addActionListener(new ActionListener() {
-			public void actionPerformed(ActionEvent e) {
-				panelLogin.setVisible(true);
-				panelRegistrationPatient.setVisible(false);
-			}
-		});
-		btnCancelarRegistro.setBounds(350, 271, 89, 23);
-		panelRegistrationPatient.add(btnCancelarRegistro);
-
-		JLabel lblBirthDatePatient = new JLabel("Fecha Nacimiento:");
-		lblBirthDatePatient.setForeground(new Color(255, 255, 255));
-		lblBirthDatePatient.setFont(new Font("Tahoma", Font.BOLD, 12));
-		lblBirthDatePatient.setBounds(283, 93, 119, 14);
-		panelRegistrationPatient.add(lblBirthDatePatient);
-
-		textFieldBirthDatePatient = new JTextField();
-		textFieldBirthDatePatient.setColumns(10);
-		textFieldBirthDatePatient.setBounds(397, 90, 119, 20);
-		panelRegistrationPatient.add(textFieldBirthDatePatient);
-
-		JLabel lblNumberPhonePatient = new JLabel("Numero Telefono:");
-		lblNumberPhonePatient.setForeground(new Color(255, 255, 255));
-		lblNumberPhonePatient.setFont(new Font("Tahoma", Font.BOLD, 12));
-		lblNumberPhonePatient.setBounds(283, 118, 119, 14);
-		panelRegistrationPatient.add(lblNumberPhonePatient);
-
-		textFieldPhoneNumberPatient = new JTextField();
-		textFieldPhoneNumberPatient.setColumns(10);
-		textFieldPhoneNumberPatient.setBounds(397, 115, 119, 20);
-		panelRegistrationPatient.add(textFieldPhoneNumberPatient);
-
-		JLabel lblAddressPatient = new JLabel("Direccion:");
-		lblAddressPatient.setForeground(new Color(255, 255, 255));
-		lblAddressPatient.setFont(new Font("Tahoma", Font.BOLD, 12));
-		lblAddressPatient.setBounds(283, 143, 119, 14);
-		panelRegistrationPatient.add(lblAddressPatient);
-
-		textFieldAddressPatient = new JTextField();
-		textFieldAddressPatient.setColumns(10);
-		textFieldAddressPatient.setBounds(397, 140, 119, 20);
-		panelRegistrationPatient.add(textFieldAddressPatient);
+																												});
+																												btnAceptarRegistro.setBounds(274, 257, 89, 23);
+																												panelRegistrationPatient.add(btnAceptarRegistro);
+																												
+																														JButton btnCancelarRegistro = new JButton("Cancelar");
+																														btnCancelarRegistro.setBackground(new Color(255, 255, 255));
+																														btnCancelarRegistro.setFont(new Font("Tahoma", Font.BOLD, 11));
+																														btnCancelarRegistro.setForeground(new Color(16, 169, 121));
+																														btnCancelarRegistro.addActionListener(new ActionListener() {
+																															public void actionPerformed(ActionEvent e) {
+																																panelLogin.setVisible(true);
+																																panelRegistrationPatient.setVisible(false);
+																															}
+																														});
+																														btnCancelarRegistro.setBounds(373, 257, 89, 23);
+																														panelRegistrationPatient.add(btnCancelarRegistro);
+																														
+																																JLabel lblBirthDatePatient = new JLabel("Fecha Nacimiento:");
+																																lblBirthDatePatient.setForeground(new Color(255, 255, 255));
+																																lblBirthDatePatient.setFont(new Font("Tahoma", Font.BOLD, 12));
+																																lblBirthDatePatient.setBounds(98, 213, 119, 14);
+																																panelRegistrationPatient.add(lblBirthDatePatient);
+																																
+																																		textFieldBirthDatePatient = new JTextField();
+																																		textFieldBirthDatePatient.setColumns(10);
+																																		textFieldBirthDatePatient.setBounds(98, 228, 119, 20);
+																																		panelRegistrationPatient.add(textFieldBirthDatePatient);
+																																		
+																																				JLabel lblNumberPhonePatient = new JLabel("Numero Telefono:");
+																																				lblNumberPhonePatient.setForeground(new Color(255, 255, 255));
+																																				lblNumberPhonePatient.setFont(new Font("Tahoma", Font.BOLD, 12));
+																																				lblNumberPhonePatient.setBounds(98, 248, 119, 14);
+																																				panelRegistrationPatient.add(lblNumberPhonePatient);
+																																				
+																																						textFieldPhoneNumberPatient = new JTextField();
+																																						textFieldPhoneNumberPatient.setColumns(10);
+																																						textFieldPhoneNumberPatient.setBounds(98, 263, 119, 20);
+																																						panelRegistrationPatient.add(textFieldPhoneNumberPatient);
+																																						
+																																								JLabel lblAddressPatient = new JLabel("Direccion:");
+																																								lblAddressPatient.setForeground(new Color(255, 255, 255));
+																																								lblAddressPatient.setFont(new Font("Tahoma", Font.BOLD, 12));
+																																								lblAddressPatient.setBounds(98, 283, 119, 14);
+																																								panelRegistrationPatient.add(lblAddressPatient);
+																																								
+																																										textFieldAddressPatient = new JTextField();
+																																										textFieldAddressPatient.setColumns(10);
+																																										textFieldAddressPatient.setBounds(98, 297, 119, 20);
+																																										panelRegistrationPatient.add(textFieldAddressPatient);
+																																										
+																																										JLabel lblPatientIcon = new JLabel("");
+																																										lblPatientIcon.setIcon(new ImageIcon(View.class.getResource("/view/images/PatientIcon.jpg")));
+																																										lblPatientIcon.setBounds(264, 104, 140, 140);
+																																										panelRegistrationPatient.add(lblPatientIcon);
+																																										
+																																										JLabel lblLettersRegistrationPatient = new JLabel("");
+																																										lblLettersRegistrationPatient.setIcon(new ImageIcon(View.class.getResource("/view/images/Letters.jpg")));
+																																										lblLettersRegistrationPatient.setBounds(0, 105, 140, 140);
+																																										panelRegistrationPatient.add(lblLettersRegistrationPatient);
+																																										
+																																										JLabel lblCrossRegistrationPatient = new JLabel("");
+																																										lblCrossRegistrationPatient.setIcon(new ImageIcon(View.class.getResource("/view/images/OsasunbideCross.jpg")));
+																																										lblCrossRegistrationPatient.setBounds(476, 105, 140, 140);
+																																										panelRegistrationPatient.add(lblCrossRegistrationPatient);
 
 		panelRegistrationDoctor = new JPanel();
-		panelRegistrationDoctor.setBackground(new Color(0, 153, 255));
+		panelRegistrationDoctor.setBackground(new Color(16, 169, 121));
 		panelRegistrationDoctor.setBounds(0, 0, 616, 351);
 		frame.getContentPane().add(panelRegistrationDoctor);
 		panelRegistrationDoctor.setLayout(null);
@@ -561,97 +582,128 @@ public class View {
 		panelRegistrationDoctor.add(lblNewLabel_1);
 
 		JLabel lblDniDoctor = new JLabel("DNI:");
-		lblDniDoctor.setBounds(20, 77, 46, 14);
+		lblDniDoctor.setBackground(new Color(240, 240, 240));
+		lblDniDoctor.setForeground(new Color(255, 255, 255));
+		lblDniDoctor.setFont(new Font("Tahoma", Font.BOLD, 11));
+		lblDniDoctor.setBounds(77, 22, 119, 14);
 		panelRegistrationDoctor.add(lblDniDoctor);
 
 		textFieldDniDoctor = new JTextField();
-		textFieldDniDoctor.setBounds(153, 74, 103, 20);
+		textFieldDniDoctor.setBounds(77, 35, 119, 20);
 		panelRegistrationDoctor.add(textFieldDniDoctor);
 		textFieldDniDoctor.setColumns(10);
 
 		JLabel lblNameDoctor = new JLabel("Nombre:");
-		lblNameDoctor.setBounds(20, 120, 46, 14);
+		lblNameDoctor.setBackground(new Color(240, 240, 240));
+		lblNameDoctor.setForeground(new Color(255, 255, 255));
+		lblNameDoctor.setFont(new Font("Tahoma", Font.BOLD, 11));
+		lblNameDoctor.setBounds(77, 60, 119, 14);
 		panelRegistrationDoctor.add(lblNameDoctor);
 
 		textFieldNameDoctor = new JTextField();
 		textFieldNameDoctor.setColumns(10);
-		textFieldNameDoctor.setBounds(153, 117, 103, 20);
+		textFieldNameDoctor.setBounds(77, 74, 119, 20);
 		panelRegistrationDoctor.add(textFieldNameDoctor);
 
 		JLabel lblSurnameDoctor = new JLabel("Apellido:");
-		lblSurnameDoctor.setBounds(20, 157, 46, 14);
+		lblSurnameDoctor.setBackground(new Color(240, 240, 240));
+		lblSurnameDoctor.setForeground(new Color(255, 255, 255));
+		lblSurnameDoctor.setFont(new Font("Tahoma", Font.BOLD, 11));
+		lblSurnameDoctor.setBounds(77, 95, 119, 14);
 		panelRegistrationDoctor.add(lblSurnameDoctor);
 
 		textFieldSurnameDoctor = new JTextField();
 		textFieldSurnameDoctor.setColumns(10);
-		textFieldSurnameDoctor.setBounds(153, 154, 103, 20);
+		textFieldSurnameDoctor.setBounds(77, 110, 119, 20);
 		panelRegistrationDoctor.add(textFieldSurnameDoctor);
 
 		JLabel lblGenderDoctor = new JLabel("Sexo:");
-		lblGenderDoctor.setBounds(20, 199, 46, 14);
+		lblGenderDoctor.setBackground(new Color(240, 240, 240));
+		lblGenderDoctor.setForeground(new Color(255, 255, 255));
+		lblGenderDoctor.setFont(new Font("Tahoma", Font.BOLD, 11));
+		lblGenderDoctor.setBounds(77, 133, 119, 14);
 		panelRegistrationDoctor.add(lblGenderDoctor);
 
 		JComboBox<String> comboBoxGenderDoctor = new JComboBox<String>();
-		comboBoxGenderDoctor.setBounds(153, 196, 103, 20);
+		comboBoxGenderDoctor.setBounds(77, 145, 119, 20);
 		panelRegistrationDoctor.add(comboBoxGenderDoctor);
 		comboBoxGenderDoctor.addItem("Hombre");
 		comboBoxGenderDoctor.addItem("Mujer");
 
 		JLabel lblBirthDateDoctor = new JLabel("Fecha Nacimiento:");
-		lblBirthDateDoctor.setBounds(20, 230, 121, 14);
+		lblBirthDateDoctor.setBackground(new Color(240, 240, 240));
+		lblBirthDateDoctor.setForeground(new Color(255, 255, 255));
+		lblBirthDateDoctor.setFont(new Font("Tahoma", Font.BOLD, 11));
+		lblBirthDateDoctor.setBounds(77, 170, 119, 14);
 		panelRegistrationDoctor.add(lblBirthDateDoctor);
 
 		textFieldBirthDateDoctor = new JTextField();
 		textFieldBirthDateDoctor.setColumns(10);
-		textFieldBirthDateDoctor.setBounds(153, 227, 103, 20);
+		textFieldBirthDateDoctor.setBounds(77, 185, 119, 20);
 		panelRegistrationDoctor.add(textFieldBirthDateDoctor);
 
 		passwordFieldDoctor = new JPasswordField();
-		passwordFieldDoctor.setBounds(417, 74, 103, 20);
+		passwordFieldDoctor.setBounds(77, 220, 119, 20);
 		panelRegistrationDoctor.add(passwordFieldDoctor);
 
 		JLabel lblContrasenaDoctor = new JLabel("Contrasena:");
-		lblContrasenaDoctor.setBounds(314, 74, 121, 20);
+		lblContrasenaDoctor.setBackground(new Color(240, 240, 240));
+		lblContrasenaDoctor.setForeground(new Color(255, 255, 255));
+		lblContrasenaDoctor.setFont(new Font("Tahoma", Font.BOLD, 11));
+		lblContrasenaDoctor.setBounds(77, 205, 119, 14);
 		panelRegistrationDoctor.add(lblContrasenaDoctor);
 
 		JLabel lblStaffNumDoctor = new JLabel("Numero Personal:");
-		lblStaffNumDoctor.setBounds(314, 117, 121, 20);
+		lblStaffNumDoctor.setBackground(new Color(240, 240, 240));
+		lblStaffNumDoctor.setForeground(new Color(255, 255, 255));
+		lblStaffNumDoctor.setFont(new Font("Tahoma", Font.BOLD, 11));
+		lblStaffNumDoctor.setBounds(77, 245, 119, 14);
 		panelRegistrationDoctor.add(lblStaffNumDoctor);
 
 		textFieldStaffNumDoctor = new JTextField();
 		textFieldStaffNumDoctor.setColumns(10);
-		textFieldStaffNumDoctor.setBounds(417, 117, 103, 20);
+		textFieldStaffNumDoctor.setBounds(77, 260, 119, 20);
 		panelRegistrationDoctor.add(textFieldStaffNumDoctor);
 
 		JLabel lblSalaryDoctor = new JLabel("Salario:");
-		lblSalaryDoctor.setBounds(314, 157, 121, 20);
+		lblSalaryDoctor.setBackground(new Color(240, 240, 240));
+		lblSalaryDoctor.setForeground(new Color(255, 255, 255));
+		lblSalaryDoctor.setFont(new Font("Tahoma", Font.BOLD, 11));
+		lblSalaryDoctor.setBounds(77, 282, 119, 14);
 		panelRegistrationDoctor.add(lblSalaryDoctor);
 
 		textFieldSalaryDoctor = new JTextField();
 		textFieldSalaryDoctor.setColumns(10);
-		textFieldSalaryDoctor.setBounds(417, 154, 103, 20);
+		textFieldSalaryDoctor.setBounds(77, 300, 119, 20);
 		panelRegistrationDoctor.add(textFieldSalaryDoctor);
 
 		JLabel lblSpecialityDoctor = new JLabel("Especialidad:");
-		lblSpecialityDoctor.setBounds(314, 196, 121, 20);
+		lblSpecialityDoctor.setBackground(new Color(240, 240, 240));
+		lblSpecialityDoctor.setForeground(new Color(255, 255, 255));
+		lblSpecialityDoctor.setFont(new Font("Tahoma", Font.BOLD, 11));
+		lblSpecialityDoctor.setBounds(206, 133, 119, 14);
 		panelRegistrationDoctor.add(lblSpecialityDoctor);
 
 		textFieldSpecialityDoctor = new JTextField();
 		textFieldSpecialityDoctor.setColumns(10);
-		textFieldSpecialityDoctor.setBounds(417, 196, 103, 20);
+		textFieldSpecialityDoctor.setBounds(206, 148, 119, 20);
 		panelRegistrationDoctor.add(textFieldSpecialityDoctor);
 
 		btnCancelDoctor = new JButton("Cancelar");
+		btnCancelDoctor.setBackground(new Color(255, 255, 255));
+		btnCancelDoctor.setForeground(new Color(16, 169, 121));
 		btnCancelDoctor.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
 				panelLogin.setVisible(true);
 				panelRegistrationDoctor.setVisible(false);
 			}
 		});
-		btnCancelDoctor.setBounds(380, 270, 142, 38);
+		btnCancelDoctor.setBounds(363, 259, 89, 23);
 		panelRegistrationDoctor.add(btnCancelDoctor);
 
 		btnAceptDoctor = new JButton("Aceptar");
+		btnAceptDoctor.setBackground(new Color(255, 255, 255));
+		btnAceptDoctor.setForeground(new Color(16, 169, 121));
 		btnAceptDoctor.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
 				Doctor doctor = new Doctor();
@@ -697,16 +749,34 @@ public class View {
 				panelRegistrationDoctor.setVisible(false);
 			}
 		});
-		btnAceptDoctor.setBounds(99, 270, 142, 38);
+		btnAceptDoctor.setBounds(264, 259, 89, 23);
 		panelRegistrationDoctor.add(btnAceptDoctor);
 
 		JLabel lblAmbulatoryDoctor = new JLabel("Ambulatorio:");
-		lblAmbulatoryDoctor.setBounds(314, 230, 80, 20);
+		lblAmbulatoryDoctor.setBackground(new Color(240, 240, 240));
+		lblAmbulatoryDoctor.setForeground(new Color(255, 255, 255));
+		lblAmbulatoryDoctor.setFont(new Font("Tahoma", Font.BOLD, 11));
+		lblAmbulatoryDoctor.setBounds(206, 173, 119, 14);
 		panelRegistrationDoctor.add(lblAmbulatoryDoctor);
 
 		JComboBox<String> comboBoxAmbulatoryDoctor = new JComboBox<String>();
-		comboBoxAmbulatoryDoctor.setBounds(417, 226, 108, 22);
+		comboBoxAmbulatoryDoctor.setBounds(206, 188, 119, 20);
 		panelRegistrationDoctor.add(comboBoxAmbulatoryDoctor);
+		
+		JLabel lblCrossSingUpDoctor = new JLabel("");
+		lblCrossSingUpDoctor.setIcon(new ImageIcon(View.class.getResource("/view/images/OsasunbideCross.jpg")));
+		lblCrossSingUpDoctor.setBounds(476, 105, 140, 140);
+		panelRegistrationDoctor.add(lblCrossSingUpDoctor);
+		
+		JLabel lblLettersSingUpDoctor = new JLabel("");
+		lblLettersSingUpDoctor.setIcon(new ImageIcon(View.class.getResource("/view/images/Letters.jpg")));
+		lblLettersSingUpDoctor.setBounds(0, 105, 140, 140);
+		panelRegistrationDoctor.add(lblLettersSingUpDoctor);
+		
+		JLabel lblIconSingUpDoctor = new JLabel("");
+		lblIconSingUpDoctor.setIcon(new ImageIcon(View.class.getResource("/view/images/DoctorIcon.jpg")));
+		lblIconSingUpDoctor.setBounds(342, 27, 140, 140);
+		panelRegistrationDoctor.add(lblIconSingUpDoctor);
 		ArrayList<Ambulatory> ambulatories = new ArrayList<Ambulatory>();
 
 		try {
