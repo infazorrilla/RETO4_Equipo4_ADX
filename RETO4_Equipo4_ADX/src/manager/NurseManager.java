@@ -7,11 +7,9 @@ import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.sql.Statement;
 import java.util.ArrayList;
-import java.util.Date;
 import java.util.List;
 
 import model.pojos.Ambulatory;
-import model.pojos.Doctor;
 import model.pojos.Nurse;
 import model.utils.BBDDUtils;
 
@@ -37,7 +35,7 @@ public class NurseManager extends AbstractManager<Nurse> {
 	public Nurse select(int staffNum) throws SQLException, Exception {
 		Nurse ret = null;
 
-		String sql = "SELECT * FROM `sanitario` WHERE numPersonal   = ? AND tipo = 'Enfermeria';";
+		String sql = "SELECT * FROM `sanitario`  s JOIN `usuario` u ON s.dniSanitario = u.dni WHERE numPersonal   = ? AND tipo = 'Enfermeria';";
 
 		Connection connection = null;
 		PreparedStatement preparedStatement = null;
@@ -70,6 +68,12 @@ public class NurseManager extends AbstractManager<Nurse> {
 				} else {
 					ret.setEir(false);
 				}
+				// User information
+				ret.setName(resultSet.getString("nombre"));
+				ret.setSurname(resultSet.getString("apellido"));
+				ret.setGender(resultSet.getString("sexo"));
+				ret.setBirthDate(resultSet.getDate("fechaNac"));
+				ret.setPassword(resultSet.getString("contrasena"));
 
 			}
 		} catch (SQLException sqle) {
@@ -105,7 +109,7 @@ public class NurseManager extends AbstractManager<Nurse> {
 		ArrayList<Nurse> ret = null;
 
 		// SQL we want to launch
-		String sql = "SELECT * FROM `sanitario` WHERE tipo = 'Enfermeria'";
+		String sql = "SELECT * FROM `sanitario`  s JOIN `usuario` u ON s.dniSanitario = u.dni WHERE tipo = 'Enfermeria'";
 
 		// The connection with BBDD
 		Connection connection = null;
@@ -160,6 +164,12 @@ public class NurseManager extends AbstractManager<Nurse> {
 				} else {
 					nurse.setEir(false);
 				}
+				// User information
+				nurse.setName(resultSet.getString("nombre"));
+				nurse.setSurname(resultSet.getString("apellido"));
+				nurse.setGender(resultSet.getString("sexo"));
+				nurse.setBirthDate(resultSet.getDate("fechaNac"));
+				nurse.setPassword(resultSet.getString("contrasena"));
 
 				// We save it in ret
 				ret.add(nurse);

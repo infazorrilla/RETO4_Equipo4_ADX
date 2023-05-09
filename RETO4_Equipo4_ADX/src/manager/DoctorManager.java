@@ -35,7 +35,7 @@ public class DoctorManager extends AbstractManager<Doctor> {
 	public Doctor select(int staffNum) throws SQLException, Exception {
 		Doctor ret = null;
 
-		String sql = "SELECT * FROM `sanitario` WHERE numPersonal = ? AND tipo = 'Medicina';";
+		String sql = "SELECT * FROM `sanitario`  s JOIN `usuario` u ON s.dniSanitario = u.dni WHERE numPersonal = ? AND tipo = 'Medicina';";
 
 		Connection connection = null;
 		PreparedStatement preparedStatement = null;
@@ -69,6 +69,12 @@ public class DoctorManager extends AbstractManager<Doctor> {
 				} else {
 					ret.setMir(false);
 				}
+				// User information
+				ret.setName(resultSet.getString("nombre"));
+				ret.setSurname(resultSet.getString("apellido"));
+				ret.setGender(resultSet.getString("sexo"));
+				ret.setBirthDate(resultSet.getDate("fechaNac"));
+				ret.setPassword(resultSet.getString("contrasena"));
 
 			}
 		} catch (SQLException sqle) {
@@ -106,7 +112,7 @@ public class DoctorManager extends AbstractManager<Doctor> {
 		ArrayList<Doctor> ret = null;
 
 		// SQL we want to launch
-		String sql = "SELECT * FROM `sanitario` WHERE tipo = 'Medicina'";
+		String sql = "SELECT * FROM `sanitario`  s JOIN `usuario` u ON s.dniSanitario = u.dni WHERE tipo = 'Medicina'";
 
 		// The connection with BBDD
 		Connection connection = null;
@@ -161,6 +167,12 @@ public class DoctorManager extends AbstractManager<Doctor> {
 				} else {
 					doctor.setMir(false);
 				}
+				// User information
+				doctor.setName(resultSet.getString("nombre"));
+				doctor.setSurname(resultSet.getString("apellido"));
+				doctor.setGender(resultSet.getString("sexo"));
+				doctor.setBirthDate(resultSet.getDate("fechaNac"));
+				doctor.setPassword(resultSet.getString("contrasena"));
 
 				// We save it in ret
 				ret.add(doctor);

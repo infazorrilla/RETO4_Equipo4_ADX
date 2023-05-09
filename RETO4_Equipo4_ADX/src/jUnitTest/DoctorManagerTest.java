@@ -3,17 +3,11 @@ package jUnitTest;
 import static org.junit.jupiter.api.Assertions.*;
 
 import java.sql.SQLException;
-import java.text.ParseException;
-import java.text.SimpleDateFormat;
 import java.util.ArrayList;
-import java.util.Date;
 
 import org.junit.jupiter.api.Test;
 
-import model.pojos.Ambulatory;
-import model.pojos.Appointment;
 import model.pojos.Doctor;
-import model.pojos.Patient;
 import manager.DoctorManager;
 
 class DoctorManagerTest {
