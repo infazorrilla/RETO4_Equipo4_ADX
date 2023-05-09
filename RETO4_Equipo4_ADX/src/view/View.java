@@ -1724,8 +1724,6 @@ public class View {
 					
 					WorkingDay workingDay = appointmentSelectionManager.selectWorkingDay(dateString);
 					TimeSlot timeSlot = appointmentSelectionManager.selectTimeSlot(hour);
-					JOptionPane.showMessageDialog(null,timeSlot.getId(), "Error", 0);
-
 					appointmentSelectionManager.insertAppointmentWorkingDayTimeSlot(appointment, workingDay, timeSlot);
 					
 					JOptionPane.showMessageDialog(null, "Cita seleccionada", "Info", 1);
