@@ -34,7 +34,6 @@ public class ViewSabi {
 	private PatientManager patientManager;
 	private DoctorManager doctorManager;
 	private NurseManager nurseManager;
-	private AmbulatoryManager ambulatoryManager;
 	private RegistrationManager registrationManager;
 
 	public JFrame frame;
@@ -58,7 +57,6 @@ public class ViewSabi {
 	private JTextField textFieldSpecialityDoctor;
 	private JButton btnAceptDoctor;
 	private JButton btnCancelDoctor;
-	private JComboBox comboBoxGenderDoctor;
 	private JPanel panelRegistrationNurse;
 	private JTextField textFieldDniNurse;
 	private JTextField textFieldNameNurse;
@@ -70,8 +68,11 @@ public class ViewSabi {
 	private JButton btnAceptNurse;
 	private JButton btnCancelNurse;
 	private JPasswordField passwordFieldNurse;
-	private JComboBox comboBoxAmbulatoryNurse;
-	private JComboBox comboBoxAmbulatoryDoctor;
+	private JComboBox<String> comboBoxAmbulatoryDoctor;
+	private JComboBox<String> comboBoxAmbulatoryNurse;
+	private JComboBox<String> comboBoxGenderNurse;
+	private JComboBox<String> comboBoxGenderDoctor;
+
 
 	/**
 	 * Create the application.
@@ -81,7 +82,6 @@ public class ViewSabi {
 		patientManager = new PatientManager();
 		doctorManager = new DoctorManager();
 		nurseManager = new NurseManager();
-		ambulatoryManager = new AmbulatoryManager();
 		registrationManager = new RegistrationManager();
 		initialize();
 	}
@@ -387,7 +387,7 @@ public class ViewSabi {
 		lblGenderDoctor.setBounds(20, 199, 46, 14);
 		panelRegistrationDoctor.add(lblGenderDoctor);
 
-		JComboBox<String> comboBoxGenderDoctor = new JComboBox<String>();
+		comboBoxGenderDoctor = new JComboBox<String>();
 		comboBoxGenderDoctor.setBounds(153, 196, 103, 20);
 		panelRegistrationDoctor.add(comboBoxGenderDoctor);
 		comboBoxGenderDoctor.addItem("Hombre");
@@ -474,17 +474,24 @@ public class ViewSabi {
 				doctor.setMir(true);
 				doctor.setType("Medicina");
 				doctor.setSpeciality(textFieldSpecialityDoctor.getText());
-				registrationManager.select();
-				doctor.setAmbulatory((String) comboBoxAmbulatoryDoctor.getSelectedItem()); 
+				Ambulatory ambulatory = null;
+				try {
+					ambulatory = registrationManager.select((String) comboBoxAmbulatoryDoctor.getSelectedItem());
+				} catch (SQLException e2) {
+					// TODO Auto-generated catch block
+					e2.printStackTrace();
+				} catch (Exception e2) {
+					// TODO Auto-generated catch block
+					e2.printStackTrace();
+				}
+				doctor.setAmbulatory(ambulatory); 
 
 				try {
 					doctorManager.insert(doctor);
 				} catch (SQLException e1) {
 					JOptionPane.showMessageDialog(btnAceptarRegistro, "Error Base De Datos", "Aviso", 2);
-					e1.printStackTrace();
 				} catch (Exception e1) {
 					JOptionPane.showMessageDialog(btnAceptarRegistro, "Errorª", "Aviso", 2);
-					e1.printStackTrace();
 				}
 
 				panelLogin.setVisible(true);
@@ -502,7 +509,7 @@ public class ViewSabi {
 		lblAmbulatoryDoctor.setBounds(314, 230, 80, 20);
 		panelRegistrationDoctor.add(lblAmbulatoryDoctor);
 
-		JComboBox<String> comboBoxAmbulatoryDoctor = new JComboBox<String>();
+		comboBoxAmbulatoryDoctor = new JComboBox<String>();
 		comboBoxAmbulatoryDoctor.setBounds(417, 226, 108, 22);
 		panelRegistrationDoctor.add(comboBoxAmbulatoryDoctor);
 		ArrayList<Ambulatory> ambulatories = new ArrayList<Ambulatory>();
@@ -552,7 +559,7 @@ public class ViewSabi {
 		lblDniNurse.setBounds(29, 81, 46, 14);
 		panelRegistrationNurse.add(lblDniNurse);
 
-		JComboBox<String> comboBoxGenderNurse = new JComboBox<String>();
+		comboBoxGenderNurse = new JComboBox<String>();
 		comboBoxGenderNurse.setBounds(138, 189, 122, 22);
 		panelRegistrationNurse.add(comboBoxGenderNurse);
 		comboBoxGenderNurse.addItem("Hombre");
@@ -640,7 +647,18 @@ public class ViewSabi {
 				nurse.setEir(true);
 				nurse.setType("Enfermeria");
 				nurse.setCategory(textFieldCategoryNurse.getText());
-
+				Ambulatory ambulatory = null;
+				try {
+					ambulatory = registrationManager.select((String) comboBoxAmbulatoryNurse.getSelectedItem());
+				} catch (SQLException e2) {
+					// TODO Auto-generated catch block
+					e2.printStackTrace();
+				} catch (Exception e2) {
+					// TODO Auto-generated catch block
+					e2.printStackTrace();
+				}
+				nurse.setAmbulatory(ambulatory); 
+				
 				try {
 					nurseManager.insert(nurse);
 				} catch (SQLException e1) {
@@ -682,9 +700,11 @@ public class ViewSabi {
 		lblAmbulatoryNurse.setBounds(366, 229, 80, 20);
 		panelRegistrationNurse.add(lblAmbulatoryNurse);
 
-		JComboBox<String> comboBoxAmbulatoryNurse = new JComboBox<String>();
+		comboBoxAmbulatoryNurse = new JComboBox<String>();
 		comboBoxAmbulatoryNurse.setBounds(461, 231, 108, 22);
 		panelRegistrationNurse.add(comboBoxAmbulatoryNurse);
+	
+		
 		try {
 			ambulatories = (ArrayList<Ambulatory>) registrationManager.select();
 		} catch (SQLException e3) {
