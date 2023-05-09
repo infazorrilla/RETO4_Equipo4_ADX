@@ -11,10 +11,23 @@ import java.util.ArrayList;
 
 import org.junit.jupiter.api.Test;
 
+import EDE.amaia.sprint2.TimeSlotDBtoArray;
+import model.pojos.TimeSlot;
+
 class TimeSlotDBtoArrayTest {
 
 	@Test
-	void test() {
+	void test() {		
+		ArrayList<TimeSlot> timeSlots = null;
+		try {
+			timeSlots = TimeSlotDBtoArray.getTimeSlots();
+		} catch (Exception e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+		
+		TimeSlotDBtoArray.writeLog(timeSlots);
+		
 		String path= "src//EDE//amaia//sprint2//logTimeSlots.txt";
 		 File fic = new File(path);
 		 BufferedReader fichero = null;

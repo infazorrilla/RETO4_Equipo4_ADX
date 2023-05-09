@@ -11,7 +11,20 @@ import model.pojos.WorkingDay;
 
 public class WorkingDayDBtoArray {
 
-	private static WorkingDayManager workingDayManager;
+	public static ArrayList<WorkingDay> getWorkingDays(){
+		ArrayList<WorkingDay> ret = new ArrayList<WorkingDay>();
+		
+		WorkingDayManager workingDayManager = new WorkingDayManager();
+		try {
+			ret = (ArrayList<WorkingDay>) workingDayManager.select();
+		} catch (SQLException e) {
+			e.printStackTrace();
+		} catch (Exception e) {
+			e.printStackTrace();
+		}
+		
+		return ret;
+	}
 	
 	public static void writeLog(ArrayList<WorkingDay> workingDays) {
 		FileWriter fileWriter = null;
@@ -36,13 +49,11 @@ public class WorkingDayDBtoArray {
 	}
 
 	public static void main(String[] args) {
-		workingDayManager = new WorkingDayManager();
 		ArrayList<WorkingDay> workingDays = null;
 		try {
-			workingDays = (ArrayList<WorkingDay>) workingDayManager.select();
-		} catch (SQLException e) {
-			e.printStackTrace();
+			workingDays = getWorkingDays();
 		} catch (Exception e) {
+			// TODO Auto-generated catch block
 			e.printStackTrace();
 		}
 		System.out.println(workingDays.toString());

@@ -11,7 +11,20 @@ import model.pojos.TimeSlot;
 
 public class TimeSlotDBtoArray {
 
-	private static TimeSlotManager timeSlotManager;
+	public static ArrayList<TimeSlot> getTimeSlots(){
+		ArrayList<TimeSlot> ret = new ArrayList<TimeSlot>();
+		
+		TimeSlotManager timeSlotManager = new TimeSlotManager();
+		try {
+			ret = (ArrayList<TimeSlot>) timeSlotManager.select();
+		} catch (SQLException e) {
+			e.printStackTrace();
+		} catch (Exception e) {
+			e.printStackTrace();
+		}
+		
+		return ret;
+	}
 	
 	public static void writeLog(ArrayList<TimeSlot> timeSlots) {
 		FileWriter fileWriter = null;
@@ -37,13 +50,11 @@ public class TimeSlotDBtoArray {
 	
 	
 	public static void main(String[] args) {
-		timeSlotManager = new TimeSlotManager();
 		ArrayList<TimeSlot> timeSlots = null;
 		try {
-			timeSlots = (ArrayList<TimeSlot>) timeSlotManager.select();
-		} catch (SQLException e) {
-			e.printStackTrace();
+			timeSlots = getTimeSlots();
 		} catch (Exception e) {
+			// TODO Auto-generated catch block
 			e.printStackTrace();
 		}
 		System.out.println(timeSlots.toString());

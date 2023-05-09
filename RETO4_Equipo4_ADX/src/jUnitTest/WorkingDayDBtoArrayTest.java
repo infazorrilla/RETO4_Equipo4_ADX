@@ -1,6 +1,6 @@
-package EDE.amaia.sprint2;
+package jUnitTest;
 
-import static org.junit.jupiter.api.Assertions.*;
+import static org.junit.jupiter.api.Assertions.assertNotNull;
 
 import java.io.BufferedReader;
 import java.io.File;
@@ -11,11 +11,24 @@ import java.util.ArrayList;
 
 import org.junit.jupiter.api.Test;
 
+import EDE.amaia.sprint2.WorkingDayDBtoArray;
+import model.pojos.WorkingDay;
+
 
 class WorkingDayDBtoArrayTest {
 
 	@Test
 	void test() {
+		ArrayList<WorkingDay> workingDays = null;
+		try {
+			workingDays = WorkingDayDBtoArray.getWorkingDays();
+		} catch (Exception e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+		
+		WorkingDayDBtoArray.writeLog(workingDays);
+		
 		String path= "src//EDE//amaia//sprint2//logWorkingDays.txt";
 		 File fic = new File(path);
 		 BufferedReader fichero = null;
