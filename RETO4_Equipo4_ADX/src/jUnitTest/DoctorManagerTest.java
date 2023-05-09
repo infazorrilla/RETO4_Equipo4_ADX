@@ -26,7 +26,7 @@ class DoctorManagerTest {
 		Doctor doctor = new Doctor();
 
 		// We set an int value in the instance
-		doctor.setStaffNum(11);
+		doctor.setStaffNum(4);
 
 		// We insert the object in the manager
 		try {
@@ -66,10 +66,10 @@ class DoctorManagerTest {
 		Doctor doctor = new Doctor();
 
 		// We set the value of the query
-		doctor.setStaffNum(1);
+		doctor.setStaffNum(3);
 		try {
 			// We select the the same value of the query
-			doctor = doctorManager.select(1);
+			doctor = doctorManager.select(3);
 		} catch (SQLException sqle) {
 			sqle.printStackTrace();
 		} catch (Exception e) {

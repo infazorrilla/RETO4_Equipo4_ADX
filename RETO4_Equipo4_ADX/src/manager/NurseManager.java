@@ -37,7 +37,7 @@ public class NurseManager extends AbstractManager<Nurse> {
 	public Nurse select(int staffNum) throws SQLException, Exception {
 		Nurse ret = null;
 
-		String sql = "SELECT * FROM `sanitario` WHERE numPersonal = ? AND tipo = 'Enfermeria';";
+		String sql = "SELECT * FROM `sanitario` WHERE numPersonal   = ? AND tipo = 'Enfermeria';";
 
 		Connection connection = null;
 		PreparedStatement preparedStatement = null;
@@ -64,7 +64,8 @@ public class NurseManager extends AbstractManager<Nurse> {
 				ret.setAmbulatory(ambulatory);
 				ret.setType(resultSet.getString("tipo"));
 				ret.setCategory(resultSet.getString("categoria"));
-				if (resultSet.getBoolean("EIR")) {
+				String eir = resultSet.getString("EIR");
+				if (eir.equals("true")) {
 					ret.setEir(true);
 				} else {
 					ret.setEir(false);
@@ -142,7 +143,7 @@ public class NurseManager extends AbstractManager<Nurse> {
 				int idAmbulatory = resultSet.getInt("idAmbulatorio");
 				String type = resultSet.getString("tipo");
 				String category = resultSet.getString("categoria");
-				Boolean eir = resultSet.getBoolean("EIR");
+				String eir = resultSet.getString("EIR");
 
 				// We put the data into Doctor
 				Ambulatory ambulatory = new Ambulatory();
@@ -154,7 +155,7 @@ public class NurseManager extends AbstractManager<Nurse> {
 				nurse.setAmbulatory(ambulatory);
 				nurse.setType(type);
 				nurse.setCategory(category);
-				if (eir) {
+				if (eir.equals("true")) {
 					nurse.setEir(true);
 				} else {
 					nurse.setEir(false);
@@ -265,7 +266,7 @@ public class NurseManager extends AbstractManager<Nurse> {
 
 			// SQL structure.
 			// The ?s are filled in below
-			String sql = "update " + SANITARIAN_TABLE + " set categoria = ? where dni = ?";
+			String sql = "update " + SANITARIAN_TABLE + " set categoria = ? where dniSanitario = ?";
 
 			preparedStatement = connection.prepareStatement(sql);
 
@@ -315,7 +316,7 @@ public class NurseManager extends AbstractManager<Nurse> {
 			connection = DriverManager.getConnection(BBDDUtils.URL_LOCAL, BBDDUtils.USER_LOCAL, BBDDUtils.PASS_LOCAL);
 
 			// SQL structure
-			String sql = "delete from " + SANITARIAN_TABLE + " where numPersonal = '" + staffNum;
+			String sql = "delete from " + SANITARIAN_TABLE + " where numPersonal = " + staffNum;
 			preparedStatement = connection.prepareStatement(sql);
 
 			// We execute
