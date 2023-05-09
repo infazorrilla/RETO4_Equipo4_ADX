@@ -186,43 +186,6 @@ public class View {
 		frame.setResizable(false); // fixed dimensions
 		frame.setLocationRelativeTo(null); // central position on the screen
 
-		ArrayList<Ambulatory> ambulatories = new ArrayList<Ambulatory>();
-
-		try {
-			ambulatories = (ArrayList<Ambulatory>) registrationManager.select();
-		} catch (SQLException e3) {
-			JOptionPane.showMessageDialog(null, "Se ha producido un error con la Base de Datos.", "Error", 0);
-		} catch (Exception e3) {
-			JOptionPane.showMessageDialog(null, "Se ha producido un error.", "Error", 0);
-		}
-		for (Ambulatory ambulatory : ambulatories) {
-			comboBoxAmbulatoryDoctor_1.addItem(ambulatory.getName());
-
-		}
-		try {
-			ambulatories = (ArrayList<Ambulatory>) registrationManager.select();
-		} catch (SQLException e3) {
-			JOptionPane.showMessageDialog(null, "Se ha producido un error con la Base de Datos.", "Error", 0);
-		} catch (Exception e3) {
-			JOptionPane.showMessageDialog(null, "Se ha producido un error.", "Error", 0);
-		}
-		for (Ambulatory ambulatory : ambulatories) {
-			comboBoxAmbulatoryNurse_1.addItem(ambulatory.getName());
-
-		}
-		ArrayList<String> ambulatoriesList = null;
-		try {
-			ambulatoriesList = appointmentSelectionManager.selectAmbulatoryNames();
-			for (String ambulatory : ambulatoriesList) {
-				cbAmbulatory.addItem(ambulatory);
-			}
-		} catch (SQLException e1) {
-			JOptionPane.showMessageDialog(null, "Se ha producido un error con la Base de Datos.", "Error", 0);
-		} catch (Exception e1) {
-			JOptionPane.showMessageDialog(null, "Se ha producido un error.", "Error", 0);
-		}
-
-		ButtonGroup group = new ButtonGroup();
 
 		// LOGIN | PANEL
 		panelLogin = new JPanel();
@@ -326,8 +289,8 @@ public class View {
 		btnSelectDoctor.setForeground(new Color(16, 169, 121));
 		btnSelectDoctor.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
-				panelLogin.setVisible(false);
-				panelNurseOrDoctor.setVisible(true);
+				panelNurseOrDoctor.setVisible(false);
+				panelRegistrationDoctor.setVisible(false);
 			}
 		});
 		btnSelectDoctor.setBounds(176, 128, 100, 40);
@@ -695,8 +658,7 @@ public class View {
 				try {
 					date1 = new SimpleDateFormat("yyyy-MM-dd").parse(sDate1);
 				} catch (ParseException e2) {
-					// TODO Auto-generated catch block
-					e2.printStackTrace();
+					JOptionPane.showMessageDialog(null, "Se ha producido un error.", "Error", 0);
 				}
 				doctor.setBirthDate(date1);
 				String password = new String(passwordFieldDoctor.getPassword());
@@ -706,23 +668,18 @@ public class View {
 				doctor.setMir(true);
 				doctor.setType("Medicina");
 				doctor.setSpeciality(textFieldSpecialityDoctor.getText());
+				Ambulatory ambulatory = null;
 				try {
-					registrationManager.select();
+					ambulatory = registrationManager.select((String) comboBoxAmbulatoryDoctor.getSelectedItem());
+					doctor.setAmbulatory(ambulatory); 
+					doctorManager.insert(doctor);
 				} catch (SQLException e2) {
-					JOptionPane.showMessageDialog(null, "Se ha producido un error con la Base de Datos.", "Error", 0);
+					JOptionPane.showMessageDialog(null, "Se ha producido un error en la base de datos.", "Error", 0);
 				} catch (Exception e2) {
 					JOptionPane.showMessageDialog(null, "Se ha producido un error.", "Error", 0);
 				}
-				// TODO
-//				doctor.setAmbulatory((String) comboBoxAmbulatoryDoctor.getSelectedItem()); 
+				doctor.setAmbulatory(ambulatory); 
 
-				try {
-					doctorManager.insert(doctor);
-				} catch (SQLException e1) {
-					JOptionPane.showMessageDialog(null, "Se ha producido un error con la Base de Datos.", "Error", 0);
-				} catch (Exception e1) {
-					JOptionPane.showMessageDialog(null, "Se ha producido un error.", "Error", 0);
-				}
 
 				panelLogin.setVisible(true);
 				panelRegistrationDoctor.setVisible(false);
@@ -907,12 +864,22 @@ public class View {
 				nurse.setType("Enfermeria");
 				nurse.setCategory(textFieldCategoryNurse.getText());
 
+				Ambulatory ambulatory = null;
+				try {
+					ambulatory = registrationManager.select((String) comboBoxAmbulatoryNurse.getSelectedItem());
+				} catch (SQLException e2) {
+					JOptionPane.showMessageDialog(null, "Se ha producido un error en la base de datos.", "Error", 0);
+				} catch (Exception e2) {
+					JOptionPane.showMessageDialog(null, "Se ha producido un error.", "Error", 0);
+				}
+				nurse.setAmbulatory(ambulatory); 
+				
 				try {
 					nurseManager.insert(nurse);
 				} catch (SQLException e1) {
-					JOptionPane.showMessageDialog(null, "Se ha producido un error con la Base de Datos.", "Error", 0);
+					JOptionPane.showMessageDialog(btnAceptarRegistro, "Error Base De Datos", "Aviso", 2);
 				} catch (Exception e1) {
-					JOptionPane.showMessageDialog(null, "Se ha producido un error.", "Error", 0);
+					JOptionPane.showMessageDialog(btnAceptarRegistro, "Errorª", "Aviso", 2);
 				}
 
 				panelLogin.setVisible(true);
@@ -1578,15 +1545,15 @@ public class View {
 
 		JComboBox<String> cbAmbulatory = new JComboBox<String>();
 		cbAmbulatory.setBounds(295, 108, 134, 21);
-		ArrayList<String> ambulatoryList = null;
+		ArrayList<String> ambulatoriesNames = null;
 		try {
-			ambulatoryList = appointmentSelectionManager.selectAmbulatoryNames();
+			ambulatoriesNames = appointmentSelectionManager.selectAmbulatoryNames();
 		} catch (SQLException e1) {
 			JOptionPane.showMessageDialog(null, "Se ha producido un error con la Base de Datos.", "Error", 0);
 		} catch (Exception e1) {
 			JOptionPane.showMessageDialog(null, "Se ha producido un error.", "Error", 0);
 		}
-		for (String ambulatory : ambulatoryList) {
+		for (String ambulatory : ambulatoriesNames) {
 			cbAmbulatory.addItem(ambulatory);
 		}
 		panelSelectAppointmentAmbulatoryType.add(cbAmbulatory);
@@ -1631,7 +1598,7 @@ public class View {
 			public void actionPerformed(ActionEvent e) {
 				wantedAmbulatory = (String) cbAmbulatory.getSelectedItem();
 
-				for (Enumeration<AbstractButton> buttons = group.getElements(); buttons.hasMoreElements();) {
+				for (Enumeration<AbstractButton> buttons = groupType.getElements(); buttons.hasMoreElements();) {
 					AbstractButton button = buttons.nextElement();
 					if (button.isSelected()) {
 						wantedSanitarian = button.getText();
@@ -1665,7 +1632,8 @@ public class View {
 		btnSelectAppointmentAmbulatoryTypeCancel = new JButton("Cancelar");
 		btnSelectAppointmentAmbulatoryTypeCancel.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
-				// TODO
+				panelPatient.setVisible(true);
+				panelSelectAppointmentAmbulatoryType.setVisible(false);
 			}
 		});
 		btnSelectAppointmentAmbulatoryTypeCancel.setBounds(315, 273, 85, 21);
@@ -1726,10 +1694,21 @@ public class View {
 		panelSelectAppointmentDateTimeSlot.add(cbSelectAppointmentDate);
 
 		JButton btnSelectAppointmentDateTimeSlotOk = new JButton("Aceptar");
+		btnSelectAppointmentDateTimeSlotOk.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent e) {
+			//TODO
+			}
+		});
 		btnSelectAppointmentDateTimeSlotOk.setBounds(207, 292, 89, 23);
 		panelSelectAppointmentDateTimeSlot.add(btnSelectAppointmentDateTimeSlotOk);
 
 		JButton btnSelectAppointmentDateTimeSlotCancel = new JButton("Cancelar");
+		btnSelectAppointmentDateTimeSlotCancel.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent e) {
+				panelSelectAppointmentDateTimeSlot.setVisible(false);
+				panelSelectAppointmentAmbulatoryType.setVisible(true);
+			}
+		});
 		btnSelectAppointmentDateTimeSlotCancel.setBounds(323, 292, 89, 23);
 		panelSelectAppointmentDateTimeSlot.add(btnSelectAppointmentDateTimeSlotCancel);
 
