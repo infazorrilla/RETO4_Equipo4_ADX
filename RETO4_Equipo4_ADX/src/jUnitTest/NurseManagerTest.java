@@ -20,7 +20,7 @@ class NurseManagerTest {
 		Nurse nurse = new Nurse();
 
 		// We set an int value in the instance
-		nurse.setStaffNum(6);
+		nurse.setDni("22222222E");
 
 		// We insert the object in the manager
 		try {
@@ -33,7 +33,7 @@ class NurseManagerTest {
 
 		// We get the previous value and delete it
 		try {
-			nurseManager.delete(nurse.getStaffNum());
+			nurseManager.delete(nurse.getDni());
 		} catch (SQLException sqle) {
 			sqle.printStackTrace();
 		} catch (Exception e) {
@@ -43,7 +43,7 @@ class NurseManagerTest {
 		// We get the previous value and select it
 		// It doesn't get anything because we've eliminated it previously.
 		try {
-			nurse = nurseManager.select(nurse.getStaffNum());
+			nurse = nurseManager.select(nurse.getDni());
 		} catch (SQLException e) {
 			e.printStackTrace();
 		} catch (Exception e) {
@@ -60,10 +60,10 @@ class NurseManagerTest {
 		Nurse nurse = new Nurse();
 
 		// We set the value of the query
-		nurse.setStaffNum(2);
+		nurse.setDni("00000000E");
 		try {
 			// We select the the same value of the query
-			nurse = nurseManager.select(2);
+			nurse = nurseManager.select("00000000E");
 		} catch (SQLException sqle) {
 			sqle.printStackTrace();
 		} catch (Exception e) {

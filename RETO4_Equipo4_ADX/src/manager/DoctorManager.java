@@ -13,7 +13,7 @@ import model.pojos.Ambulatory;
 import model.pojos.Doctor;
 import model.utils.BBDDUtils;
 
-public class DoctorManager extends AbstractManager<Doctor> {
+public class DoctorManager {
 
 	// RUBRICA | SPRINT 2 | INDIVIDUAL
 	// Management of the Table:
@@ -31,8 +31,7 @@ public class DoctorManager extends AbstractManager<Doctor> {
 
 	public static final String SANITARIAN_TABLE = "sanitario";
 
-	@Override
-	public Doctor select(int staffNum) throws SQLException, Exception {
+	public Doctor select(String dni) throws SQLException, Exception {
 		Doctor ret = null;
 
 		String sql = "SELECT * FROM `sanitario`  s JOIN `usuario` u ON s.dniSanitario = u.dni WHERE numPersonal = ? AND tipo = 'Medicina';";
@@ -45,7 +44,7 @@ public class DoctorManager extends AbstractManager<Doctor> {
 			Class.forName(BBDDUtils.DRIVER_LOCAL);
 			connection = DriverManager.getConnection(BBDDUtils.URL_LOCAL, BBDDUtils.USER_LOCAL, BBDDUtils.PASS_LOCAL);
 			preparedStatement = connection.prepareStatement(sql);
-			preparedStatement.setInt(1, staffNum);
+			preparedStatement.setString(1, dni);
 			resultSet = preparedStatement.executeQuery();
 
 			while (resultSet.next()) {
@@ -104,7 +103,6 @@ public class DoctorManager extends AbstractManager<Doctor> {
 		return ret;
 	}
 
-	@Override
 	public List<Doctor> select() throws SQLException, Exception {
 		// Returns all rows of the ambulatory table
 		// If there is nothing, it returns NULL
@@ -208,7 +206,6 @@ public class DoctorManager extends AbstractManager<Doctor> {
 		return ret;
 	}
 
-	@Override
 	public void insert(Doctor doctor) throws SQLException, Exception {
 		// Connection with the BD
 		Connection connection = null;
@@ -259,7 +256,6 @@ public class DoctorManager extends AbstractManager<Doctor> {
 
 	}
 
-	@Override
 	public void update(Doctor doctor) throws SQLException, Exception {
 		// Connection with the BD
 		Connection connection = null;
@@ -312,8 +308,7 @@ public class DoctorManager extends AbstractManager<Doctor> {
 
 	}
 
-	@Override
-	public void delete(int staffNum) throws SQLException, Exception {
+	public void delete(String dni) throws SQLException, Exception {
 		// Connection with the BD
 		Connection connection = null;
 
@@ -328,7 +323,7 @@ public class DoctorManager extends AbstractManager<Doctor> {
 			connection = DriverManager.getConnection(BBDDUtils.URL_LOCAL, BBDDUtils.USER_LOCAL, BBDDUtils.PASS_LOCAL);
 
 			// SQL structure
-			String sql = "delete from " + SANITARIAN_TABLE + " where numPersonal = " + staffNum;
+			String sql = "delete from " + SANITARIAN_TABLE  + " where dniSanitario = '" + dni + "'";
 			preparedStatement = connection.prepareStatement(sql);
 
 			// We execute
