@@ -1,19 +1,17 @@
 package jUnitTest;
 
-import static org.junit.jupiter.api.Assertions.*;
+import static org.junit.jupiter.api.Assertions.assertEquals;
 
 import java.sql.SQLException;
-import java.text.ParseException;
-import java.text.SimpleDateFormat;
 import java.util.ArrayList;
-import java.util.Date;
 
-import org.junit.jupiter.api.BeforeAll;
 import org.junit.jupiter.api.Test;
 
 import manager.AppointmentSelectionManager;
 import model.pojos.Ambulatory;
+import model.pojos.Doctor;
 import model.pojos.Sanitarian;
+import model.pojos.TimeSlot;
 
 class AppointmentSelectionManagerTest {
 
@@ -36,26 +34,10 @@ class AppointmentSelectionManagerTest {
 	}
 
 	@Test
-	void testSelectAmbulatories() {
-		Ambulatory ambulatory = null;
-		try {
-			ambulatory = manager.selectAmbulatory("a");
-		} catch (SQLException e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
-		} catch (Exception e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
-		}
-
-		assertEquals(1, ambulatory.getId());
-	}
-
-	@Test
 	void testShowAvailableDates() {
 		Ambulatory test = new Ambulatory();
 		test.setId(1);
-		ArrayList<Date> dates = new ArrayList<Date>();
+		ArrayList<String> dates = new ArrayList<String>();
 		try {
 			dates = manager.showAvailableDates("Enfermeria", test);
 		} catch (SQLException e) {
@@ -67,14 +49,8 @@ class AppointmentSelectionManagerTest {
 		}
 
 		String sDate = "2023-04-05";
-		Date date = new Date();
-		try {
-			date = new SimpleDateFormat("yyyy-MM-dd").parse(sDate);
-		} catch (ParseException e) {
-			e.printStackTrace();
-		}
 
-		assertEquals(dates.get(0), date);
+		assertEquals(dates.get(0), sDate);
 	}
 
 	@Test
@@ -92,30 +68,15 @@ class AppointmentSelectionManagerTest {
 
 		assertEquals(1, test.getId());
 	}
-
-	@Test
-	void testShowAvailableSanitarianByDate() {
-		ArrayList<Sanitarian> test = new ArrayList<Sanitarian>();
-		try {
-			test = manager.showAvailableSanitarianByDate("Enfermeria", "2023-04-05");
-		} catch (SQLException e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
-		} catch (Exception e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
-		}
-
-		assertEquals(2, test.size());
-	}
-
-	// TODO
-	// Arreglar
+	
 	@Test
 	void testShowAvailableTimeSlots() {
-		ArrayList<Integer> timeSlots = new ArrayList<Integer>();
+		Sanitarian sanitarian = new Doctor();
+		sanitarian.setDni("11111111A");
+		
+		ArrayList<TimeSlot> timeSlots = new ArrayList<TimeSlot>();
 		try {
-			timeSlots = manager.showAvailableTimeSlots("11111111A", "2023-04-05");
+			timeSlots = manager.showAvailableTimeSlots(sanitarian, "2023-04-05");
 		} catch (SQLException e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
@@ -132,5 +93,42 @@ class AppointmentSelectionManagerTest {
 
 		assertEquals(expected.size(), timeSlots.size());
 	}
+
+	@Test
+	void testShowAvailableSanitarianByDate() {
+		ArrayList<Sanitarian> test = new ArrayList<Sanitarian>();
+		try {
+			test = manager.showAvailableSanitarianByDate("Enfermeria", "2023-04-05");
+		} catch (SQLException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		} catch (Exception e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+
+		assertEquals(2, test.size());
+	}
+	
+	@Test
+	void testSelectSanitarian() {
+		Sanitarian test = new Doctor();
+		test.setName("b");
+		test.setSurname("b");
+		try {
+			test = manager.selectSanitarian(test.getName(), test.getSurname());
+		} catch (SQLException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		} catch (Exception e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+		
+		assertEquals("11111111A", test.getDni());
+	}
+
+	
+	
 
 }

@@ -1,25 +1,22 @@
 package view;
 
 import java.awt.Color;
-import java.awt.Font;
 import java.awt.HeadlessException;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+import java.awt.event.ItemEvent;
+import java.awt.event.ItemListener;
 import java.awt.event.KeyAdapter;
 import java.awt.event.KeyEvent;
 import java.awt.event.MouseAdapter;
 import java.awt.event.MouseEvent;
 import java.awt.event.MouseListener;
 import java.sql.SQLException;
-import java.text.ParseException;
-import java.text.SimpleDateFormat;
 import java.util.ArrayList;
-import java.util.Date;
 import java.util.Enumeration;
 
 import javax.swing.AbstractButton;
 import javax.swing.ButtonGroup;
-import javax.swing.ImageIcon;
 import javax.swing.JButton;
 import javax.swing.JComboBox;
 import javax.swing.JFrame;
@@ -28,6 +25,8 @@ import javax.swing.JOptionPane;
 import javax.swing.JPanel;
 import javax.swing.JPasswordField;
 import javax.swing.JRadioButton;
+import javax.swing.JScrollPane;
+import javax.swing.JTable;
 import javax.swing.JTextField;
 import javax.swing.SwingConstants;
 import javax.swing.event.CaretEvent;
@@ -36,7 +35,6 @@ import javax.swing.table.DefaultTableModel;
 
 import manager.AppointmentSelectionManager;
 import manager.BlockUnlockPatientManager;
-import manager.PatientManager;
 import manager.TimeSlotManager;
 import manager.UserDataModificationManager;
 import model.pojos.Ambulatory;
@@ -48,17 +46,8 @@ import model.pojos.Patient;
 import model.pojos.Sanitarian;
 import model.pojos.TimeSlot;
 import model.pojos.User;
-import model.pojos.WorkingDay;
-
-import javax.swing.JTable;
-import javax.swing.JScrollPane;
-import java.awt.event.ItemListener;
-import java.awt.event.ItemEvent;
 
 public class ViewAmaia {
-//	private PatientManager patientManager;
-//	private DoctorManager doctorManager;
-//	private NurseManager nurseManager;
 	private UserDataModificationManager userDataModificationManager;
 	private AppointmentSelectionManager appointmentSelectionManager;
 	private BlockUnlockPatientManager blockDesblockPatientManager;
@@ -67,7 +56,7 @@ public class ViewAmaia {
 	private User user;
 	private String wantedAmbulatory;
 	private String wantedSanitarian;
-	private ArrayList<Date> dates;
+	private ArrayList<String> dates;
 
 	public JFrame frame;
 	private JPanel panelLogin;
@@ -95,14 +84,9 @@ public class ViewAmaia {
 	private JTable tableSelectTimeSlot;
 	private JComboBox<String> cbSelectAppointmentDate;
 	private JComboBox<String> cbSelectAppointmentSanitarian;
-	private JButton btnNewButton;
 	private JPanel panelBlockPatient;
 	private JTable tableBlockPatients;
 	private JButton btnBlockPatientOk;
-	private JButton btnBlockAmbulatoryPatient;
-	private JButton btntodo1;
-	private JButton btntodo2;
-	private JButton btnModifySanitarianData;
 	private JTable tablePatientData;
 	private JScrollPane scrollPane_1;
 
@@ -174,18 +158,17 @@ public class ViewAmaia {
 					panelSelectAppointmentAmbulatoryType.setVisible(true);
 
 					// Panel Modify Patient
-					tablePatientData.setModel(
-							new DefaultTableModel(new Object[][] {}, new String[] { "", ""}));
-					
+					tablePatientData.setModel(new DefaultTableModel(new Object[][] {}, new String[] { "", "" }));
+
 					DefaultTableModel model = (DefaultTableModel) tablePatientData.getModel();
 					model.setRowCount(0);
 
-					model.addRow(new String[] { "DNI", user.getDni()});
-					model.addRow(new String[] { "Nombre", user.getName()});
-					model.addRow(new String[] { "Apellido", user.getSurname()});
-					model.addRow(new String[] { "Fecha de nacimiento", user.getBirthDate().toString()});
-					model.addRow(new String[] { "Dirección", ((Patient) user).getAddress()});
-					model.addRow(new String[] { "Teléfono", ((Patient) user).getPhoneNumber()});
+					model.addRow(new String[] { "DNI", user.getDni() });
+					model.addRow(new String[] { "Nombre", user.getName() });
+					model.addRow(new String[] { "Apellido", user.getSurname() });
+					model.addRow(new String[] { "Fecha de nacimiento", user.getBirthDate().toString() });
+					model.addRow(new String[] { "Dirección", ((Patient) user).getAddress() });
+					model.addRow(new String[] { "Teléfono", ((Patient) user).getPhoneNumber() });
 				}
 
 				if (user instanceof Doctor) {
@@ -266,7 +249,7 @@ public class ViewAmaia {
 //		Modify Patient panel
 		panelModifyPatient = new JPanel();
 		panelModifyPatient.setBackground(new Color(0, 128, 192));
-		panelModifyPatient.setBounds(0, 0, 616, 351);
+		panelModifyPatient.setBounds(556, 0, 60, 351);
 		frame.getContentPane().add(panelModifyPatient);
 		panelModifyPatient.setLayout(null);
 		panelModifyPatient.setVisible(false);
@@ -445,7 +428,7 @@ public class ViewAmaia {
 		});
 		btnModifyPatientUnsubscribe.setBounds(398, 202, 183, 23);
 		panelModifyPatient.add(btnModifyPatientUnsubscribe);
-		
+
 		scrollPane_1 = new JScrollPane();
 		scrollPane_1.setBounds(10, 84, 268, 103);
 		panelModifyPatient.add(scrollPane_1);
@@ -455,7 +438,6 @@ public class ViewAmaia {
 		tablePatientData.setRowSelectionAllowed(false);
 		scrollPane_1.setViewportView(tablePatientData);
 		tablePatientData.setDefaultEditor(Object.class, null);
-
 
 //		Modify Sanitarian panel
 		panelModifySanitarian = new JPanel();
@@ -635,7 +617,7 @@ public class ViewAmaia {
 //		panel SelectAppointmentAmbulatoryType
 		panelSelectAppointmentAmbulatoryType = new JPanel();
 		panelSelectAppointmentAmbulatoryType.setBackground(new Color(0, 128, 192));
-		panelSelectAppointmentAmbulatoryType.setBounds(535, 0, 81, 351);
+		panelSelectAppointmentAmbulatoryType.setBounds(0, 0, 616, 351);
 		frame.getContentPane().add(panelSelectAppointmentAmbulatoryType);
 		panelSelectAppointmentAmbulatoryType.setLayout(null);
 		panelSelectAppointmentAmbulatoryType.setVisible(false);
@@ -708,7 +690,7 @@ public class ViewAmaia {
 				}
 
 				Ambulatory ambulatory = new Ambulatory();
-				dates = new ArrayList<Date>();
+				dates = new ArrayList<String>();
 				try {
 					ambulatory = appointmentSelectionManager.selectAmbulatory(wantedAmbulatory);
 					dates = appointmentSelectionManager.showAvailableDates(wantedSanitarian, ambulatory);
@@ -718,8 +700,9 @@ public class ViewAmaia {
 					JOptionPane.showMessageDialog(null, "Se ha producido un error.", "Error", 0);
 				}
 
-				for (Date date : dates) {
-					cbSelectAppointmentDate.addItem(date.toString());
+				cbSelectAppointmentDate.addItem("");
+				for (String date : dates) {
+					cbSelectAppointmentDate.addItem(date);
 				}
 
 				panelSelectAppointmentAmbulatoryType.setVisible(false);
@@ -742,7 +725,7 @@ public class ViewAmaia {
 //		panel SelectAppointmentDateTimeSlot
 		panelSelectAppointmentDateTimeSlot = new JPanel();
 		panelSelectAppointmentDateTimeSlot.setBackground(new Color(0, 128, 192));
-		panelSelectAppointmentDateTimeSlot.setBounds(557, 0, 59, 351);
+		panelSelectAppointmentDateTimeSlot.setBounds(0, 0, 616, 351);
 		frame.getContentPane().add(panelSelectAppointmentDateTimeSlot);
 		panelSelectAppointmentDateTimeSlot.setLayout(null);
 		panelSelectAppointmentDateTimeSlot.setVisible(false);
@@ -752,6 +735,7 @@ public class ViewAmaia {
 		panelSelectAppointmentDateTimeSlot.add(scrollPaneSelectTimeSlot);
 
 		tableSelectTimeSlot = new JTable();
+		tableSelectTimeSlot.setDefaultEditor(Object.class, null);
 		tableSelectTimeSlot.setModel(new DefaultTableModel(new Object[][] {},
 				new String[] { "Profesional", "Ambulatorio", "Fecha", "Hora" }));
 		scrollPaneSelectTimeSlot.setViewportView(tableSelectTimeSlot);
@@ -761,6 +745,33 @@ public class ViewAmaia {
 		panelSelectAppointmentDateTimeSlot.add(lblSelectAppointmentDate);
 
 		cbSelectAppointmentDate = new JComboBox<String>();
+		cbSelectAppointmentDate.addItemListener(new ItemListener() {
+			public void itemStateChanged(ItemEvent e) {
+				if (!cbSelectAppointmentDate.getSelectedItem().toString().equals("")) {
+					cbSelectAppointmentSanitarian.removeAllItems();
+					String dateString = cbSelectAppointmentDate.getSelectedItem().toString();
+
+					ArrayList<Sanitarian> sanitarians;
+					try {
+						sanitarians = appointmentSelectionManager.showAvailableSanitarianByDate(wantedSanitarian,
+								dateString);
+						cbSelectAppointmentSanitarian.addItem("");
+						for (Sanitarian sanitarian : sanitarians) {
+							cbSelectAppointmentSanitarian
+									.addItem(sanitarian.getSurname() + ", " + sanitarian.getName());
+						}
+					} catch (SQLException e1) {
+						JOptionPane.showMessageDialog(null, "Se ha producido un error con la Base de Datos.", "Error",
+								0);
+					} catch (Exception e1) {
+						JOptionPane.showMessageDialog(null, "Se ha producido un error.", "Error", 0);
+					}
+				} else {
+					cbSelectAppointmentSanitarian.removeAllItems();
+					cbSelectAppointmentSanitarian.addItem("");
+				}
+			}
+		});
 		cbSelectAppointmentDate.setBounds(313, 19, 144, 22);
 		panelSelectAppointmentDateTimeSlot.add(cbSelectAppointmentDate);
 
@@ -772,76 +783,51 @@ public class ViewAmaia {
 		btnSelectAppointmentDateTimeSlotCancel.setBounds(323, 292, 89, 23);
 		panelSelectAppointmentDateTimeSlot.add(btnSelectAppointmentDateTimeSlotCancel);
 
-		JLabel lblSelectAppontmentSanitarian = new JLabel("Seleccione un profesional");
-		lblSelectAppontmentSanitarian.setBounds(174, 99, 129, 14);
+		JLabel lblSelectAppontmentSanitarian = new JLabel("Profesionales disponibles");
+		lblSelectAppontmentSanitarian.setBounds(174, 80, 129, 14);
 		panelSelectAppointmentDateTimeSlot.add(lblSelectAppontmentSanitarian);
 
 		cbSelectAppointmentSanitarian = new JComboBox<String>();
-		cbSelectAppointmentSanitarian.addActionListener(new ActionListener() {
-			public void actionPerformed(ActionEvent e) {
+		try {
+		cbSelectAppointmentSanitarian.addItemListener(new ItemListener() {
+			public void itemStateChanged(ItemEvent e) {
+				if (null != cbSelectAppointmentSanitarian.getSelectedItem()) {
+					if (!cbSelectAppointmentSanitarian.getSelectedItem().toString().equals("")) {
+						String dateString = cbSelectAppointmentDate.getSelectedItem().toString();
+						String nameSurname = (String) cbSelectAppointmentSanitarian.getSelectedItem();
 
+						String[] parts = nameSurname.split(",");
+						String surname = parts[0].trim();
+						String name = parts[1].trim();
+						ArrayList<TimeSlot> timeSlots = null;
+						try {
+							Sanitarian sanitarian = appointmentSelectionManager.selectSanitarian(name, surname);
+							timeSlots = appointmentSelectionManager.showAvailableTimeSlots(sanitarian, dateString);
+
+							DefaultTableModel model = (DefaultTableModel) tableSelectTimeSlot.getModel();
+							model.setRowCount(0);
+
+							for (TimeSlot timeSlot : timeSlots) {
+								model.addRow(new String[] { surname + ", " + name, wantedAmbulatory,
+										cbSelectAppointmentDate.getSelectedItem().toString(),
+										timeSlotManager.select(timeSlot.getId()).getStartTime().toString() });
+							}
+						} catch (SQLException e1) {
+							JOptionPane.showMessageDialog(null, "Se ha producido un error con la Base de Datos.",
+									"Error", 0);
+						} catch (Exception e1) {
+							JOptionPane.showMessageDialog(null, "Se ha producido un error.", "Error", 0);
+						}
+					} else {
+						DefaultTableModel model = (DefaultTableModel) tableSelectTimeSlot.getModel();
+						model.setRowCount(0);					}
+				}
 			}
 		});
-		cbSelectAppointmentSanitarian.setBounds(319, 91, 138, 22);
+		}catch (Exception e) {
+		}
+		cbSelectAppointmentSanitarian.setBounds(319, 76, 138, 22);
 		panelSelectAppointmentDateTimeSlot.add(cbSelectAppointmentSanitarian);
-
-		JButton btnSelectAppointmentDateOk = new JButton("Aceptar");
-		btnSelectAppointmentDateOk.addActionListener(new ActionListener() {
-			public void actionPerformed(ActionEvent e) {
-				String dateString = cbSelectAppointmentDate.getSelectedItem().toString();
-
-				ArrayList<Sanitarian> sanitarians;
-				try {
-					sanitarians = appointmentSelectionManager.showAvailableSanitarianByDate(wantedSanitarian,
-							dateString);
-					for (Sanitarian sanitarian : sanitarians) {
-						cbSelectAppointmentSanitarian.addItem(sanitarian.getName());
-					}
-				} catch (SQLException e1) {
-					JOptionPane.showMessageDialog(null, "Se ha producido un error con la Base de Datos.", "Error", 0);
-				} catch (Exception e1) {
-					JOptionPane.showMessageDialog(null, "Se ha producido un error.", "Error", 0);
-				}
-			}
-		});
-		btnSelectAppointmentDateOk.setBounds(259, 52, 89, 23);
-		panelSelectAppointmentDateTimeSlot.add(btnSelectAppointmentDateOk);
-
-		btnNewButton = new JButton("New button");
-		btnNewButton.addActionListener(new ActionListener() {
-			public void actionPerformed(ActionEvent e) {
-				String dateString = cbSelectAppointmentDate.getSelectedItem().toString();
-
-				ArrayList<Integer> timeSlotIds = null;
-				try {
-					timeSlotIds = appointmentSelectionManager.showAvailableTimeSlots(wantedSanitarian, dateString);
-				} catch (SQLException e1) {
-					JOptionPane.showMessageDialog(null, "Se ha producido un error con la Base de Datos.", "Error", 0);
-				} catch (Exception e1) {
-					JOptionPane.showMessageDialog(null, "Se ha producido un error.", "Error", 0);
-				}
-
-				DefaultTableModel model = (DefaultTableModel) tableSelectTimeSlot.getModel();
-				model.setRowCount(0);
-
-				for (Integer timeSlot : timeSlotIds) {
-					try {
-						model.addRow(new String[] { wantedSanitarian, wantedAmbulatory,
-								cbSelectAppointmentDate.getSelectedItem().toString(),
-								timeSlotManager.select(timeSlot).toString() });
-					} catch (SQLException e1) {
-						JOptionPane.showMessageDialog(null, "Se ha producido un error con la Base de Datos.", "Error",
-								0);
-					} catch (Exception e1) {
-						JOptionPane.showMessageDialog(null, "Se ha producido un error.", "Error", 0);
-					}
-				}
-
-//				"Profesional", "Ambulatorio", "Fecha", "Hora"
-			}
-		});
-		btnNewButton.setBounds(49, 91, 89, 23);
-		panelSelectAppointmentDateTimeSlot.add(btnNewButton);
 
 	}
 }

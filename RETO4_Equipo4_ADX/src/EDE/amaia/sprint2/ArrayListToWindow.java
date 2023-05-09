@@ -74,7 +74,7 @@ public class ArrayListToWindow {
 		frame.getContentPane().add(tabbedPane);
 
 		JPanel panelWorkingDay = new JPanel();
-		tabbedPane.addTab("New tab", null, panelWorkingDay, null);
+		tabbedPane.addTab("Working Day", null, panelWorkingDay, null);
 		panelWorkingDay.setLayout(null);
 
 		JScrollPane scrollPaneWorkingDay;
@@ -95,7 +95,7 @@ public class ArrayListToWindow {
 		}
 
 		JPanel panelTimeSlot = new JPanel();
-		tabbedPane.addTab("New tab", null, panelTimeSlot, null);
+		tabbedPane.addTab("Time Slot", null, panelTimeSlot, null);
 		
 		JScrollPane scrollPaneTimeSlot;
 		scrollPaneTimeSlot = new JScrollPane();

@@ -338,8 +338,6 @@ public class UserDataModificationManager {
 
 			preparedStatement.executeUpdate();
 			
-//			deleteUser(dni);
-
 		} catch (SQLException sqle) {
 			throw sqle;
 		} catch (Exception e) {
@@ -381,8 +379,6 @@ public class UserDataModificationManager {
 
 			preparedStatement.executeUpdate();
 			
-			deleteUser(dni);
-
 		} catch (SQLException sqle) {
 			throw sqle;
 		} catch (Exception e) {
@@ -667,47 +663,6 @@ public class UserDataModificationManager {
 
 			preparedStatement.executeUpdate();
 			
-//			deleteUser(dni);
-
-		} catch (SQLException sqle) {
-			throw sqle;
-		} catch (Exception e) {
-			throw e;
-		} finally {
-			try {
-				if (preparedStatement != null)
-					preparedStatement.close();
-			} catch (Exception e) {
-			}
-			;
-			try {
-				if (connection != null)
-					connection.close();
-			} catch (Exception e) {
-			}
-			;
-		}
-	}
-	
-	/**
-	 * Deletes the row in DB's 'Usuario' table by dni
-	 * @param dni String
-	 * @throws SQLException, Excepcion 
-	 */
-	private void deleteUser(String dni) throws SQLException, Exception {
-		Connection connection = null;
-		PreparedStatement preparedStatement = null;
-
-		try {
-			connection = DriverManager.getConnection(BBDDUtils.URL_LOCAL, BBDDUtils.USER_LOCAL, BBDDUtils.PASS_LOCAL);
-			preparedStatement = null;
-
-			Class.forName(BBDDUtils.DRIVER_LOCAL);
-			String sql = "delete from usuario where dni = '" + dni + "'";
-			preparedStatement = connection.prepareStatement(sql);
-
-			preparedStatement.executeUpdate();
-
 		} catch (SQLException sqle) {
 			throw sqle;
 		} catch (Exception e) {

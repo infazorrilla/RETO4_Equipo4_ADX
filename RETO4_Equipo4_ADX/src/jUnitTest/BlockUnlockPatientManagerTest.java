@@ -1,16 +1,13 @@
 package jUnitTest;
 
-import static org.junit.jupiter.api.Assertions.*;
+import static org.junit.jupiter.api.Assertions.assertEquals;
 
 import java.sql.SQLException;
 import java.util.ArrayList;
-import java.util.Date;
 
-import org.junit.jupiter.api.BeforeAll;
 import org.junit.jupiter.api.Test;
 
 import manager.BlockUnlockPatientManager;
-import manager.PatientManager;
 import manager.UserDataModificationManager;
 import model.pojos.Patient;
 
@@ -54,25 +51,7 @@ class BlockUnlockPatientManagerTest {
 		Patient patient = new Patient();
 		try {
 			patient = userDataModificationManager.selectPatient("00000000A");
-		} catch (SQLException e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
-		} catch (Exception e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
-		}
-
-		try {
 			manager.blockPatient(patient);
-		} catch (SQLException e1) {
-			// TODO Auto-generated catch block
-			e1.printStackTrace();
-		} catch (Exception e1) {
-			// TODO Auto-generated catch block
-			e1.printStackTrace();
-		}
-		
-		try {
 			patient = userDataModificationManager.selectPatient("00000000A");
 		} catch (SQLException e) {
 			// TODO Auto-generated catch block
@@ -84,32 +63,14 @@ class BlockUnlockPatientManagerTest {
 
 		assertEquals(true, patient.isBlocked());
 	}
-	
+
 	@Test
 	void testUnlockPatient() {
 		UserDataModificationManager userDataModificationManager = new UserDataModificationManager();
 		Patient patient = new Patient();
 		try {
 			patient = userDataModificationManager.selectPatient("00000000A");
-		} catch (SQLException e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
-		} catch (Exception e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
-		}
-
-		try {
 			manager.unlockPatient(patient);
-		} catch (SQLException e1) {
-			// TODO Auto-generated catch block
-			e1.printStackTrace();
-		} catch (Exception e1) {
-			// TODO Auto-generated catch block
-			e1.printStackTrace();
-		}
-		
-		try {
 			patient = userDataModificationManager.selectPatient("00000000A");
 		} catch (SQLException e) {
 			// TODO Auto-generated catch block
@@ -121,6 +82,5 @@ class BlockUnlockPatientManagerTest {
 
 		assertEquals(false, patient.isBlocked());
 	}
-	
 
 }

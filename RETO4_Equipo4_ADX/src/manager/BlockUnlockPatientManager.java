@@ -7,12 +7,8 @@ import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.sql.Statement;
 import java.util.ArrayList;
-import java.util.Date;
 
-import model.pojos.Ambulatory;
-import model.pojos.Nurse;
 import model.pojos.Patient;
-import model.pojos.TimeSlot;
 import model.utils.BBDDUtils;
 
 public class BlockUnlockPatientManager {

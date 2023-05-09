@@ -11,7 +11,7 @@ import model.utils.BBDDUtils;
 
 public class DBUsers {
 
-		private ArrayList <String> getAllUsers (){
+		public ArrayList <String> getAllUsers (){
 			ArrayList <String> ret = null;
 			
 			String sql = "select user from mysql.user;";
