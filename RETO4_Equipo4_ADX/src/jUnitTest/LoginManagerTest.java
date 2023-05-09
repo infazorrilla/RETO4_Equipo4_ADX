@@ -15,8 +15,8 @@ class LoginManagerTest {
 	void testGetUserByDniAndPassword() {
 
 		// We set the values
-		String userDNI = "00000000A";
-		String pass = "beba";
+		String userDNI = "00000000D";
+		String pass = "123";
 
 		// Instantiate the manager class
 		LoginManager loginManager = new LoginManager();
@@ -40,9 +40,9 @@ class LoginManagerTest {
 
 		try {
 			// We set the values in the Method
-			doctor = loginManager.identifyUserType("11111111A");
-			nurse = loginManager.identifyUserType("22222222A");
-			patient = loginManager.identifyUserType("00000000A");
+			doctor = loginManager.identifyUserType("00000000D");
+			nurse = loginManager.identifyUserType("00000000E");
+			patient = loginManager.identifyUserType("00000000P");
 		} catch (SQLException e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
