@@ -133,7 +133,7 @@ class AmbulatoryManagerTest {
 	void testUpdateAmbulatory() {
 		// We set the initial values
 		Ambulatory ambulatory = new Ambulatory();
-		ambulatory.setId(10);
+		ambulatory.setId(11);
 		ambulatory.setName("Cruces");
 		ambulatory.setPhoneNumber("945555520");
 		ambulatory.setAddress("Cruces");
@@ -161,10 +161,14 @@ class AmbulatoryManagerTest {
 
 		// We set a comparative expected result
 		Ambulatory expected = new Ambulatory();
-		expected.setId(10);
-		expected.setName("Cruces");
-		expected.setPhoneNumber("944444444");
-		expected.setAddress("Cruces");
+		try {
+			// We select the previous object
+			expected = ambulatoryManager.select(11);
+		} catch (SQLException sqle) {
+			sqle.printStackTrace();
+		} catch (Exception e1) {
+			e1.printStackTrace();
+		}
 
 		assertEquals(ambulatory, expected);
 	}

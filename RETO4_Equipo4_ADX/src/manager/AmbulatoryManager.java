@@ -10,8 +10,6 @@ import java.util.ArrayList;
 import java.util.List;
 
 import model.pojos.Ambulatory;
-import model.pojos.Appointment;
-import model.pojos.Nurse;
 import model.utils.BBDDUtils;
 
 public class AmbulatoryManager extends AbstractManager<Ambulatory> {
@@ -234,16 +232,14 @@ public class AmbulatoryManager extends AbstractManager<Ambulatory> {
 			// We open the connection with the BD
 			connection = DriverManager.getConnection(BBDDUtils.URL_LOCAL, BBDDUtils.USER_LOCAL, BBDDUtils.PASS_LOCAL);
 
-			String name = null;
-			String phoneNumber = null;
-			String address = null;
 			// SQL structure.
 			// The ?s are filled in below
-			String sql = "update " + AMBULATORY_TABLE + " set nombre = ?, 	direccion = ?, telefono = ? where idAmbulatorio = ?";
+			String sql = "update " + AMBULATORY_TABLE
+					+ " set nombre = ?, direccion = ?, telefono = ? where idAmbulatorio = ?";
 			preparedStatement = connection.prepareStatement(sql);
-			preparedStatement.setString(1, name);
-			preparedStatement.setString(2, phoneNumber);
-			preparedStatement.setString(3, address);
+			preparedStatement.setString(1, ambulatory.getName());
+			preparedStatement.setString(2, ambulatory.getAddress());
+			preparedStatement.setString(3, ambulatory.getPhoneNumber());
 			preparedStatement.setInt(4, ambulatory.getId());
 
 			// We execute
