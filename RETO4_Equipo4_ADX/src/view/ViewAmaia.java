@@ -810,6 +810,8 @@ public class ViewAmaia {
 					JOptionPane.showMessageDialog(null,timeSlot.getId(), "Error", 0);
 
 					appointmentSelectionManager.insertAppointmentWorkingDayTimeSlot(appointment, workingDay, timeSlot);
+					
+					JOptionPane.showMessageDialog(null, "Cita seleccionada", "Info", 1);
 				} catch (SQLException e1) {
 					JOptionPane.showMessageDialog(null, "Se ha producido un error con la Base de Datos.", "Error", 0);
 				} catch (Exception e1) {

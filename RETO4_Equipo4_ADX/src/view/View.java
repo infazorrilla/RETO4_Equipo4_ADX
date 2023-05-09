@@ -35,6 +35,7 @@ import javax.swing.event.CaretListener;
 import javax.swing.table.DefaultTableModel;
 
 import manager.AmbulatoryManager;
+import manager.AppointmentManager;
 import manager.AppointmentSelectionManager;
 import manager.BlockUnlockPatientManager;
 import manager.PatientManager;
@@ -42,6 +43,7 @@ import manager.RegistrationManager;
 import manager.TimeSlotManager;
 import manager.UserDataModificationManager;
 import model.pojos.Ambulatory;
+import model.pojos.Appointment;
 import manager.DoctorManager;
 import manager.LoginManager;
 import manager.NurseManager;
@@ -68,6 +70,7 @@ public class View {
 	private UserDataModificationManager userDataModificationManager;
 	private AppointmentSelectionManager appointmentSelectionManager;
 	private TimeSlotManager timeSlotManager;
+	private AppointmentManager appointmentManager;
 
 	private BlockUnlockPatientManager blockUnlockPatientManager;
 	private String userDNI;
@@ -171,6 +174,7 @@ public class View {
 		nurseManager = new NurseManager();
 		ambulatoryManager = new AmbulatoryManager();
 		registrationManager = new RegistrationManager();
+		appointmentManager = new AppointmentManager();
 
 		initialize();
 	}
@@ -1696,7 +1700,40 @@ public class View {
 		JButton btnSelectAppointmentDateTimeSlotOk = new JButton("Aceptar");
 		btnSelectAppointmentDateTimeSlotOk.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
-			//TODO
+				int fila = tableSelectTimeSlot.getSelectedRow();
+				String hour = (String) tableSelectTimeSlot.getValueAt(fila, 3);
+				String dateString = cbSelectAppointmentDate.getSelectedItem().toString();
+
+				Appointment appointment = new Appointment();
+				try {
+					String nameSurname = (String) cbSelectAppointmentSanitarian.getSelectedItem();
+					String[] parts = nameSurname.split(",");
+					String surname = parts[0].trim();
+					String name = parts[1].trim();
+					Sanitarian sanitarian = appointmentSelectionManager.selectSanitarian(name, surname);
+
+					Ambulatory ambulatory = appointmentSelectionManager.selectAmbulatory(wantedAmbulatory);
+					appointment.setAmbulatory(ambulatory);
+					appointment.setPatient((Patient) user);
+					appointment.setSanitarian(sanitarian);
+
+					appointmentManager.insert(appointment);
+					
+					appointment = appointmentSelectionManager.selectAppointment((Patient) user, sanitarian,
+							appointmentSelectionManager.selectAmbulatory(wantedAmbulatory));
+					
+					WorkingDay workingDay = appointmentSelectionManager.selectWorkingDay(dateString);
+					TimeSlot timeSlot = appointmentSelectionManager.selectTimeSlot(hour);
+					JOptionPane.showMessageDialog(null,timeSlot.getId(), "Error", 0);
+
+					appointmentSelectionManager.insertAppointmentWorkingDayTimeSlot(appointment, workingDay, timeSlot);
+					
+					JOptionPane.showMessageDialog(null, "Cita seleccionada", "Info", 1);
+				} catch (SQLException e1) {
+					JOptionPane.showMessageDialog(null, "Se ha producido un error con la Base de Datos.", "Error", 0);
+				} catch (Exception e1) {
+					JOptionPane.showMessageDialog(null, "Se ha producido un error.", "Error", 0);
+				}
 			}
 		});
 		btnSelectAppointmentDateTimeSlotOk.setBounds(207, 292, 89, 23);
