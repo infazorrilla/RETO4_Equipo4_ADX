@@ -21,7 +21,7 @@ class AmbulatoryManagerTest {
 		Ambulatory ambulatory = new Ambulatory();
 
 		// We set an int value in the instance
-		ambulatory.setId(1);
+		ambulatory.setId(10);
 
 		// We insert the object in the manager
 		try {
@@ -99,10 +99,10 @@ class AmbulatoryManagerTest {
 	void testInsertAmbulatory() {
 		// We set expected values for later comparison
 		Ambulatory expected = new Ambulatory();
-		expected.setId(8);
+		expected.setId(15);
 		expected.setName("Cruces");
 		expected.setAddress("Cruces");
-		expected.setPhoneNumber("945 55 55 20");
+		expected.setPhoneNumber("945555520");
 
 		try {
 			// We insert the expected values
@@ -115,15 +115,11 @@ class AmbulatoryManagerTest {
 
 		// We set the comparative values
 		Ambulatory actual = new Ambulatory();
-		actual.setId(8);
-		actual.setName("Cruces");
-		actual.setAddress("Cruces");
-		actual.setPhoneNumber("945 55 55 20");
 
 		try {
 
 			// We insert the comparative values
-			ambulatoryManager.insert(actual);
+			actual = ambulatoryManager.select(15);
 		} catch (SQLException sqle) {
 			sqle.printStackTrace();
 		} catch (Exception e) {
@@ -139,7 +135,7 @@ class AmbulatoryManagerTest {
 		Ambulatory ambulatory = new Ambulatory();
 		ambulatory.setId(10);
 		ambulatory.setName("Cruces");
-		ambulatory.setPhoneNumber("945 55 55 20");
+		ambulatory.setPhoneNumber("945555520");
 		ambulatory.setAddress("Cruces");
 		try {
 			// We insert the initial values
@@ -152,7 +148,7 @@ class AmbulatoryManagerTest {
 
 		// We set a new value
 		ambulatory.setName("Cruces");
-		ambulatory.setPhoneNumber("944 44 44 44");
+		ambulatory.setPhoneNumber("944444444");
 		ambulatory.setAddress("Cruces");
 		try {
 			// We update the values
@@ -167,7 +163,7 @@ class AmbulatoryManagerTest {
 		Ambulatory expected = new Ambulatory();
 		expected.setId(10);
 		expected.setName("Cruces");
-		expected.setPhoneNumber("944 44 44 44");
+		expected.setPhoneNumber("944444444");
 		expected.setAddress("Cruces");
 
 		assertEquals(ambulatory, expected);

@@ -239,7 +239,7 @@ public class AmbulatoryManager extends AbstractManager<Ambulatory> {
 			String address = null;
 			// SQL structure.
 			// The ?s are filled in below
-			String sql = "update " + AMBULATORY_TABLE + " set nombre = ?, 	direccion = ?, telefono = ? where id = ?";
+			String sql = "update " + AMBULATORY_TABLE + " set nombre = ?, 	direccion = ?, telefono = ? where idAmbulatorio = ?";
 			preparedStatement = connection.prepareStatement(sql);
 			preparedStatement.setString(1, name);
 			preparedStatement.setString(2, phoneNumber);
@@ -290,7 +290,7 @@ public class AmbulatoryManager extends AbstractManager<Ambulatory> {
 			connection = DriverManager.getConnection(BBDDUtils.URL_LOCAL, BBDDUtils.USER_LOCAL, BBDDUtils.PASS_LOCAL);
 
 			// SQL structure
-			String sql = "delete from " + AMBULATORY_TABLE + " where id = " + id;
+			String sql = "delete from " + AMBULATORY_TABLE + " where idAmbulatorio = " + id;
 			preparedStatement = connection.prepareStatement(sql);
 
 			// We execute
