@@ -6,15 +6,21 @@ import java.sql.DriverManager;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.sql.Statement;
+import java.text.ParseException;
+import java.text.SimpleDateFormat;
+import java.time.LocalTime;
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
 
 import model.pojos.Ambulatory;
+import model.pojos.Appointment;
 import model.pojos.Doctor;
 import model.pojos.Nurse;
+import model.pojos.Patient;
 import model.pojos.Sanitarian;
 import model.pojos.TimeSlot;
+import model.pojos.WorkingDay;
 import model.utils.BBDDUtils;
 
 public class AppointmentSelectionManager {
@@ -437,6 +443,218 @@ public class AppointmentSelectionManager {
 					ret.setPassword(password);
 				}
 
+			}
+
+		} catch (SQLException sqle) {
+			throw sqle;
+		} catch (Exception e) {
+			throw e;
+		} finally {
+			try {
+				if (resultSet != null)
+					resultSet.close();
+			} catch (Exception e) {
+			}
+			;
+			try {
+				if (statement != null)
+					statement.close();
+			} catch (Exception e) {
+			}
+			;
+			try {
+				if (connection != null)
+					connection.close();
+			} catch (Exception e) {
+			}
+			;
+		}
+		return ret;
+	}
+
+	public void insertAppointmentWorkingDayTimeSlot(Appointment appointment, WorkingDay workingDay, TimeSlot timeSlot)
+			throws SQLException, Exception {
+		Connection connection = null;
+		Statement statement = null;
+
+		try {
+			connection = DriverManager.getConnection(BBDDUtils.URL_LOCAL, BBDDUtils.USER_LOCAL, BBDDUtils.PASS_LOCAL);
+			statement = connection.createStatement();
+			Class.forName(BBDDUtils.DRIVER_LOCAL);
+
+			String sql = "insert into citajornadafranja ( idCita, idJornada, idFranja) values ('" + appointment.getId()
+					+ "', '" + workingDay.getId() + "', '" + timeSlot.getId() + "')";
+
+			statement.executeUpdate(sql);
+
+		} catch (SQLException sqle) {
+			throw sqle;
+		} catch (Exception e) {
+			throw e;
+		} finally {
+			try {
+				if (statement != null)
+					statement.close();
+			} catch (Exception e) {
+			}
+			;
+			try {
+				if (connection != null)
+					connection.close();
+			} catch (Exception e) {
+			}
+			;
+		}
+	}
+
+	public Appointment selectAppointment(Patient patient, Sanitarian sanitarian, Ambulatory ambulatory)
+			throws SQLException, Exception {
+		Appointment ret = null;
+
+		String sql = "select * from cita where dniPaciente= '" + patient.getDni() + "' and dniSanitario ='"
+				+ sanitarian.getDni() + "' and idAmbulatorio = " + ambulatory.getId();
+
+		Connection connection = null;
+		Statement statement = null;
+		ResultSet resultSet = null;
+
+		try {
+			Class.forName(BBDDUtils.DRIVER_LOCAL);
+			connection = DriverManager.getConnection(BBDDUtils.URL_LOCAL, BBDDUtils.USER_LOCAL, BBDDUtils.PASS_LOCAL);
+			statement = connection.createStatement();
+			resultSet = statement.executeQuery(sql);
+
+			while (resultSet.next()) {
+				if (null == ret)
+					ret = new Appointment();
+
+				int idAppointment = resultSet.getInt("idCita");
+
+				ret.setId(idAppointment);
+				ret.setSanitarian(sanitarian);
+				ret.setPatient(patient);
+				ret.setAmbulatory(ambulatory);
+			}
+
+		} catch (SQLException sqle) {
+			throw sqle;
+		} catch (Exception e) {
+			throw e;
+		} finally {
+			try {
+				if (resultSet != null)
+					resultSet.close();
+			} catch (Exception e) {
+			}
+			;
+			try {
+				if (statement != null)
+					statement.close();
+			} catch (Exception e) {
+			}
+			;
+			try {
+				if (connection != null)
+					connection.close();
+			} catch (Exception e) {
+			}
+			;
+		}
+		return ret;
+	}
+
+	public WorkingDay selectWorkingDay(String sDate) throws SQLException, Exception {
+		WorkingDay ret = null;
+
+//		SimpleDateFormat format = new SimpleDateFormat("yyyy-MM-dd");
+//		Date parsed = format.parse(sDate);
+//		java.sql.Date sqlDate = new java.sql.Date(parsed.getTime());
+
+		String sql = "select * from jornada where fecha= '" + sDate +"'";
+
+		Connection connection = null;
+		Statement statement = null;
+		ResultSet resultSet = null;
+
+		try {
+			Class.forName(BBDDUtils.DRIVER_LOCAL);
+			connection = DriverManager.getConnection(BBDDUtils.URL_LOCAL, BBDDUtils.USER_LOCAL, BBDDUtils.PASS_LOCAL);
+			statement = connection.createStatement();
+			resultSet = statement.executeQuery(sql);
+
+			while (resultSet.next()) {
+				if (null == ret)
+					ret = new WorkingDay();
+
+				int id = resultSet.getInt("idJornada");
+				LocalTime startTime = LocalTime.parse(resultSet.getString("horaInicio"));
+				LocalTime endTime = LocalTime.parse(resultSet.getString("horaFin"));
+				Date date = null;
+				try {
+					date = new SimpleDateFormat("yyyy-MM-dd").parse(sDate);
+				} catch (ParseException e) {
+					e.printStackTrace();
+				}
+
+				ret.setId(id);
+				ret.setDate(date);
+				ret.setStartTime(startTime);
+				ret.setEndTime(endTime);
+			}
+
+		} catch (SQLException sqle) {
+			throw sqle;
+		} catch (Exception e) {
+			throw e;
+		} finally {
+			try {
+				if (resultSet != null)
+					resultSet.close();
+			} catch (Exception e) {
+			}
+			;
+			try {
+				if (statement != null)
+					statement.close();
+			} catch (Exception e) {
+			}
+			;
+			try {
+				if (connection != null)
+					connection.close();
+			} catch (Exception e) {
+			}
+			;
+		}
+		return ret;
+	}
+
+	public TimeSlot selectTimeSlot(String sStartTime) throws SQLException, Exception {
+		TimeSlot ret = null;
+
+		String sql = "select * from franja where horaInicio = '" + sStartTime + "'";
+
+		Connection connection = null;
+		Statement statement = null;
+		ResultSet resultSet = null;
+
+		try {
+			Class.forName(BBDDUtils.DRIVER_LOCAL);
+			connection = DriverManager.getConnection(BBDDUtils.URL_LOCAL, BBDDUtils.USER_LOCAL, BBDDUtils.PASS_LOCAL);
+			statement = connection.createStatement();
+			resultSet = statement.executeQuery(sql);
+
+			while (resultSet.next()) {
+				if (null == ret)
+					ret = new TimeSlot();
+
+				int id = resultSet.getInt("idFranja");
+				LocalTime startTime = LocalTime.parse(sStartTime);
+				LocalTime endTime = LocalTime.parse(resultSet.getString("horaFin"));
+
+				ret.setId(id);
+				ret.setStartTime(startTime);
+				ret.setEndTime(endTime);
 			}
 
 		} catch (SQLException sqle) {

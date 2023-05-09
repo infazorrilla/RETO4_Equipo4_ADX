@@ -33,11 +33,13 @@ import javax.swing.event.CaretEvent;
 import javax.swing.event.CaretListener;
 import javax.swing.table.DefaultTableModel;
 
+import manager.AppointmentManager;
 import manager.AppointmentSelectionManager;
 import manager.BlockUnlockPatientManager;
 import manager.TimeSlotManager;
 import manager.UserDataModificationManager;
 import model.pojos.Ambulatory;
+import model.pojos.Appointment;
 //import manager.DoctorManager;
 //import manager.NurseManager;
 import model.pojos.Doctor;
@@ -46,12 +48,14 @@ import model.pojos.Patient;
 import model.pojos.Sanitarian;
 import model.pojos.TimeSlot;
 import model.pojos.User;
+import model.pojos.WorkingDay;
 
 public class ViewAmaia {
 	private UserDataModificationManager userDataModificationManager;
 	private AppointmentSelectionManager appointmentSelectionManager;
 	private BlockUnlockPatientManager blockDesblockPatientManager;
 	private TimeSlotManager timeSlotManager;
+	private AppointmentManager appointmentManager;
 	private String userDNI;
 	private User user;
 	private String wantedAmbulatory;
@@ -101,6 +105,7 @@ public class ViewAmaia {
 		appointmentSelectionManager = new AppointmentSelectionManager();
 		blockDesblockPatientManager = new BlockUnlockPatientManager();
 		timeSlotManager = new TimeSlotManager();
+		appointmentManager = new AppointmentManager();
 		initialize();
 	}
 
@@ -776,6 +781,43 @@ public class ViewAmaia {
 		panelSelectAppointmentDateTimeSlot.add(cbSelectAppointmentDate);
 
 		JButton btnSelectAppointmentDateTimeSlotOk = new JButton("Aceptar");
+		btnSelectAppointmentDateTimeSlotOk.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent e) {
+				int fila = tableSelectTimeSlot.getSelectedRow();
+				String hour = (String) tableSelectTimeSlot.getValueAt(fila, 3);
+				String dateString = cbSelectAppointmentDate.getSelectedItem().toString();
+
+				Appointment appointment = new Appointment();
+				try {
+					String nameSurname = (String) cbSelectAppointmentSanitarian.getSelectedItem();
+					String[] parts = nameSurname.split(",");
+					String surname = parts[0].trim();
+					String name = parts[1].trim();
+					Sanitarian sanitarian = appointmentSelectionManager.selectSanitarian(name, surname);
+
+					Ambulatory ambulatory = appointmentSelectionManager.selectAmbulatory(wantedAmbulatory);
+					appointment.setAmbulatory(ambulatory);
+					appointment.setPatient((Patient) user);
+					appointment.setSanitarian(sanitarian);
+
+					appointmentManager.insert(appointment);
+					
+					appointment = appointmentSelectionManager.selectAppointment((Patient) user, sanitarian,
+							appointmentSelectionManager.selectAmbulatory(wantedAmbulatory));
+					
+					WorkingDay workingDay = appointmentSelectionManager.selectWorkingDay(dateString);
+					TimeSlot timeSlot = appointmentSelectionManager.selectTimeSlot(hour);
+					JOptionPane.showMessageDialog(null,timeSlot.getId(), "Error", 0);
+
+					appointmentSelectionManager.insertAppointmentWorkingDayTimeSlot(appointment, workingDay, timeSlot);
+				} catch (SQLException e1) {
+					JOptionPane.showMessageDialog(null, "Se ha producido un error con la Base de Datos.", "Error", 0);
+				} catch (Exception e1) {
+					JOptionPane.showMessageDialog(null, "Se ha producido un error.", "Error", 0);
+				}
+
+			}
+		});
 		btnSelectAppointmentDateTimeSlotOk.setBounds(207, 292, 89, 23);
 		panelSelectAppointmentDateTimeSlot.add(btnSelectAppointmentDateTimeSlotOk);
 
@@ -789,42 +831,43 @@ public class ViewAmaia {
 
 		cbSelectAppointmentSanitarian = new JComboBox<String>();
 		try {
-		cbSelectAppointmentSanitarian.addItemListener(new ItemListener() {
-			public void itemStateChanged(ItemEvent e) {
-				if (null != cbSelectAppointmentSanitarian.getSelectedItem()) {
-					if (!cbSelectAppointmentSanitarian.getSelectedItem().toString().equals("")) {
-						String dateString = cbSelectAppointmentDate.getSelectedItem().toString();
-						String nameSurname = (String) cbSelectAppointmentSanitarian.getSelectedItem();
+			cbSelectAppointmentSanitarian.addItemListener(new ItemListener() {
+				public void itemStateChanged(ItemEvent e) {
+					if (null != cbSelectAppointmentSanitarian.getSelectedItem()) {
+						if (!cbSelectAppointmentSanitarian.getSelectedItem().toString().equals("")) {
+							String dateString = cbSelectAppointmentDate.getSelectedItem().toString();
+							String nameSurname = (String) cbSelectAppointmentSanitarian.getSelectedItem();
 
-						String[] parts = nameSurname.split(",");
-						String surname = parts[0].trim();
-						String name = parts[1].trim();
-						ArrayList<TimeSlot> timeSlots = null;
-						try {
-							Sanitarian sanitarian = appointmentSelectionManager.selectSanitarian(name, surname);
-							timeSlots = appointmentSelectionManager.showAvailableTimeSlots(sanitarian, dateString);
+							String[] parts = nameSurname.split(",");
+							String surname = parts[0].trim();
+							String name = parts[1].trim();
+							ArrayList<TimeSlot> timeSlots = null;
+							try {
+								Sanitarian sanitarian = appointmentSelectionManager.selectSanitarian(name, surname);
+								timeSlots = appointmentSelectionManager.showAvailableTimeSlots(sanitarian, dateString);
 
+								DefaultTableModel model = (DefaultTableModel) tableSelectTimeSlot.getModel();
+								model.setRowCount(0);
+
+								for (TimeSlot timeSlot : timeSlots) {
+									model.addRow(new String[] { surname + ", " + name, wantedAmbulatory,
+											cbSelectAppointmentDate.getSelectedItem().toString(),
+											timeSlotManager.select(timeSlot.getId()).getStartTime().toString() });
+								}
+							} catch (SQLException e1) {
+								JOptionPane.showMessageDialog(null, "Se ha producido un error con la Base de Datos.",
+										"Error", 0);
+							} catch (Exception e1) {
+								JOptionPane.showMessageDialog(null, "Se ha producido un error.", "Error", 0);
+							}
+						} else {
 							DefaultTableModel model = (DefaultTableModel) tableSelectTimeSlot.getModel();
 							model.setRowCount(0);
-
-							for (TimeSlot timeSlot : timeSlots) {
-								model.addRow(new String[] { surname + ", " + name, wantedAmbulatory,
-										cbSelectAppointmentDate.getSelectedItem().toString(),
-										timeSlotManager.select(timeSlot.getId()).getStartTime().toString() });
-							}
-						} catch (SQLException e1) {
-							JOptionPane.showMessageDialog(null, "Se ha producido un error con la Base de Datos.",
-									"Error", 0);
-						} catch (Exception e1) {
-							JOptionPane.showMessageDialog(null, "Se ha producido un error.", "Error", 0);
 						}
-					} else {
-						DefaultTableModel model = (DefaultTableModel) tableSelectTimeSlot.getModel();
-						model.setRowCount(0);					}
+					}
 				}
-			}
-		});
-		}catch (Exception e) {
+			});
+		} catch (Exception e) {
 		}
 		cbSelectAppointmentSanitarian.setBounds(319, 76, 138, 22);
 		panelSelectAppointmentDateTimeSlot.add(cbSelectAppointmentSanitarian);
