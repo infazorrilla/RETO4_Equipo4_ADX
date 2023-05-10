@@ -850,11 +850,16 @@ public class ViewAmaia {
 
 								DefaultTableModel model = (DefaultTableModel) tableSelectTimeSlot.getModel();
 								model.setRowCount(0);
-
-								for (TimeSlot timeSlot : timeSlots) {
-									model.addRow(new String[] { surname + ", " + name, wantedAmbulatory,
-											cbSelectAppointmentDate.getSelectedItem().toString(),
-											timeSlotManager.select(timeSlot.getId()).getStartTime().toString() });
+								
+								if((null == timeSlots) || (timeSlots.size() == 0)) {
+									JOptionPane.showMessageDialog(null, "No quedan citas disponibles con " +name,
+											"Error", 0);
+								}else {
+									for (TimeSlot timeSlot : timeSlots) {
+										model.addRow(new String[] { surname + ", " + name, wantedAmbulatory,
+												cbSelectAppointmentDate.getSelectedItem().toString(),
+												timeSlotManager.select(timeSlot.getId()).getStartTime().toString() });
+									}	
 								}
 							} catch (SQLException e1) {
 								JOptionPane.showMessageDialog(null, "Se ha producido un error con la Base de Datos.",

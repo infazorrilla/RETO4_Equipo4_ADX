@@ -157,6 +157,8 @@ public class View {
 	private JButton btnBlockPatientOk;
 	private JTable tablePatientData;
 	private JScrollPane scrollPane_1;
+	private JPasswordField tfLoginPassword;
+	private JTextField tfLoginUser;
 
 	/**
 	 * Create the application.
@@ -256,22 +258,100 @@ public class View {
 		lblLoginPassword.setForeground(new Color(16, 169, 121));
 
 		btnLoginOk = new JButton("Aceptar");
+		btnLoginOk.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent e) {
+				userDNI = tfLoginUser.getText();
+				// LOGING CHECK
+				String pass = new String(tfLoginPassword.getPassword());
+
+				try {
+					user = userDataModificationManager.identifyUserType(userDNI);
+				} catch (SQLException e2) {
+					JOptionPane.showMessageDialog(null, e2.getMessage(), "Error", 0);
+				} catch (Exception e2) {
+					JOptionPane.showMessageDialog(null, e2.getMessage(), "Error", 0);
+				}
+
+				int verifiedUser = new LoginManager().getUserByDniAndPassword(userDNI, pass);
+
+				switch (verifiedUser) {
+				case 1:
+					JOptionPane.showMessageDialog(null, "ACCEDIENDO COMO PACIENTE");
+					panelLogin.setVisible(false);
+					panelPatient.setVisible(true);
+
+					// Panel Modify Patient
+					tablePatientData.setModel(new DefaultTableModel(new Object[][] {}, new String[] { "", "" }));
+
+					DefaultTableModel model = (DefaultTableModel) tablePatientData.getModel();
+					model.setRowCount(0);
+
+					model.addRow(new String[] { "DNI", user.getDni() });
+					model.addRow(new String[] { "Nombre", user.getName() });
+					model.addRow(new String[] { "Apellido", user.getSurname() });
+					model.addRow(new String[] { "Fecha de nacimiento", user.getBirthDate().toString() });
+					model.addRow(new String[] { "Dirección", ((Patient) user).getAddress() });
+					model.addRow(new String[] { "Teléfono", ((Patient) user).getPhoneNumber() });
+					break;
+				case 2:
+					JOptionPane.showMessageDialog(null, "ACCEDIENDO COMO EMPLEADO"); // ADMIN
+					panelLogin.setVisible(false);
+					panelSanitarian.setVisible(true);
+					tfModifySanitarianDNI.setText(userDNI);
+
+					break;
+				case 3:
+					JOptionPane.showMessageDialog(null, "USUARIO BLOQUEADO"); // PATIENT BLOCKED
+					break;
+				default:
+					JOptionPane.showMessageDialog(null, "USUARIO O CONTRSEÑA INCORRETO");
+					tfLoginPassword.setText("");
+				}
+
+				if (user instanceof Sanitarian) {
+					panelBlockPatient.setVisible(true);
+					ArrayList<Patient> patients = null;
+					try {
+						patients = blockUnlockPatientManager.showPatientByAmbulatoryId(
+								userDataModificationManager.selectDoctor(userDNI).getAmbulatory().getId());
+					} catch (SQLException e2) {
+						JOptionPane.showMessageDialog(null, "Se ha producido un error con la BBDD.", "Error", 0);
+					} catch (Exception e2) {
+						JOptionPane.showMessageDialog(null, "Se ha producido un error.", "Error", 0);
+
+					}
+					DefaultTableModel model = (DefaultTableModel) tableBlockPatients.getModel();
+					model.setRowCount(0);
+
+					for (Patient patient : patients) {
+						model.addRow(new String[] { patient.getDni(), patient.getName(), patient.getSurname(),
+								blockUnlockPatientManager.patientState(patient.isBlocked()) });
+					}
+				}
+			}
+		});
 		btnLoginOk.setForeground(new Color(255, 255, 255));
 		btnLoginOk.setBackground(new Color(16, 169, 121));
 		btnLoginOk.setBounds(22, 123, 89, 23);
 		panel.add(btnLoginOk);
 
 		btnLoginCancel = new JButton("Cancelar");
+		btnLoginCancel.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent e) {
+				tfLoginUser.setText("");
+				tfLoginPassword.setText("");
+			}
+		});
 		btnLoginCancel.setForeground(new Color(255, 255, 255));
 		btnLoginCancel.setBackground(new Color(16, 169, 121));
 		btnLoginCancel.setBounds(121, 123, 89, 23);
 		panel.add(btnLoginCancel);
 
-		JPasswordField tfLoginPassword = new JPasswordField();
+		tfLoginPassword = new JPasswordField();
 		tfLoginPassword.setBounds(41, 81, 171, 20);
 		panel.add(tfLoginPassword);
 
-		JTextField tfLoginUser = new JTextField();
+		tfLoginUser = new JTextField();
 		tfLoginUser.setBounds(41, 29, 171, 20);
 		panel.add(tfLoginUser);
 		tfLoginUser.setColumns(10);
@@ -1771,10 +1851,15 @@ public class View {
 							DefaultTableModel model = (DefaultTableModel) tableSelectTimeSlot.getModel();
 							model.setRowCount(0);
 
-							for (TimeSlot timeSlot : timeSlots) {
-								model.addRow(new String[] { surname + ", " + name, wantedAmbulatory,
-										cbSelectAppointmentDate.getSelectedItem().toString(),
-										timeSlotManager.select(timeSlot.getId()).getStartTime().toString() });
+							if((null == timeSlots) || (timeSlots.size() == 0)) {
+								JOptionPane.showMessageDialog(null, "No quedan citas disponibles con " +name,
+										"Error", 0);
+							}else {
+								for (TimeSlot timeSlot : timeSlots) {
+									model.addRow(new String[] { surname + ", " + name, wantedAmbulatory,
+											cbSelectAppointmentDate.getSelectedItem().toString(),
+											timeSlotManager.select(timeSlot.getId()).getStartTime().toString() });
+								}	
 							}
 						} catch (SQLException e1) {
 							JOptionPane.showMessageDialog(null, "Se ha producido un error con la Base de Datos.",
@@ -1874,84 +1959,8 @@ public class View {
 		panelBlockPatient.setVisible(false);
 		panelSelectAppointmentAmbulatoryType.setVisible(false);
 		tablePatientData.setDefaultEditor(Object.class, null);
-		btnLoginCancel.addActionListener(new ActionListener() {
-			public void actionPerformed(ActionEvent e) {
-				tfLoginUser.setText("");
-				tfLoginPassword.setText("");
-			}
-		});
-		btnLoginOk.addActionListener(new ActionListener() {
-			public void actionPerformed(ActionEvent e) {
-				userDNI = tfLoginUser.getText();
-				// LOGING CHECK
-				String pass = new String(tfLoginPassword.getPassword());
-
-				try {
-					user = userDataModificationManager.identifyUserType(userDNI);
-				} catch (SQLException e2) {
-					JOptionPane.showMessageDialog(null, e2.getMessage(), "Error", 0);
-				} catch (Exception e2) {
-					JOptionPane.showMessageDialog(null, e2.getMessage(), "Error", 0);
-				}
-
-				int verifiedUser = new LoginManager().getUserByDniAndPassword(userDNI, pass);
-
-				switch (verifiedUser) {
-				case 1:
-					JOptionPane.showMessageDialog(null, "ACCEDIENDO COMO PACIENTE");
-					panelLogin.setVisible(false);
-					panelPatient.setVisible(true);
-
-					// Panel Modify Patient
-					tablePatientData.setModel(new DefaultTableModel(new Object[][] {}, new String[] { "", "" }));
-
-					DefaultTableModel model = (DefaultTableModel) tablePatientData.getModel();
-					model.setRowCount(0);
-
-					model.addRow(new String[] { "DNI", user.getDni() });
-					model.addRow(new String[] { "Nombre", user.getName() });
-					model.addRow(new String[] { "Apellido", user.getSurname() });
-					model.addRow(new String[] { "Fecha de nacimiento", user.getBirthDate().toString() });
-					model.addRow(new String[] { "Dirección", ((Patient) user).getAddress() });
-					model.addRow(new String[] { "Teléfono", ((Patient) user).getPhoneNumber() });
-					break;
-				case 2:
-					JOptionPane.showMessageDialog(null, "ACCEDIENDO COMO EMPLEADO"); // ADMIN
-					panelLogin.setVisible(false);
-					panelSanitarian.setVisible(true);
-					tfModifySanitarianDNI.setText(userDNI);
-
-					break;
-				case 3:
-					JOptionPane.showMessageDialog(null, "USUARIO BLOQUEADO"); // PATIENT BLOCKED
-					break;
-				default:
-					JOptionPane.showMessageDialog(null, "USUARIO O CONTRSEÑA INCORRETO");
-					tfLoginPassword.setText("");
-				}
-
-				if (user instanceof Sanitarian) {
-					panelBlockPatient.setVisible(true);
-					ArrayList<Patient> patients = null;
-					try {
-						patients = blockUnlockPatientManager.showPatientByAmbulatoryId(
-								userDataModificationManager.selectDoctor(userDNI).getAmbulatory().getId());
-					} catch (SQLException e2) {
-						JOptionPane.showMessageDialog(null, "Se ha producido un error con la BBDD.", "Error", 0);
-					} catch (Exception e2) {
-						JOptionPane.showMessageDialog(null, "Se ha producido un error.", "Error", 0);
-
-					}
-					DefaultTableModel model = (DefaultTableModel) tableBlockPatients.getModel();
-					model.setRowCount(0);
-
-					for (Patient patient : patients) {
-						model.addRow(new String[] { patient.getDni(), patient.getName(), patient.getSurname(),
-								blockUnlockPatientManager.patientState(patient.isBlocked()) });
-					}
-				}
-			}
-		});
+		
+		
 
 	}
 }
