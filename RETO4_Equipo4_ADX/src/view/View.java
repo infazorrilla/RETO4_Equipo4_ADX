@@ -310,18 +310,31 @@ public class View {
 				if (user instanceof Sanitarian) {
 					panelBlockPatient.setVisible(true);
 					ArrayList<Patient> patients = null;
-					try {
-						patients = blockUnlockPatientManager.showPatientByAmbulatoryId(
-								userDataModificationManager.selectDoctor(userDNI).getAmbulatory().getId());
-					} catch (SQLException e2) {
-						JOptionPane.showMessageDialog(null, "Se ha producido un error con la BBDD.", "Error", 0);
-					} catch (Exception e2) {
-						JOptionPane.showMessageDialog(null, "Se ha producido un error.", "Error", 0);
+					if (user instanceof Doctor) {
+						try {
+							patients = blockUnlockPatientManager.showPatientByAmbulatoryId(
+									userDataModificationManager.selectDoctor(userDNI).getAmbulatory().getId());
+						} catch (SQLException e2) {
+							JOptionPane.showMessageDialog(null, "Se ha producido un error con la BBDD.", "Error", 0);
+						} catch (Exception e2) {
+							JOptionPane.showMessageDialog(null, "Se ha producido un error.", "Error", 0);
 
+						}
+					}
+					
+					if (user instanceof Nurse) {
+						try {
+							patients = blockUnlockPatientManager.showPatientByAmbulatoryId(
+									userDataModificationManager.selectNurse(userDNI).getAmbulatory().getId());
+						} catch (SQLException e2) {
+							JOptionPane.showMessageDialog(null, "Se ha producido un error con la BBDD.", "Error", 0);
+						} catch (Exception e2) {
+							JOptionPane.showMessageDialog(null, "Se ha producido un error.", "Error", 0);
+
+						}
 					}
 					DefaultTableModel model = (DefaultTableModel) tableBlockPatients.getModel();
 					model.setRowCount(0);
-
 					for (Patient patient : patients) {
 						model.addRow(new String[] { patient.getDni(), patient.getName(), patient.getSurname(),
 								blockUnlockPatientManager.patientState(patient.isBlocked()) });
@@ -669,14 +682,12 @@ public class View {
 			}
 		});
 
-
 		JLabel lblNameDoctor = new JLabel("Nombre:");
 		lblNameDoctor.setBackground(new Color(240, 240, 240));
 		lblNameDoctor.setForeground(new Color(255, 255, 255));
 		lblNameDoctor.setFont(new Font("Tahoma", Font.BOLD, 11));
 		lblNameDoctor.setBounds(60, 60, 119, 14);
 		panelRegistrationDoctor.add(lblNameDoctor);
-		
 
 		textFieldNameDoctor = new JTextField();
 		textFieldNameDoctor.setColumns(10);
@@ -1057,8 +1068,7 @@ public class View {
 			public void actionPerformed(ActionEvent e) {
 				try {
 					if (nurseManager.select(textFieldDniNurse.getText()) != null
-							|| doctorManager.select(textFieldDniNurse.getText()) != null)
-							{
+							|| doctorManager.select(textFieldDniNurse.getText()) != null) {
 						JOptionPane.showMessageDialog(btnAceptarRegistro, "Usuario ya registrado", "Aviso", 2);
 					} else {
 						Nurse nurse = new Nurse();
@@ -2095,10 +2105,10 @@ public class View {
 						blockUnlockPatientManager.unlockPatient(patient);
 						JOptionPane.showMessageDialog(null, "Paciente desbloqueado/a", "Confirmación", 1);
 					}
-					
-					ArrayList<Patient> patients =  blockUnlockPatientManager.showPatientByAmbulatoryId(
-								userDataModificationManager.selectDoctor(userDNI).getAmbulatory().getId());
-					
+
+					ArrayList<Patient> patients = blockUnlockPatientManager.showPatientByAmbulatoryId(
+							userDataModificationManager.selectDoctor(userDNI).getAmbulatory().getId());
+
 					DefaultTableModel model = (DefaultTableModel) tableBlockPatients.getModel();
 					model.setRowCount(0);
 
@@ -2107,13 +2117,13 @@ public class View {
 								blockUnlockPatientManager.patientState(Onepatient.isBlocked()) });
 					}
 					tableBlockPatients.repaint();
-					
-					} catch (SQLException e2) {
-						JOptionPane.showMessageDialog(null, "Se ha producido un error con la BBDD.", "Error", 0);
-					} catch (Exception e2) {
-						JOptionPane.showMessageDialog(null, "Se ha producido un error.", "Error", 0);
 
-					}
+				} catch (SQLException e2) {
+					JOptionPane.showMessageDialog(null, "Se ha producido un error con la BBDD.", "Error", 0);
+				} catch (Exception e2) {
+					JOptionPane.showMessageDialog(null, "Se ha producido un error.", "Error", 0);
+
+				}
 			}
 		});
 		btnBlockPatientOk.setBounds(265, 261, 85, 21);
