@@ -557,7 +557,7 @@ public class ViewAmaia {
 //		panel BlockPatient
 		panelBlockPatient = new JPanel();
 		panelBlockPatient.setBackground(new Color(0, 128, 192));
-		panelBlockPatient.setBounds(535, 0, 81, 351);
+		panelBlockPatient.setBounds(0, 0, 616, 351);
 		frame.getContentPane().add(panelBlockPatient);
 		panelBlockPatient.setLayout(null);
 
@@ -603,12 +603,25 @@ public class ViewAmaia {
 						blockDesblockPatientManager.unlockPatient(patient);
 						JOptionPane.showMessageDialog(null, "Paciente desbloqueado/a", "Confirmación", 1);
 					}
-				} catch (SQLException e1) {
-					JOptionPane.showMessageDialog(null, "Se ha producido un error con la Base de Datos.", "Error", 0);
-				} catch (Exception e1) {
-					JOptionPane.showMessageDialog(null, "Se ha producido un error.", "Error", 0);
-				}
-				tableBlockPatients.repaint();
+					
+					ArrayList<Patient> patients =  blockDesblockPatientManager.showPatientByAmbulatoryId(
+								userDataModificationManager.selectDoctor(userDNI).getAmbulatory().getId());
+					
+					DefaultTableModel model = (DefaultTableModel) tableBlockPatients.getModel();
+					model.setRowCount(0);
+
+					for (Patient Onepatient : patients) {
+						model.addRow(new String[] { Onepatient.getDni(), Onepatient.getName(), Onepatient.getSurname(),
+								blockDesblockPatientManager.patientState(Onepatient.isBlocked()) });
+					}
+					tableBlockPatients.repaint();
+					
+					} catch (SQLException e2) {
+						JOptionPane.showMessageDialog(null, "Se ha producido un error con la BBDD.", "Error", 0);
+					} catch (Exception e2) {
+						JOptionPane.showMessageDialog(null, "Se ha producido un error.", "Error", 0);
+
+					}
 			}
 		});
 		btnBlockPatientOk.setBounds(194, 279, 85, 21);
@@ -691,7 +704,6 @@ public class ViewAmaia {
 					if (button.isSelected()) {
 						wantedSanitarian = button.getText();
 					}
-
 				}
 
 				Ambulatory ambulatory = new Ambulatory();
