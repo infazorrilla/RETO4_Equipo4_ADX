@@ -9,9 +9,12 @@ import org.junit.jupiter.api.Test;
 
 import manager.AppointmentSelectionManager;
 import model.pojos.Ambulatory;
+import model.pojos.Appointment;
 import model.pojos.Doctor;
+import model.pojos.Patient;
 import model.pojos.Sanitarian;
 import model.pojos.TimeSlot;
+import model.pojos.WorkingDay;
 
 class AppointmentSelectionManagerTest {
 
@@ -68,12 +71,12 @@ class AppointmentSelectionManagerTest {
 
 		assertEquals(1, test.getId());
 	}
-	
+
 	@Test
 	void testShowAvailableTimeSlots() {
 		Sanitarian sanitarian = new Doctor();
 		sanitarian.setDni("11111111A");
-		
+
 		ArrayList<TimeSlot> timeSlots = new ArrayList<TimeSlot>();
 		try {
 			timeSlots = manager.showAvailableTimeSlots(sanitarian, "2023-04-05");
@@ -109,7 +112,7 @@ class AppointmentSelectionManagerTest {
 
 		assertEquals(2, test.size());
 	}
-	
+
 	@Test
 	void testSelectSanitarian() {
 		Sanitarian test = new Doctor();
@@ -124,11 +127,64 @@ class AppointmentSelectionManagerTest {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
 		}
-		
+
 		assertEquals("11111111A", test.getDni());
 	}
 
+	@Test
+	void testSelectAppointment() {
+		Patient patient = new Patient();
+		patient.setDni("00000000A");
+		Sanitarian sanitarian = new Doctor();
+		sanitarian.setDni("11111111A");
+		Ambulatory ambulatory = new Ambulatory();
+		ambulatory.setId(1);
+
+		Appointment test = new Appointment();
+		try {
+			test = manager.selectAppointment(patient, sanitarian, ambulatory);
+		} catch (SQLException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		} catch (Exception e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+
+		assertEquals(4, test.getId());
+	}
 	
+	@Test
+	void testWorkingDay() {
+		WorkingDay test = new WorkingDay();
+		try {
+			test = manager.selectWorkingDay("2023-04-05");
+		} catch (SQLException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		} catch (Exception e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+		
+		assertEquals(1, test.getId());
+	}
 	
+	@Test
+	void testTimeSlot() {
+		TimeSlot test = new TimeSlot();
+		
+		try {
+			test = manager.selectTimeSlot("08:00");
+		} catch (SQLException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		} catch (Exception e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+		
+		assertEquals(1, test.getId());
+	}
 
 }
