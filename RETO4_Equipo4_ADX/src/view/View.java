@@ -925,11 +925,11 @@ public class View {
 		btnAceptNurse.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
 				Nurse nurse = new Nurse();
-				nurse.setDni(textFieldDniDoctor.getText());
-				nurse.setName(textFieldNameDoctor.getText());
-				nurse.setSurname(textFieldSurnameDoctor.getText());
+				nurse.setDni(textFieldDniNurse.getText());
+				nurse.setName(textFieldNameNurse.getText());
+				nurse.setSurname(textFieldSurnameNurse.getText());
 				nurse.setGender((String) comboBoxGenderNurse.getSelectedItem());
-				String sDate1 = textFieldBirthDateDoctor.getText();
+				String sDate1 = textFieldBirthDateNurse.getText();
 				Date date1 = null;
 				try {
 					date1 = new SimpleDateFormat("yyyy-MM-dd").parse(sDate1);

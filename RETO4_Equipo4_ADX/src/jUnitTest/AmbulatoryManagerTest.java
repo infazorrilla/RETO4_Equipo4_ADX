@@ -15,47 +15,6 @@ class AmbulatoryManagerTest {
 	AmbulatoryManager ambulatoryManager = new AmbulatoryManager();
 
 	@Test
-	void testDelete() {
-
-		// Instance of the Ambulatory class
-		Ambulatory ambulatory = new Ambulatory();
-
-		// We set an int value in the instance
-		ambulatory.setId(10);
-
-		// We insert the object in the manager
-		try {
-			ambulatoryManager.insert(ambulatory);
-		} catch (SQLException sqle) {
-			sqle.printStackTrace();
-		} catch (Exception e1) {
-			e1.printStackTrace();
-		}
-
-		// We get the previous value and delete it
-		try {
-			ambulatoryManager.delete(ambulatory.getId());
-		} catch (SQLException sqle) {
-			sqle.printStackTrace();
-		} catch (Exception e) {
-			e.printStackTrace();
-		}
-
-		// We get the previous value and select it
-		// It doesn't get anything because we've eliminated it previously.
-		try {
-			ambulatory = ambulatoryManager.select(ambulatory.getId());
-		} catch (SQLException e) {
-			e.printStackTrace();
-		} catch (Exception e) {
-			e.printStackTrace();
-		}
-
-		// We use AssertEquals to compare the state of the object with null
-		assertEquals(ambulatory, null);
-	}
-
-	@Test
 	void testSelectInt() {
 		// Instance of the Doctor class
 		Ambulatory ambulatory = new Ambulatory();
@@ -171,6 +130,38 @@ class AmbulatoryManagerTest {
 		}
 
 		assertEquals(ambulatory, expected);
+	}
+
+	@Test
+	void testDelete() {
+
+		// Instance of the Ambulatory class
+		Ambulatory ambulatory = new Ambulatory();
+
+		// We set an int value in the instance
+		ambulatory.setId(11);
+
+		// We get the previous value and delete it
+		try {
+			ambulatoryManager.delete(ambulatory.getId());
+		} catch (SQLException sqle) {
+			sqle.printStackTrace();
+		} catch (Exception e) {
+			e.printStackTrace();
+		}
+
+		// We get the previous value and select it
+		// It doesn't get anything because we've eliminated it previously.
+		try {
+			ambulatory = ambulatoryManager.select(ambulatory.getId());
+		} catch (SQLException e) {
+			e.printStackTrace();
+		} catch (Exception e) {
+			e.printStackTrace();
+		}
+
+		// We use AssertEquals to compare the state of the object with null
+		assertEquals(ambulatory, null);
 	}
 
 }
