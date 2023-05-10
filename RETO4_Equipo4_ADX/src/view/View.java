@@ -867,7 +867,7 @@ public class View {
 
 				Ambulatory ambulatory = null;
 				try {
-					ambulatory = registrationManager.select((String) comboBoxAmbulatoryNurse.getSelectedItem());
+					ambulatory = appointmentSelectionManager.selectAmbulatory((String) comboBoxAmbulatoryNurse.getSelectedItem());
 				} catch (SQLException e2) {
 					JOptionPane.showMessageDialog(null, "Se ha producido un error en la base de datos.", "Error", 0);
 				} catch (Exception e2) {

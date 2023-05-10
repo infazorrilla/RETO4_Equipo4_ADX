@@ -28,6 +28,7 @@ import model.pojos.Doctor;
 import model.pojos.Nurse;
 import model.pojos.Patient;
 import java.awt.Font;
+import java.awt.HeadlessException;
 
 public class ViewSabi {
 
@@ -72,7 +73,6 @@ public class ViewSabi {
 	private JComboBox<String> comboBoxAmbulatoryNurse;
 	private JComboBox<String> comboBoxGenderNurse;
 	private JComboBox<String> comboBoxGenderDoctor;
-
 
 	/**
 	 * Create the application.
@@ -227,42 +227,58 @@ public class ViewSabi {
 		JButton btnAceptarRegistro = new JButton("Aceptar");
 		btnAceptarRegistro.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
-				Patient patient = new Patient();
-				patient.setDni(textFieldDNIPatient.getText().trim());
-				patient.setName(textFieldNamePatient.getText().trim());
-				patient.setSurname(textFieldSurnamePatient.getText().trim());
-				patient.setGender((String) comboBoxGenderPatient.getSelectedItem());
-				String sDate1 = textFieldBirthDatePatient.getText().trim();
-				Date date1 = null;
-				try {
-					date1 = new SimpleDateFormat("yyyy-MM-dd").parse(sDate1);
-				} catch (ParseException e2) {
-					// TODO Auto-generated catch block
-					e2.printStackTrace();
-				}
-				patient.setBirthDate(date1);
-				String password = new String(textFieldPasswordPatient.getPassword());
-				patient.setPassword(password);
-				patient.setPhoneNumber(textFieldPhoneNumberPatient.getText().trim());
-				patient.setAddress(textFieldAddressPatient.getText());
 
 				try {
-					patientManager.insert(patient);
+					if (patientManager.select(textFieldDNIPatient.getText().trim()) != null) {
+						JOptionPane.showMessageDialog(btnAceptarRegistro, "Usuario ya registrado", "Aviso", 2);
+					} else {
+						Patient patient = new Patient();
+						patient.setDni(textFieldDNIPatient.getText().trim());
+						patient.setName(textFieldNamePatient.getText().trim());
+						patient.setSurname(textFieldSurnamePatient.getText().trim());
+						patient.setGender((String) comboBoxGenderPatient.getSelectedItem());
+						String sDate1 = textFieldBirthDatePatient.getText().trim();
+						Date date1 = null;
+						try {
+							date1 = new SimpleDateFormat("yyyy-MM-dd").parse(sDate1);
+						} catch (ParseException e2) {
+							// TODO Auto-generated catch block
+							e2.printStackTrace();
+						}
+						patient.setBirthDate(date1);
+						String password = new String(textFieldPasswordPatient.getPassword());
+						patient.setPassword(password);
+						patient.setPhoneNumber(textFieldPhoneNumberPatient.getText().trim());
+						patient.setAddress(textFieldAddressPatient.getText());
+
+						try {
+							patientManager.insert(patient);
+						} catch (SQLException e1) {
+							JOptionPane.showMessageDialog(btnAceptarRegistro, "Error Base De Datos", "Aviso", 2);
+							e1.printStackTrace();
+						} catch (Exception e1) {
+							JOptionPane.showMessageDialog(btnAceptarRegistro, "Errorª", "Aviso", 2);
+							e1.printStackTrace();
+						}
+
+						JOptionPane.showMessageDialog(btnAceptarRegistro, "Usuario registrado", "Bien", 3);
+						panelLogin.setVisible(true);
+						panelRegistrationPatient.setVisible(false);
+						panelNurseOrDoctor.setVisible(false);
+						panelRegistrationDoctor.setVisible(false);
+						panelRegistrationNurse.setVisible(false);
+					}
+				} catch (HeadlessException e1) {
+					// TODO Auto-generated catch block
+					e1.printStackTrace();
 				} catch (SQLException e1) {
-					JOptionPane.showMessageDialog(btnAceptarRegistro, "Error Base De Datos", "Aviso", 2);
+					// TODO Auto-generated catch block
 					e1.printStackTrace();
 				} catch (Exception e1) {
-					JOptionPane.showMessageDialog(btnAceptarRegistro, "Errorª", "Aviso", 2);
+					// TODO Auto-generated catch block
 					e1.printStackTrace();
 				}
-
-				panelLogin.setVisible(true);
-				panelRegistrationPatient.setVisible(false);
-				panelNurseOrDoctor.setVisible(false);
-				panelRegistrationDoctor.setVisible(false);
-				panelRegistrationNurse.setVisible(false);
 			}
-
 		});
 		btnAceptarRegistro.setBounds(200, 271, 89, 23);
 		panelRegistrationPatient.add(btnAceptarRegistro);
@@ -453,53 +469,65 @@ public class ViewSabi {
 		btnAceptDoctor = new JButton("Aceptar");
 		btnAceptDoctor.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
-				Doctor doctor = new Doctor();
-				doctor.setDni(textFieldDniDoctor.getText());
-				doctor.setName(textFieldNameDoctor.getText());
-				doctor.setSurname(textFieldSurnameDoctor.getText());
-				doctor.setGender((String) comboBoxGenderDoctor.getSelectedItem());
-				String sDate1 = textFieldBirthDateDoctor.getText();
-				Date date1 = null;
-				try {
-					date1 = new SimpleDateFormat("yyyy-MM-dd").parse(sDate1);
-				} catch (ParseException e2) {
-					// TODO Auto-generated catch block
-					e2.printStackTrace();
-				}
-				doctor.setBirthDate(date1);
-				String password = new String(passwordFieldDoctor.getPassword());
-				doctor.setPassword(password);
-				doctor.setStaffNum(Integer.parseInt(textFieldStaffNumDoctor.getText()));
-				doctor.setSalary(Integer.parseInt(textFieldSalaryDoctor.getText()));
-				doctor.setMir(true);
-				doctor.setType("Medicina");
-				doctor.setSpeciality(textFieldSpecialityDoctor.getText());
-				Ambulatory ambulatory = null;
-				try {
-					ambulatory = registrationManager.select((String) comboBoxAmbulatoryDoctor.getSelectedItem());
-				} catch (SQLException e2) {
-					// TODO Auto-generated catch block
-					e2.printStackTrace();
-				} catch (Exception e2) {
-					// TODO Auto-generated catch block
-					e2.printStackTrace();
-				}
-				doctor.setAmbulatory(ambulatory); 
 
 				try {
-					doctorManager.insert(doctor);
-				} catch (SQLException e1) {
-					JOptionPane.showMessageDialog(btnAceptarRegistro, "Error Base De Datos", "Aviso", 2);
+					if (nurseManager.select(textFieldDniDoctor.getText()) != null || doctorManager.select(textFieldDniDoctor.getText()) != null) {
+						JOptionPane.showMessageDialog(btnAceptarRegistro, "Usuario ya registrado", "Aviso", 2);
+					} else {
+
+						Doctor doctor = new Doctor();
+						doctor.setDni(textFieldDniDoctor.getText());
+						doctor.setName(textFieldNameDoctor.getText());
+						doctor.setSurname(textFieldSurnameDoctor.getText());
+						doctor.setGender((String) comboBoxGenderDoctor.getSelectedItem());
+						String sDate1 = textFieldBirthDateDoctor.getText();
+						Date date1 = null;
+						try {
+							date1 = new SimpleDateFormat("yyyy-MM-dd").parse(sDate1);
+						} catch (ParseException e2) {
+							// TODO Auto-generated catch block
+							e2.printStackTrace();
+						}
+						doctor.setBirthDate(date1);
+						String password = new String(passwordFieldDoctor.getPassword());
+						doctor.setPassword(password);
+						doctor.setStaffNum(Integer.parseInt(textFieldStaffNumDoctor.getText()));
+						doctor.setSalary(Integer.parseInt(textFieldSalaryDoctor.getText()));
+						doctor.setMir(true);
+						doctor.setType("Medicina");
+						doctor.setSpeciality(textFieldSpecialityDoctor.getText());
+						Ambulatory ambulatory = null;
+						try {
+							ambulatory = registrationManager
+									.select((String) comboBoxAmbulatoryDoctor.getSelectedItem());
+						} catch (SQLException e2) {
+							// TODO Auto-generated catch block
+							e2.printStackTrace();
+						} catch (Exception e2) {
+							// TODO Auto-generated catch block
+							e2.printStackTrace();
+						}
+						doctor.setAmbulatory(ambulatory);
+
+						try {
+							doctorManager.insert(doctor);
+						} catch (SQLException e1) {
+							JOptionPane.showMessageDialog(btnAceptarRegistro, "Error Base De Datos", "Aviso", 2);
+						} catch (Exception e1) {
+							JOptionPane.showMessageDialog(btnAceptarRegistro, "Errorª", "Aviso", 2);
+						}
+
+						JOptionPane.showMessageDialog(btnAceptarRegistro, "Usuario registrado", "Bien", 3);
+						panelLogin.setVisible(true);
+						panelRegistrationPatient.setVisible(false);
+						panelNurseOrDoctor.setVisible(false);
+						panelRegistrationDoctor.setVisible(false);
+						panelRegistrationNurse.setVisible(false);
+					}
 				} catch (Exception e1) {
-					JOptionPane.showMessageDialog(btnAceptarRegistro, "Errorª", "Aviso", 2);
+					// TODO Auto-generated catch block
+					e1.printStackTrace();
 				}
-
-				panelLogin.setVisible(true);
-				panelRegistrationPatient.setVisible(false);
-				panelNurseOrDoctor.setVisible(false);
-				panelRegistrationDoctor.setVisible(false);
-				panelRegistrationNurse.setVisible(false);
-
 			}
 		});
 		btnAceptDoctor.setBounds(99, 270, 142, 38);
@@ -513,7 +541,7 @@ public class ViewSabi {
 		comboBoxAmbulatoryDoctor.setBounds(417, 226, 108, 22);
 		panelRegistrationDoctor.add(comboBoxAmbulatoryDoctor);
 		ArrayList<Ambulatory> ambulatories = new ArrayList<Ambulatory>();
-	
+
 		try {
 			ambulatories = (ArrayList<Ambulatory>) registrationManager.select();
 		} catch (SQLException e3) {
@@ -523,9 +551,9 @@ public class ViewSabi {
 			JOptionPane.showMessageDialog(btnAceptarRegistro, "Errorª", "Aviso", 2);
 			e3.printStackTrace();
 		}
-		for(Ambulatory ambulatory: ambulatories) {
+		for (Ambulatory ambulatory : ambulatories) {
 			comboBoxAmbulatoryDoctor.addItem(ambulatory.getName());
-			
+
 		}
 
 		panelRegistrationNurse = new JPanel();
@@ -626,55 +654,76 @@ public class ViewSabi {
 		btnAceptNurse = new JButton("Aceptar");
 		btnAceptNurse.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
-				Nurse nurse = new Nurse();
-				nurse.setDni(textFieldDniDoctor.getText());
-				nurse.setName(textFieldNameDoctor.getText());
-				nurse.setSurname(textFieldSurnameDoctor.getText());
-				nurse.setGender((String) comboBoxGenderNurse.getSelectedItem());
-				String sDate1 = textFieldBirthDateDoctor.getText();
-				Date date1 = null;
+
 				try {
-					date1 = new SimpleDateFormat("yyyy-MM-dd").parse(sDate1);
-				} catch (ParseException e2) {
+					if (nurseManager.select(textFieldDniDoctor.getText()) != null || doctorManager.select(textFieldDniDoctor.getText()) != null) {
+						JOptionPane.showMessageDialog(btnAceptarRegistro, "Usuario ya registrado", "Aviso", 2);
+					} else {
+						Nurse nurse = new Nurse();
+						nurse.setDni(textFieldDniDoctor.getText());
+						nurse.setName(textFieldNameDoctor.getText());
+						nurse.setSurname(textFieldSurnameDoctor.getText());
+						nurse.setGender((String) comboBoxGenderNurse.getSelectedItem());
+						String sDate1 = textFieldBirthDateDoctor.getText();
+						Date date1 = null;
+						try {
+							date1 = new SimpleDateFormat("yyyy-MM-dd").parse(sDate1);
+						} catch (ParseException e2) {
+							// TODO Auto-generated catch block
+							e2.printStackTrace();
+						}
+						nurse.setBirthDate(date1);
+						String password = new String(passwordFieldNurse.getPassword());
+						nurse.setPassword(password);
+						nurse.setStaffNum(Integer.parseInt(textFieldStaffNumberNurse.getText()));
+						nurse.setSalary(Integer.parseInt(textFieldSalaryNurse.getText()));
+						nurse.setEir(true);
+						nurse.setType("Enfermeria");
+						nurse.setCategory(textFieldCategoryNurse.getText());
+						Ambulatory ambulatory = null;
+						try {
+							ambulatory = registrationManager.select((String) comboBoxAmbulatoryNurse.getSelectedItem());
+						} catch (SQLException e2) {
+							// TODO Auto-generated catch block
+							e2.printStackTrace();
+						} catch (Exception e2) {
+							// TODO Auto-generated catch block
+							e2.printStackTrace();
+						}
+						nurse.setAmbulatory(ambulatory);
+
+						try {
+							nurseManager.insert(nurse);
+						} catch (SQLException e1) {
+							JOptionPane.showMessageDialog(btnAceptarRegistro, "Error Base De Datos", "Aviso", 2);
+							e1.printStackTrace();
+						} catch (Exception e1) {
+							JOptionPane.showMessageDialog(btnAceptarRegistro, "Errorª", "Aviso", 2);
+							e1.printStackTrace();
+						}
+
+						JOptionPane.showMessageDialog(btnAceptarRegistro, "Usuario registrado", "Bien", 3);
+						panelLogin.setVisible(true);
+						panelRegistrationPatient.setVisible(false);
+						panelNurseOrDoctor.setVisible(false);
+						panelRegistrationDoctor.setVisible(false);
+						panelRegistrationNurse.setVisible(false);
+					}
+				} catch (HeadlessException e1) {
 					// TODO Auto-generated catch block
-					e2.printStackTrace();
-				}
-				nurse.setBirthDate(date1);
-				String password = new String(passwordFieldNurse.getPassword());
-				nurse.setPassword(password);
-				nurse.setStaffNum(Integer.parseInt(textFieldStaffNumberNurse.getText()));
-				nurse.setSalary(Integer.parseInt(textFieldSalaryNurse.getText()));
-				nurse.setEir(true);
-				nurse.setType("Enfermeria");
-				nurse.setCategory(textFieldCategoryNurse.getText());
-				Ambulatory ambulatory = null;
-				try {
-					ambulatory = registrationManager.select((String) comboBoxAmbulatoryNurse.getSelectedItem());
-				} catch (SQLException e2) {
+					e1.printStackTrace();
+				} catch (NumberFormatException e1) {
 					// TODO Auto-generated catch block
-					e2.printStackTrace();
-				} catch (Exception e2) {
-					// TODO Auto-generated catch block
-					e2.printStackTrace();
-				}
-				nurse.setAmbulatory(ambulatory); 
-				
-				try {
-					nurseManager.insert(nurse);
+					e1.printStackTrace();
 				} catch (SQLException e1) {
-					JOptionPane.showMessageDialog(btnAceptarRegistro, "Error Base De Datos", "Aviso", 2);
+					// TODO Auto-generated catch block
 					e1.printStackTrace();
 				} catch (Exception e1) {
-					JOptionPane.showMessageDialog(btnAceptarRegistro, "Errorª", "Aviso", 2);
+					// TODO Auto-generated catch block
 					e1.printStackTrace();
 				}
-
-				panelLogin.setVisible(true);
-				panelRegistrationPatient.setVisible(false);
-				panelNurseOrDoctor.setVisible(false);
-				panelRegistrationDoctor.setVisible(false);
-				panelRegistrationNurse.setVisible(false);
 			}
+
 		});
 		btnAceptNurse.setBounds(95, 280, 171, 47);
 		panelRegistrationNurse.add(btnAceptNurse);
@@ -700,11 +749,10 @@ public class ViewSabi {
 		lblAmbulatoryNurse.setBounds(366, 229, 80, 20);
 		panelRegistrationNurse.add(lblAmbulatoryNurse);
 
-		comboBoxAmbulatoryNurse = new JComboBox<String>();
+		comboBoxAmbulatoryNurse =  new JComboBox<String>();
 		comboBoxAmbulatoryNurse.setBounds(461, 231, 108, 22);
 		panelRegistrationNurse.add(comboBoxAmbulatoryNurse);
-	
-		
+
 		try {
 			ambulatories = (ArrayList<Ambulatory>) registrationManager.select();
 		} catch (SQLException e3) {
@@ -714,9 +762,9 @@ public class ViewSabi {
 			JOptionPane.showMessageDialog(btnAceptarRegistro, "Errorª", "Aviso", 2);
 			e3.printStackTrace();
 		}
-		for(Ambulatory ambulatory: ambulatories) {
+		for (Ambulatory ambulatory : ambulatories) {
 			comboBoxAmbulatoryNurse.addItem(ambulatory.getName());
-			
+
 		}
 
 	}
