@@ -1278,7 +1278,7 @@ public class View {
 		panelSanitarian.add(btnModifySanitarianData);
 
 		JLabel lblLettersPanelSanitarian = new JLabel("");
-		lblLettersPanelSanitarian.setIcon(new ImageIcon(ViewDaniel.class.getResource("/view/images/Letters.jpg")));
+		lblLettersPanelSanitarian.setIcon(new ImageIcon(View.class.getResource("/view/images/Letters.jpg")));
 		lblLettersPanelSanitarian.setBounds(0, 105, 140, 140);
 		panelSanitarian.add(lblLettersPanelSanitarian);
 
@@ -1301,7 +1301,7 @@ public class View {
 
 		JLabel lblCrossPanelSanitarian = new JLabel("");
 		lblCrossPanelSanitarian
-				.setIcon(new ImageIcon(ViewDaniel.class.getResource("/view/images/OsasunbideCross.jpg")));
+				.setIcon(new ImageIcon(View.class.getResource("/view/images/OsasunbideCross.jpg")));
 		lblCrossPanelSanitarian.setBounds(476, 105, 140, 140);
 		panelSanitarian.add(lblCrossPanelSanitarian);
 
