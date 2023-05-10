@@ -291,7 +291,7 @@ public class View {
 		btnSelectDoctor.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
 				panelNurseOrDoctor.setVisible(false);
-				panelRegistrationDoctor.setVisible(false);
+				panelRegistrationDoctor.setVisible(true);
 			}
 		});
 		btnSelectDoctor.setBounds(176, 128, 100, 40);
