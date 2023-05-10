@@ -1,6 +1,7 @@
 package manager;
 
 import java.sql.Connection;
+import java.sql.Date;
 import java.sql.DriverManager;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
@@ -30,11 +31,17 @@ public class DoctorManager {
 	 */
 
 	public static final String SANITARIAN_TABLE = "sanitario";
+	public static final String SQL_SELECT_ONE = "SELECT * FROM `sanitario`  s JOIN `usuario` u ON s.dniSanitario = u.dni WHERE s.dniSanitario = ? AND tipo = 'Medicina'";
+	public static final String SQL_SELECT_ALL = "SELECT * FROM `sanitario`  s JOIN `usuario` u ON s.dniSanitario = u.dni WHERE tipo = 'Medicina'";
+
+	public static final String SQL_INSERT_USER = "INSERT INTO `usuario` (`dni`, `nombre`, `apellido`, `sexo`, `fechaNac`, `contrasena`) VALUES (?, ?, ?, ?, ?, ?)";
+	public static final String SQL_INSERT_SANITARIAN = "INSERT INTO `sanitario` (`dniSanitario`, `numPersonal`, `salario`, `idAmbulatorio`, `tipo`, `especialidad`, `MIR`, `categoria`, `EIR`) VALUES (?, ?, ?, ?, 'Medicina', ?, ?, NULL, NULL)";
+
+	public static final String SQL_UPDATE = "";
+	public static final String SQL_DELETE = "";
 
 	public Doctor select(String dni) throws SQLException, Exception {
 		Doctor ret = null;
-
-		String sql = "SELECT * FROM `sanitario`  s JOIN `usuario` u ON s.dniSanitario = u.dni WHERE numPersonal = ? AND tipo = 'Medicina';";
 
 		Connection connection = null;
 		PreparedStatement preparedStatement = null;
@@ -43,8 +50,8 @@ public class DoctorManager {
 		try {
 			Class.forName(BBDDUtils.DRIVER_LOCAL);
 			connection = DriverManager.getConnection(BBDDUtils.URL_LOCAL, BBDDUtils.USER_LOCAL, BBDDUtils.PASS_LOCAL);
-			preparedStatement = connection.prepareStatement(sql);
-			preparedStatement.setString(1, dni);
+			preparedStatement = connection.prepareStatement(SQL_SELECT_ONE);
+			preparedStatement.setString(1, dni); // We insert in "s.dniSanitario = ?"
 			resultSet = preparedStatement.executeQuery();
 
 			while (resultSet.next()) {
@@ -109,9 +116,6 @@ public class DoctorManager {
 
 		ArrayList<Doctor> ret = null;
 
-		// SQL we want to launch
-		String sql = "SELECT * FROM `sanitario`  s JOIN `usuario` u ON s.dniSanitario = u.dni WHERE tipo = 'Medicina'";
-
 		// The connection with BBDD
 		Connection connection = null;
 
@@ -129,7 +133,7 @@ public class DoctorManager {
 
 			// Let's launch the sentence. . .
 			statement = connection.createStatement();
-			resultSet = statement.executeQuery(sql);
+			resultSet = statement.executeQuery(SQL_SELECT_ALL);
 
 			// It is not possible to know how many things the resultSet has returned.
 			// You have to go 1 by 1 and save everything in its object
@@ -141,31 +145,26 @@ public class DoctorManager {
 
 				Doctor doctor = new Doctor();
 
-				// We take out the columns of the RS
-				String dni = resultSet.getString("dniSanitario");
-				int staffNum = resultSet.getInt("numPersonal");
-				float salary = resultSet.getFloat("salario");
-				int idAmbulatory = resultSet.getInt("idAmbulatorio");
-				String type = resultSet.getString("tipo");
-				String speciality = resultSet.getString("especialidad");
-				String mir = resultSet.getString("MIR");
-
 				// We put the data into Doctor
+				doctor.setDni(resultSet.getString("dniSanitario"));
+				doctor.setStaffNum(resultSet.getInt("numPersonal"));
+				doctor.setSalary(resultSet.getFloat("salario"));
+
+				int idAmbulatory = resultSet.getInt("idAmbulatorio");
 				Ambulatory ambulatory = new Ambulatory();
 				ambulatory.setId(idAmbulatory);
-
-				doctor.setDni(dni);
-				doctor.setStaffNum(staffNum);
-				doctor.setSalary(salary);
 				doctor.setAmbulatory(ambulatory);
-				doctor.setType(type);
-				doctor.setSpeciality(speciality);
+
+				doctor.setType(resultSet.getString("tipo"));
+				doctor.setSpeciality(resultSet.getString("especialidad"));
+				String mir = resultSet.getString("MIR");
 				if (mir.equals("true")) {
 					doctor.setMir(true);
 				} else {
 					doctor.setMir(false);
 				}
-				// User information
+
+				// + User information
 				doctor.setName(resultSet.getString("nombre"));
 				doctor.setSurname(resultSet.getString("apellido"));
 				doctor.setGender(resultSet.getString("sexo"));
@@ -207,10 +206,10 @@ public class DoctorManager {
 	}
 
 	public void insert(Doctor doctor) throws SQLException, Exception {
-		// Connection with the BD
+		// Connection with the DB
 		Connection connection = null;
 
-		// SQL statement to BD
+		// SQL statement to DB
 		Statement statement = null;
 
 		try {
@@ -223,14 +222,22 @@ public class DoctorManager {
 			// We are going to throw the statement
 			statement = connection.createStatement();
 
-			// SQL structure
-			String sql = "INSERT INTO " + SANITARIAN_TABLE
-					+ " (`dniSanitario`, `numPersonal`, `salario`, `idAmbulatorio`, `tipo`, `especialidad`, `MIR`, `categoria`, `EIR`) VALUES ('"
-					+ doctor.getDni() + "', '" + doctor.getStaffNum() + "', '" + doctor.getSalary() + "', 'NULL', '"
-					+ doctor.getType() + "', '" + doctor.getSpeciality() + "', '" + doctor.isMir() + "', NULL, NULL);";
+			// Insert data into parameters | USER TABLE
+			long milliseconds = doctor.getBirthDate().getTime();
+			java.sql.Date date = new java.sql.Date(milliseconds);
+			String sqlUser = "INSERT INTO `usuario` (`dni`, `nombre`, `apellido`, `sexo`, `fechaNac`, `contrasena`) VALUES ('"
+					+ doctor.getDni() + "', '" + doctor.getName() + "', '" + doctor.getSurname() + "','"
+					+ doctor.getGender() + "','" + date + "','" + doctor.getPassword() + "')";
+
+			// Insert data into parameters | SANITARIAN TABLE
+			String sqlSanitarian = "INSERT INTO `sanitario` (`dniSanitario`, `numPersonal`, `salario`, `idAmbulatorio`, `tipo`, `especialidad`, `MIR`, `categoria`, `EIR`) VALUES ('"
+					+ doctor.getDni() + "', '" + doctor.getStaffNum() + "', '" + doctor.getSalary() + "', '"
+					+ doctor.getAmbulatory().getId() + "', 'Medicina', '" + doctor.getSpeciality() + "', '"
+					+ doctor.isMir() + "', NULL, NULL)";
 
 			// We execute
-			statement.executeUpdate(sql);
+			statement.executeUpdate(sqlUser);
+			statement.executeUpdate(sqlSanitarian);
 
 		} catch (SQLException sqle) {
 			System.out.println("Error with the BD - " + sqle.getMessage());
@@ -270,7 +277,7 @@ public class DoctorManager {
 			// We open the connection with the BD
 			connection = DriverManager.getConnection(BBDDUtils.URL_LOCAL, BBDDUtils.USER_LOCAL, BBDDUtils.PASS_LOCAL);
 
-			String speciality = null;
+			
 
 			// SQL structure.
 			// The ?s are filled in below
@@ -278,7 +285,7 @@ public class DoctorManager {
 
 			preparedStatement = connection.prepareStatement(sql);
 
-			preparedStatement.setString(1, speciality);
+			preparedStatement.setString(1, doctor.getSpeciality());
 			preparedStatement.setString(2, doctor.getDni());
 
 			// We execute
@@ -323,7 +330,7 @@ public class DoctorManager {
 			connection = DriverManager.getConnection(BBDDUtils.URL_LOCAL, BBDDUtils.USER_LOCAL, BBDDUtils.PASS_LOCAL);
 
 			// SQL structure
-			String sql = "delete from " + SANITARIAN_TABLE  + " where dniSanitario = '" + dni + "'";
+			String sql = "delete from " + SANITARIAN_TABLE + " where dniSanitario = '" + dni + "'";
 			preparedStatement = connection.prepareStatement(sql);
 
 			// We execute
