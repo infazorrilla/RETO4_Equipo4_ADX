@@ -150,16 +150,13 @@ public class View {
 	private JButton btnAceptNurse;
 	private JButton btnCancelNurse;
 	private JPasswordField passwordFieldNurse;
-	private JComboBox comboBoxAmbulatoryNurse;
-	private JComboBox comboBoxAmbulatoryDoctor;
+	private JComboBox<String> comboBoxAmbulatoryNurse;
+	private JComboBox<String> comboBoxAmbulatoryDoctor;
 	private JPanel panelBlockPatient;
 	private JTable tableBlockPatients;
 	private JButton btnBlockPatientOk;
 	private JTable tablePatientData;
 	private JScrollPane scrollPane_1;
-	JComboBox<String> comboBoxAmbulatoryDoctor_1;
-	JComboBox<String> comboBoxAmbulatoryNurse_1;
-	JComboBox<String> cbAmbulatory;
 
 	/**
 	 * Create the application.
@@ -699,9 +696,9 @@ public class View {
 		lblAmbulatoryDoctor.setBounds(206, 173, 119, 14);
 		panelRegistrationDoctor.add(lblAmbulatoryDoctor);
 
-		JComboBox<String> comboBoxAmbulatoryDoctor_1_1 = new JComboBox<String>();
-		comboBoxAmbulatoryDoctor_1_1.setBounds(206, 188, 119, 20);
-		panelRegistrationDoctor.add(comboBoxAmbulatoryDoctor_1_1);
+		comboBoxAmbulatoryDoctor = new JComboBox<String>();
+		comboBoxAmbulatoryDoctor.setBounds(206, 188, 119, 20);
+		panelRegistrationDoctor.add(comboBoxAmbulatoryDoctor);
 
 		JLabel lblCrossSingUpDoctor = new JLabel("");
 		lblCrossSingUpDoctor.setIcon(new ImageIcon(View.class.getResource("/view/images/OsasunbideCross.jpg")));
@@ -916,9 +913,10 @@ public class View {
 		lblAmbulatoryNurse.setBounds(200, 190, 119, 14);
 		panelRegistrationNurse.add(lblAmbulatoryNurse);
 
-		JComboBox<String> comboBoxAmbulatoryNurse_1_1 = new JComboBox<String>();
-		comboBoxAmbulatoryNurse_1_1.setBounds(200, 205, 119, 20);
-		panelRegistrationNurse.add(comboBoxAmbulatoryNurse_1_1);
+		comboBoxAmbulatoryNurse = new JComboBox<String>();
+		comboBoxAmbulatoryNurse.setBounds(200, 205, 119, 20);
+		panelRegistrationNurse.add(comboBoxAmbulatoryNurse);
+		
 
 		JLabel lblCrossSingUpNurse = new JLabel("");
 		lblCrossSingUpNurse.setIcon(new ImageIcon(View.class.getResource("/view/images/OsasunbideCross.jpg")));
@@ -1559,6 +1557,8 @@ public class View {
 		}
 		for (String ambulatory : ambulatoriesNames) {
 			cbAmbulatory.addItem(ambulatory);
+			comboBoxAmbulatoryNurse.addItem(ambulatory);
+			comboBoxAmbulatoryDoctor.addItem(ambulatory);
 		}
 		panelSelectAppointmentAmbulatoryType.add(cbAmbulatory);
 
