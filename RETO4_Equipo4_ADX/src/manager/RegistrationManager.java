@@ -149,5 +149,5 @@ public class RegistrationManager  {
 		return ret;
 	}
 	
-	private ArrayList<int>
+	//private ArrayList<int>
 }
