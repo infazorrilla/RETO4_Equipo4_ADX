@@ -465,20 +465,52 @@ public class View {
 		textFieldDNIPatient.setBounds(98, 49, 119, 20);
 		panelRegistrationPatient.add(textFieldDNIPatient);
 		textFieldDNIPatient.setColumns(10);
+		textFieldDNIPatient.addKeyListener(new KeyAdapter() {
+			@Override
+			public void keyTyped(KeyEvent e) {
+				if (textFieldDNIPatient.getCaretPosition() >= 9) {
+					e.consume();
+				}
+			}
+		});
 
 		JTextField textFieldNamePatient = new JTextField();
 		textFieldNamePatient.setBounds(98, 84, 119, 20);
 		panelRegistrationPatient.add(textFieldNamePatient);
 		textFieldNamePatient.setColumns(10);
+		textFieldNamePatient.addKeyListener(new KeyAdapter() {
+			@Override
+			public void keyTyped(KeyEvent e) {
+				if (textFieldNamePatient.getCaretPosition() >= 50) {
+					e.consume();
+				}
+			}
+		});
 
 		JTextField textFieldSurnamePatient = new JTextField();
 		textFieldSurnamePatient.setBounds(98, 118, 119, 20);
 		panelRegistrationPatient.add(textFieldSurnamePatient);
 		textFieldSurnamePatient.setColumns(10);
+		textFieldSurnamePatient.addKeyListener(new KeyAdapter() {
+			@Override
+			public void keyTyped(KeyEvent e) {
+				if (textFieldSurnamePatient.getCaretPosition() >= 50) {
+					e.consume();
+				}
+			}
+		});
 
 		JPasswordField textFieldPasswordPatient = new JPasswordField();
 		textFieldPasswordPatient.setBounds(98, 190, 119, 20);
 		panelRegistrationPatient.add(textFieldPasswordPatient);
+		textFieldPasswordPatient.addKeyListener(new KeyAdapter() {
+			@Override
+			public void keyTyped(KeyEvent e) {
+				if (textFieldPasswordPatient.getCaretPosition() >= 50) {
+					e.consume();
+				}
+			}
+		});
 
 		JComboBox<String> comboBoxGenderPatient = new JComboBox<String>();
 		comboBoxGenderPatient.setBounds(98, 153, 119, 20);
@@ -560,6 +592,14 @@ public class View {
 		textFieldPhoneNumberPatient.setColumns(10);
 		textFieldPhoneNumberPatient.setBounds(98, 263, 119, 20);
 		panelRegistrationPatient.add(textFieldPhoneNumberPatient);
+		textFieldPhoneNumberPatient.addKeyListener(new KeyAdapter() {
+			@Override
+			public void keyTyped(KeyEvent e) {
+				if (textFieldPhoneNumberPatient.getCaretPosition() >= 9) {
+					e.consume();
+				}
+			}
+		});
 
 		JLabel lblAddressPatient = new JLabel("Direccion:");
 		lblAddressPatient.setForeground(new Color(255, 255, 255));
@@ -571,6 +611,14 @@ public class View {
 		textFieldAddressPatient.setColumns(10);
 		textFieldAddressPatient.setBounds(98, 297, 119, 20);
 		panelRegistrationPatient.add(textFieldAddressPatient);
+		textFieldAddressPatient.addKeyListener(new KeyAdapter() {
+			@Override
+			public void keyTyped(KeyEvent e) {
+				if (textFieldAddressPatient.getCaretPosition() >= 70) {
+					e.consume();
+				}
+			}
+		});
 
 		JLabel lblPatientIcon = new JLabel("");
 		lblPatientIcon.setIcon(new ImageIcon(View.class.getResource("/view/images/PatientIcon.jpg")));
@@ -612,6 +660,15 @@ public class View {
 		textFieldDniDoctor.setBounds(60, 35, 119, 20);
 		panelRegistrationDoctor.add(textFieldDniDoctor);
 		textFieldDniDoctor.setColumns(10);
+		textFieldDniDoctor.addKeyListener(new KeyAdapter() {
+			@Override
+			public void keyTyped(KeyEvent e) {
+				if (textFieldDniDoctor.getCaretPosition() >= 9) {
+					e.consume();
+				}
+			}
+		});
+
 
 		JLabel lblNameDoctor = new JLabel("Nombre:");
 		lblNameDoctor.setBackground(new Color(240, 240, 240));
@@ -619,11 +676,20 @@ public class View {
 		lblNameDoctor.setFont(new Font("Tahoma", Font.BOLD, 11));
 		lblNameDoctor.setBounds(60, 60, 119, 14);
 		panelRegistrationDoctor.add(lblNameDoctor);
+		
 
 		textFieldNameDoctor = new JTextField();
 		textFieldNameDoctor.setColumns(10);
 		textFieldNameDoctor.setBounds(60, 74, 119, 20);
 		panelRegistrationDoctor.add(textFieldNameDoctor);
+		textFieldNameDoctor.addKeyListener(new KeyAdapter() {
+			@Override
+			public void keyTyped(KeyEvent e) {
+				if (textFieldNameDoctor.getCaretPosition() >= 50) {
+					e.consume();
+				}
+			}
+		});
 
 		JLabel lblSurnameDoctor = new JLabel("Apellido:");
 		lblSurnameDoctor.setBackground(new Color(240, 240, 240));
@@ -636,6 +702,14 @@ public class View {
 		textFieldSurnameDoctor.setColumns(10);
 		textFieldSurnameDoctor.setBounds(60, 110, 119, 20);
 		panelRegistrationDoctor.add(textFieldSurnameDoctor);
+		textFieldSurnameDoctor.addKeyListener(new KeyAdapter() {
+			@Override
+			public void keyTyped(KeyEvent e) {
+				if (textFieldSurnameDoctor.getCaretPosition() >= 50) {
+					e.consume();
+				}
+			}
+		});
 
 		JLabel lblGenderDoctor = new JLabel("Sexo:");
 		lblGenderDoctor.setBackground(new Color(240, 240, 240));
@@ -665,6 +739,14 @@ public class View {
 		passwordFieldDoctor = new JPasswordField();
 		passwordFieldDoctor.setBounds(60, 220, 119, 20);
 		panelRegistrationDoctor.add(passwordFieldDoctor);
+		passwordFieldDoctor.addKeyListener(new KeyAdapter() {
+			@Override
+			public void keyTyped(KeyEvent e) {
+				if (passwordFieldDoctor.getCaretPosition() >= 50) {
+					e.consume();
+				}
+			}
+		});
 
 		JLabel lblContrasenaDoctor = new JLabel("Contrasena:");
 		lblContrasenaDoctor.setBackground(new Color(240, 240, 240));
@@ -708,6 +790,14 @@ public class View {
 		textFieldSpecialityDoctor.setColumns(10);
 		textFieldSpecialityDoctor.setBounds(206, 148, 119, 20);
 		panelRegistrationDoctor.add(textFieldSpecialityDoctor);
+		textFieldSpecialityDoctor.addKeyListener(new KeyAdapter() {
+			@Override
+			public void keyTyped(KeyEvent e) {
+				if (textFieldSpecialityDoctor.getCaretPosition() >= 30) {
+					e.consume();
+				}
+			}
+		});
 
 		btnCancelDoctor = new JButton("Cancelar");
 		btnCancelDoctor.setFont(new Font("Tahoma", Font.BOLD, 11));
@@ -866,18 +956,42 @@ public class View {
 		textFieldDniNurse.setBounds(60, 40, 119, 20);
 		panelRegistrationNurse.add(textFieldDniNurse);
 		textFieldDniNurse.setColumns(10);
+		textFieldDniNurse.addKeyListener(new KeyAdapter() {
+			@Override
+			public void keyTyped(KeyEvent e) {
+				if (textFieldDniNurse.getCaretPosition() >= 9) {
+					e.consume();
+				}
+			}
+		});
 
 		textFieldNameNurse = new JTextField();
 		textFieldNameNurse.setText("");
 		textFieldNameNurse.setColumns(10);
 		textFieldNameNurse.setBounds(60, 78, 119, 20);
 		panelRegistrationNurse.add(textFieldNameNurse);
+		textFieldNameNurse.addKeyListener(new KeyAdapter() {
+			@Override
+			public void keyTyped(KeyEvent e) {
+				if (textFieldNameNurse.getCaretPosition() >= 50) {
+					e.consume();
+				}
+			}
+		});
 
 		textFieldSurnameNurse = new JTextField();
 		textFieldSurnameNurse.setText("");
 		textFieldSurnameNurse.setColumns(10);
 		textFieldSurnameNurse.setBounds(60, 115, 119, 20);
 		panelRegistrationNurse.add(textFieldSurnameNurse);
+		textFieldSurnameNurse.addKeyListener(new KeyAdapter() {
+			@Override
+			public void keyTyped(KeyEvent e) {
+				if (textFieldSurnameNurse.getCaretPosition() >= 50) {
+					e.consume();
+				}
+			}
+		});
 
 		textFieldBirthDateNurse = new JTextField();
 		textFieldBirthDateNurse.setText("");
@@ -926,6 +1040,14 @@ public class View {
 		textFieldCategoryNurse.setColumns(10);
 		textFieldCategoryNurse.setBounds(200, 165, 119, 20);
 		panelRegistrationNurse.add(textFieldCategoryNurse);
+		textFieldCategoryNurse.addKeyListener(new KeyAdapter() {
+			@Override
+			public void keyTyped(KeyEvent e) {
+				if (textFieldCategoryNurse.getCaretPosition() >= 30) {
+					e.consume();
+				}
+			}
+		});
 
 		btnAceptNurse = new JButton("Aceptar");
 		btnAceptNurse.setFont(new Font("Tahoma", Font.BOLD, 11));
@@ -1018,6 +1140,14 @@ public class View {
 		passwordFieldNurse = new JPasswordField();
 		passwordFieldNurse.setBounds(60, 225, 119, 20);
 		panelRegistrationNurse.add(passwordFieldNurse);
+		passwordFieldNurse.addKeyListener(new KeyAdapter() {
+			@Override
+			public void keyTyped(KeyEvent e) {
+				if (passwordFieldNurse.getCaretPosition() >= 50) {
+					e.consume();
+				}
+			}
+		});
 
 		JLabel lblAmbulatoryNurse = new JLabel("Ambulatorio:");
 		lblAmbulatoryNurse.setForeground(new Color(255, 255, 255));
@@ -1965,12 +2095,25 @@ public class View {
 						blockUnlockPatientManager.unlockPatient(patient);
 						JOptionPane.showMessageDialog(null, "Paciente desbloqueado/a", "Confirmación", 1);
 					}
-				} catch (SQLException e1) {
-					JOptionPane.showMessageDialog(null, "Se ha producido un error con la Base de Datos.", "Error", 0);
-				} catch (Exception e1) {
-					JOptionPane.showMessageDialog(null, "Se ha producido un error.", "Error", 0);
-				}
-				tableBlockPatients.repaint();
+					
+					ArrayList<Patient> patients =  blockUnlockPatientManager.showPatientByAmbulatoryId(
+								userDataModificationManager.selectDoctor(userDNI).getAmbulatory().getId());
+					
+					DefaultTableModel model = (DefaultTableModel) tableBlockPatients.getModel();
+					model.setRowCount(0);
+
+					for (Patient Onepatient : patients) {
+						model.addRow(new String[] { Onepatient.getDni(), Onepatient.getName(), Onepatient.getSurname(),
+								blockUnlockPatientManager.patientState(Onepatient.isBlocked()) });
+					}
+					tableBlockPatients.repaint();
+					
+					} catch (SQLException e2) {
+						JOptionPane.showMessageDialog(null, "Se ha producido un error con la BBDD.", "Error", 0);
+					} catch (Exception e2) {
+						JOptionPane.showMessageDialog(null, "Se ha producido un error.", "Error", 0);
+
+					}
 			}
 		});
 		btnBlockPatientOk.setBounds(265, 261, 85, 21);
