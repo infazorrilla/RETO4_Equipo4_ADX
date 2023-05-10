@@ -148,4 +148,6 @@ public class RegistrationManager  {
 		}
 		return ret;
 	}
+	
+	private ArrayList<int>
 }
