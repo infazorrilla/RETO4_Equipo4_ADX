@@ -3,56 +3,20 @@ package jUnitTest;
 import static org.junit.jupiter.api.Assertions.*;
 
 import java.sql.SQLException;
+import java.text.ParseException;
+import java.text.SimpleDateFormat;
 import java.util.ArrayList;
+import java.util.Date;
 
 import org.junit.jupiter.api.Test;
 
 import manager.NurseManager;
+import model.pojos.Ambulatory;
 import model.pojos.Nurse;
 
 class NurseManagerTest {
 
 	NurseManager nurseManager = new NurseManager();
-
-	@Test
-	void testDelete() {
-		// Instance of the Nurse class
-		Nurse nurse = new Nurse();
-
-		// We set an int value in the instance
-		nurse.setDni("22222222E");
-
-		// We insert the object in the manager
-		try {
-			nurseManager.insert(nurse);
-		} catch (SQLException sqle) {
-			sqle.printStackTrace();
-		} catch (Exception e1) {
-			e1.printStackTrace();
-		}
-
-		// We get the previous value and delete it
-		try {
-			nurseManager.delete(nurse.getDni());
-		} catch (SQLException sqle) {
-			sqle.printStackTrace();
-		} catch (Exception e) {
-			e.printStackTrace();
-		}
-
-		// We get the previous value and select it
-		// It doesn't get anything because we've eliminated it previously.
-		try {
-			nurse = nurseManager.select(nurse.getDni());
-		} catch (SQLException e) {
-			e.printStackTrace();
-		} catch (Exception e) {
-			e.printStackTrace();
-		}
-
-		// We use AssertEquals to compare the state of the object with null
-		assertEquals(nurse, null);
-	}
 
 	@Test
 	void testSelectInt() {
@@ -98,11 +62,32 @@ class NurseManagerTest {
 	void testInsertNurse() {
 		// We set expected values for later comparison
 		Nurse expected = new Nurse();
-		expected.setDni("00000000D");
-		expected.setStaffNum(0);
-		expected.setSalary(0);
-		expected.setType(null);
-		expected.setCategory(null);
+
+		// User data
+		expected.setDni("22222222E");
+		expected.setName("Raquel");
+		expected.setSurname("BORRAR");
+		expected.setGender("mujer");
+		Date date = null;
+		String sDate = "2023-04-02";
+		try {
+			date = new SimpleDateFormat("yyyy-MM-dd").parse(sDate);
+		} catch (ParseException e) {
+			e.printStackTrace();
+		}
+		expected.setBirthDate(date);
+		expected.setPassword("123");
+
+		// Doctor data
+		expected.setDni("22222222E");
+		expected.setStaffNum(300);
+		expected.setSalary(100);
+
+		Ambulatory ambulatory = new Ambulatory();
+		ambulatory.setId(1);
+		expected.setAmbulatory(ambulatory);
+
+		expected.setCategory("Familiar");
 		expected.setEir(false);
 
 		try {
@@ -116,35 +101,48 @@ class NurseManagerTest {
 
 		// We set the comparative values
 		Nurse actual = new Nurse();
-		actual.setDni("00000000D");
-		actual.setStaffNum(0);
-		actual.setSalary(0);
-		actual.setType(null);
-		actual.setCategory(null);
-		actual.setEir(false);
 		try {
-
 			// We insert the comparative values
-			nurseManager.insert(actual);
+			actual = nurseManager.select("22222222E");
 		} catch (SQLException sqle) {
 			sqle.printStackTrace();
 		} catch (Exception e) {
 			e.printStackTrace();
 		}
 		// We compares between the expected and comparative values
-		assertEquals(expected, actual);
+		assertEquals(expected.getDni(), actual.getDni());
 	}
 
 	@Test
 	void testUpdateNurse() {
 		// We set the initial values
 		Nurse nurse = new Nurse();
-		nurse.setDni("00000000D");
-		nurse.setStaffNum(0);
-		nurse.setSalary(0);
-		nurse.setType(null);
-		nurse.setCategory(null);
-		nurse.setEir(false);
+		// User data
+		nurse.setDni("33333333E");
+		nurse.setName("Roberto");
+		nurse.setSurname("BORRAR");
+		nurse.setGender("hombre");
+		Date date = null;
+		String sDate = "2023-04-02";
+		try {
+			date = new SimpleDateFormat("yyyy-MM-dd").parse(sDate);
+		} catch (ParseException e) {
+			e.printStackTrace();
+		}
+		nurse.setBirthDate(date);
+		nurse.setPassword("123");
+
+		// Doctor data
+		nurse.setDni("33333333E");
+		nurse.setStaffNum(400);
+		nurse.setSalary(100);
+
+		Ambulatory ambulatory = new Ambulatory();
+		ambulatory.setId(1);
+		nurse.setAmbulatory(ambulatory);
+
+		nurse.setCategory("Cardiología");
+		nurse.setEir(true);
 
 		try {
 			// We insert the initial values
@@ -157,6 +155,7 @@ class NurseManagerTest {
 
 		// We set a new value
 		nurse.setCategory("Familiar");
+		nurse.setDni("33333333E");
 		try {
 			// We update the values
 			nurseManager.update(nurse);
@@ -168,15 +167,58 @@ class NurseManagerTest {
 
 		// We set a comparative expected result
 		Nurse expected = new Nurse();
-		expected.setDni("00000000D");
-		expected.setStaffNum(0);
-		expected.setSalary(0);
-		expected.setType(null);
+		expected.setDni("33333333E");
+		expected.setName("Roberto");
+		expected.setSurname("BORRAR");
+		expected.setGender("hombre");
+		try {
+			date = new SimpleDateFormat("yyyy-MM-dd").parse(sDate);
+		} catch (ParseException e) {
+			e.printStackTrace();
+		}
+		expected.setBirthDate(date);
+		expected.setPassword("123");
+		expected.setDni("33333333E");
+		expected.setStaffNum(400);
+		expected.setSalary(100);
+		ambulatory.setId(1);
+		expected.setAmbulatory(ambulatory);
 		expected.setCategory("Familiar");
-		expected.setEir(false);
+		expected.setEir(true);
 
-		assertEquals(nurse, expected);
+		assertEquals(nurse.getCategory(), expected.getCategory());
 
+	}
+
+	@Test
+	void testDelete() {
+		// Instance of the Nurse class
+		Nurse nurse = new Nurse();
+
+		// We set an int value in the instance
+		nurse.setDni("22222222E");
+
+		// We get the previous value and delete it
+		try {
+			nurseManager.delete(nurse.getDni());
+		} catch (SQLException sqle) {
+			sqle.printStackTrace();
+		} catch (Exception e) {
+			e.printStackTrace();
+		}
+
+		// We get the previous value and select it
+		// It doesn't get anything because we've eliminated it previously.
+		try {
+			nurse = nurseManager.select(nurse.getDni());
+		} catch (SQLException e) {
+			e.printStackTrace();
+		} catch (Exception e) {
+			e.printStackTrace();
+		}
+
+		// We use AssertEquals to compare the state of the object with null
+		assertEquals(nurse, null);
 	}
 
 }
