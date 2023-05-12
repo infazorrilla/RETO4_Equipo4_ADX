@@ -138,7 +138,7 @@ public class View {
 	private JTextField textFieldSpecialityDoctor;
 	private JButton btnAceptDoctor;
 	private JButton btnCancelDoctor;
-	private JComboBox comboBoxGenderDoctor;
+	private JComboBox<String> comboBoxGenderDoctor;
 	private JPanel panelRegistrationNurse;
 	private JTextField textFieldDniNurse;
 	private JTextField textFieldNameNurse;
@@ -729,11 +729,11 @@ public class View {
 		lblGenderDoctor.setBounds(60, 133, 119, 14);
 		panelRegistrationDoctor.add(lblGenderDoctor);
 
-		JComboBox<String> comboBoxGenderDoctor_1 = new JComboBox<String>();
-		comboBoxGenderDoctor_1.setBounds(60, 145, 119, 20);
-		panelRegistrationDoctor.add(comboBoxGenderDoctor_1);
-		comboBoxGenderDoctor_1.addItem("Hombre");
-		comboBoxGenderDoctor_1.addItem("Mujer");
+		comboBoxGenderDoctor = new JComboBox<String>();
+		comboBoxGenderDoctor.setBounds(60, 145, 119, 20);
+		panelRegistrationDoctor.add(comboBoxGenderDoctor);
+		comboBoxGenderDoctor.addItem("Hombre");
+		comboBoxGenderDoctor.addItem("Mujer");
 
 		JLabel lblBirthDateDoctor = new JLabel("Fecha Nacimiento:");
 		lblBirthDateDoctor.setBackground(new Color(240, 240, 240));
@@ -857,7 +857,7 @@ public class View {
 								.selectAmbulatory((String) comboBoxAmbulatoryDoctor.getSelectedItem());
 						doctor.setAmbulatory(ambulatory);
 						doctorManager.insert(doctor);
-						JOptionPane.showMessageDialog(btnAceptarRegistro, "Usuario registrado", "Bien", 3);
+						JOptionPane.showMessageDialog(null, "Usuario registrado", "Bien", 3);
 						panelLogin.setVisible(true);
 						panelRegistrationDoctor.setVisible(false);
 					}
@@ -1107,12 +1107,12 @@ public class View {
 						try {
 							nurseManager.insert(nurse);
 						} catch (SQLException e1) {
-							JOptionPane.showMessageDialog(btnAceptarRegistro, "Error Base De Datos", "Aviso", 2);
+							JOptionPane.showMessageDialog(null, "Error Base De Datos", "Aviso", 2);
 						} catch (Exception e1) {
-							JOptionPane.showMessageDialog(btnAceptarRegistro, "Errorª", "Aviso", 2);
+							JOptionPane.showMessageDialog(null, "Errorª", "Aviso", 2);
 						}
 
-						JOptionPane.showMessageDialog(btnAceptarRegistro, "Usuario registrado", "Bien", 3);
+						JOptionPane.showMessageDialog(null, "Usuario registrado", "Bien", 3);
 						panelLogin.setVisible(true);
 						panelRegistrationNurse.setVisible(false);
 					}
