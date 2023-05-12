@@ -126,25 +126,26 @@ public class AppointmentSelectionManager {
 		ArrayList<String> ret = null;
 
 		Connection connection = null;
+		Statement statement = null;
 		ResultSet resultSet = null;
-		CallableStatement stmt = null;
 
-		String query = "{call sacarFechasDisponibles(?,?)}";
+		String sql = "select j.fecha from jornada j join jornadasanitario js on j.idJornada=js.idJornada "
+				+ "join sanitario s on js.dniSanitario=s.dniSanitario "
+				+ "where tipo= '"+type+"' and s.idAmbulatorio = " + ambulatory.getId() ;
 
 		try {
 			Class.forName(BBDDUtils.DRIVER_LOCAL);
 			connection = DriverManager.getConnection(BBDDUtils.URL_LOCAL, BBDDUtils.USER_LOCAL, BBDDUtils.PASS_LOCAL);
-			stmt = connection.prepareCall(query);
-			stmt.setString(1, type);
-			stmt.setInt(2, ambulatory.getId());
+			statement = connection.createStatement();
+			resultSet = statement.executeQuery(sql);
 
-			resultSet = stmt.executeQuery();
+			resultSet = statement.executeQuery(sql);
 
 			while (resultSet.next()) {
 				if (null == ret)
 					ret = new ArrayList<String>();
 
-				Date date = resultSet.getDate("Fecha");
+				Date date = resultSet.getDate("fecha");
 				String sDate = date.toString();
 
 				ret.add(sDate);
@@ -161,8 +162,8 @@ public class AppointmentSelectionManager {
 			}
 			;
 			try {
-				if (stmt != null)
-					stmt.close();
+				if (statement != null)
+					statement.close();
 			} catch (Exception e) {
 			}
 			;
@@ -256,10 +257,9 @@ public class AppointmentSelectionManager {
 
 		String sql = "select idFranja from franja where idFranja NOT IN (SELECT f.idFranja "
 				+ "from franja f left join citajornadafranja cjf on f.idFranja=cjf.idFranja "
-				+ "join cita c on c.idCita=cjf.idCita "
-				+ "join sanitario s on c.dniSanitario=s.dniSanitario "
-				+ "left join jornada j on j.idJornada=cjf.idJornada "
-				+ "where s.dniSanitario = '"+sanitarian.getDni()+"' and j.fecha='"+dateString+"');";
+				+ "join cita c on c.idCita=cjf.idCita " + "join sanitario s on c.dniSanitario=s.dniSanitario "
+				+ "left join jornada j on j.idJornada=cjf.idJornada " + "where s.dniSanitario = '" + sanitarian.getDni()
+				+ "' and j.fecha='" + dateString + "');";
 
 		Connection connection = null;
 		Statement statement = null;
@@ -320,13 +320,15 @@ public class AppointmentSelectionManager {
 	 * @return
 	 * @throws SQLException, Exception
 	 */
-	public ArrayList<Sanitarian> showAvailableSanitarianByDate(String type, String date)
+	public ArrayList<Sanitarian> showAvailableSanitarianByDate(String type, String date, Ambulatory ambulatory)
 			throws SQLException, Exception {
 		ArrayList<Sanitarian> ret = null;
 
-		String sql = "select js.dniSanitario, u.nombre, u.apellido from jornadasanitario js join jornada j on js.idJornada=j.idJornada "
-				+ "join sanitario s on js.dniSanitario=s.dniSanitario join usuario u on s.dniSanitario=u.dni "
-				+ "WHERE fecha= '" + date + "' and tipo='" + type + "'";
+		String sql = "select js.dniSanitario, u.nombre, u.apellido "
+				+ "from jornadasanitario js join jornada j on js.idJornada=j.idJornada "
+				+ "join sanitario s on js.dniSanitario=s.dniSanitario "
+				+ "join usuario u on s.dniSanitario=u.dni "
+				+ "WHERE fecha= '"+date+"' and tipo='"+type+"' and s.idAmbulatorio=" + ambulatory.getId();
 
 		Connection connection = null;
 		Statement statement = null;
@@ -469,10 +471,12 @@ public class AppointmentSelectionManager {
 	}
 
 	/**
-	 * Inserts a row in DB's 'citajornadafranja' table. Gets ids from Appointment, WorkingDay and TimeSlot 
+	 * Inserts a row in DB's 'citajornadafranja' table. Gets ids from Appointment,
+	 * WorkingDay and TimeSlot
+	 * 
 	 * @param appointment Appointment
-	 * @param workingDay WorkingDay
-	 * @param timeSlot TimeSlot
+	 * @param workingDay  WorkingDay
+	 * @param timeSlot    TimeSlot
 	 * @throws SQLException
 	 * @throws Exception
 	 */
@@ -514,7 +518,8 @@ public class AppointmentSelectionManager {
 	/**
 	 * Selects the last appointment from a certain patient and a certain doctor.
 	 * Used to get appointment's id to make an insert in 'citajornadafranja' table
-	 * @param patient Patient
+	 * 
+	 * @param patient    Patient
 	 * @param sanitarian Sanitarian
 	 * @param ambulatory Ambulatory
 	 * @return Appointment
@@ -578,8 +583,9 @@ public class AppointmentSelectionManager {
 	}
 
 	/**
-	 * Selects the workingDay by date
-	 * Used to get workingDay's id to make an insert in 'citajornadafranja' table
+	 * Selects the workingDay by date Used to get workingDay's id to make an insert
+	 * in 'citajornadafranja' table
+	 * 
 	 * @param sDate String of the date
 	 * @return WorkingDay
 	 * @throws SQLException
@@ -588,7 +594,7 @@ public class AppointmentSelectionManager {
 	public WorkingDay selectWorkingDay(String sDate) throws SQLException, Exception {
 		WorkingDay ret = null;
 
-		String sql = "select * from jornada where fecha= '" + sDate +"'";
+		String sql = "select * from jornada where fecha= '" + sDate + "'";
 
 		Connection connection = null;
 		Statement statement = null;
@@ -648,8 +654,9 @@ public class AppointmentSelectionManager {
 	}
 
 	/**
-	 * Selects the timeSlot by startTime
-	 * Used to get timeSlot's id to make an insert in 'citajornadafranja' table
+	 * Selects the timeSlot by startTime Used to get timeSlot's id to make an insert
+	 * in 'citajornadafranja' table
+	 * 
 	 * @param sStartTime string of startTime
 	 * @return TimeSlot
 	 * @throws SQLException

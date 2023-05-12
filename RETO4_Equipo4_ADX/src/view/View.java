@@ -1914,8 +1914,9 @@ public class View {
 
 					ArrayList<Sanitarian> sanitarians;
 					try {
+						Ambulatory ambulatory = appointmentSelectionManager.selectAmbulatory(wantedAmbulatory);
 						sanitarians = appointmentSelectionManager.showAvailableSanitarianByDate(wantedSanitarian,
-								dateString);
+								dateString, ambulatory);
 						cbSelectAppointmentSanitarian.addItem("");
 						for (Sanitarian sanitarian : sanitarians) {
 							cbSelectAppointmentSanitarian
