@@ -16,6 +16,10 @@ public class AppointmentWorkingDayTimeSlot {
 		this.timeSlot = timeSlot;
 	}
 
+	public AppointmentWorkingDayTimeSlot() {
+		// TODO Auto-generated constructor stub
+	}
+
 	public ArrayList<Appointment> getAppointment() {
 		return appointment;
 	}
