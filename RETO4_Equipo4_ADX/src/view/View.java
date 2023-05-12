@@ -36,6 +36,7 @@ import manager.AppointmentManager;
 import manager.AppointmentSelectionManager;
 import manager.BlockUnlockPatientManager;
 import manager.PatientManager;
+import manager.ShowAppointmentManager;
 import manager.TimeSlotManager;
 import manager.UserDataModificationManager;
 import model.pojos.Ambulatory;
@@ -149,6 +150,15 @@ public class View {
 	private JScrollPane scrollPane_1;
 	private JPasswordField tfLoginPassword;
 	private JTextField tfLoginUser;
+	private JPanel panelShowAppointment;
+	private JTable tableShowAppointment;
+	private JButton btnShowAppointments;
+	private JButton btnBackShowAppointment;
+	private JTextField textFieldDNIPatient;
+	private JTextField textFieldNamePatient;
+	private JTextField textFieldSurnamePatient;
+	private JPasswordField textFieldPasswordPatient;
+	private JButton btnAceptarRegistro;
 
 	/**
 	 * Create the application.
@@ -195,6 +205,14 @@ public class View {
 		btnLoginResgistrationPatient.setForeground(new Color(255, 255, 255));
 		btnLoginResgistrationPatient.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
+				textFieldDNIPatient.setText("");
+				textFieldNamePatient.setText("");
+				textFieldSurnamePatient.setText("");
+				textFieldPasswordPatient.setText("");
+				textFieldBirthDatePatient.setText("");
+				textFieldPhoneNumberPatient.setText("");
+				textFieldAddressPatient.setText("");
+				
 				panelLogin.setVisible(false);
 				panelRegistrationPatient.setVisible(true);
 			}
@@ -208,6 +226,9 @@ public class View {
 		btnRegistroSanitarian.setForeground(new Color(255, 255, 255));
 		btnRegistroSanitarian.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
+				
+				
+				
 				panelLogin.setVisible(false);
 				panelNurseOrDoctor.setVisible(true);
 			}
@@ -279,6 +300,29 @@ public class View {
 					model.addRow(new String[] { "Fecha de nacimiento", user.getBirthDate().toString() });
 					model.addRow(new String[] { "Dirección", ((Patient) user).getAddress() });
 					model.addRow(new String[] { "Teléfono", ((Patient) user).getPhoneNumber() });
+
+					// Panel Show Appointment
+					ShowAppointmentManager showAppointmentManager = new ShowAppointmentManager();
+					ArrayList<Appointment> appointments = null;
+					try {
+						appointments = (ArrayList<Appointment>) showAppointmentManager.select(userDNI);
+					} catch (SQLException e1) {
+						// TODO Auto-generated catch block
+						e1.printStackTrace();
+					} catch (Exception e1) {
+						// TODO Auto-generated catch block
+						e1.printStackTrace();
+					}
+
+					model = (DefaultTableModel) tableShowAppointment.getModel();
+					model.setRowCount(0);
+					for (Appointment appointment : appointments) {
+						String sId = Integer.toString(appointment.getId());
+						model.addRow(new String[] { sId, appointment.getSanitarian().getDni(),
+								appointment.getSanitarian().getType(),
+								appointment.getTimeSlot().getStartTime().toString(),
+								appointment.getAppointmentWorkingDayTimeSlot().getWorkingDay().getDate().toString() });
+					}
 					break;
 				case 2:
 					JOptionPane.showMessageDialog(null, "ACCEDIENDO COMO EMPLEADO"); // ADMIN
@@ -309,7 +353,7 @@ public class View {
 
 						}
 					}
-					
+
 					if (user instanceof Nurse) {
 						try {
 							patients = blockUnlockPatientManager.showPatientByAmbulatoryId(
@@ -344,6 +388,32 @@ public class View {
 		panel.add(tfLoginUser);
 		tfLoginUser.setColumns(10);
 
+		panelShowAppointment = new JPanel();
+		panelShowAppointment.setBounds(0, 0, 616, 351);
+		frame.getContentPane().add(panelShowAppointment);
+		panelShowAppointment.setLayout(null);
+		panelShowAppointment.setVisible(false);
+
+		JScrollPane scrollPane_2 = new JScrollPane();
+		scrollPane_2.setBounds(112, 72, 356, 198);
+		panelShowAppointment.add(scrollPane_2);
+
+		tableShowAppointment = new JTable();
+		scrollPane_2.setViewportView(tableShowAppointment);
+		tableShowAppointment.setModel(new DefaultTableModel(new Object[][] {},
+				new String[] { "Id Cita", "DNI Sanitario", "Tipo", "Hora", "Fecha" }));
+
+		btnBackShowAppointment = new JButton("Atras");
+		btnBackShowAppointment.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent e) {
+				panelPatient.setVisible(true);
+				panelShowAppointment.setVisible(false);
+			}
+		});
+		btnBackShowAppointment.setBounds(195, 281, 188, 45);
+		panelShowAppointment.add(btnBackShowAppointment);
+		tableShowAppointment.setDefaultEditor(Object.class, null);
+
 		// PANEL | REGISTRATION: SANITARIAN
 		panelNurseOrDoctor = new JPanel();
 		panelNurseOrDoctor.setBounds(0, 0, 616, 351);
@@ -358,6 +428,20 @@ public class View {
 		btnSelectDoctor.setForeground(new Color(16, 169, 121));
 		btnSelectDoctor.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
+				textFieldDniDoctor.setText("");
+				textFieldNameDoctor.setText("");
+				textFieldSurnameDoctor.setText("");
+				passwordFieldDoctor.setText("");
+				textFieldBirthDateDoctor.setText("");
+				textFieldStaffNumDoctor.setText("");
+				textFieldSalaryDoctor.setText("");
+				textFieldSpecialityDoctor.setText("");
+				
+
+				
+				
+				
+				
 				panelNurseOrDoctor.setVisible(false);
 				panelRegistrationDoctor.setVisible(true);
 			}
@@ -371,6 +455,18 @@ public class View {
 		btnSelectNurse.setFont(new Font("Tahoma", Font.BOLD, 11));
 		btnSelectNurse.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
+				textFieldDniNurse.setText("");
+				textFieldNameNurse.setText("");
+				textFieldSurnameNurse.setText("");
+				passwordFieldNurse.setText("");
+				textFieldBirthDateNurse.setText("");
+				textFieldStaffNumberNurse.setText("");
+				textFieldSalaryNurse.setText("");
+				textFieldCategoryNurse.setText("");
+				
+				
+				
+				
 				panelNurseOrDoctor.setVisible(false);
 				panelRegistrationNurse.setVisible(true);
 			}
@@ -450,7 +546,7 @@ public class View {
 		lblPassSingUpPatient.setBounds(98, 175, 119, 14);
 		panelRegistrationPatient.add(lblPassSingUpPatient);
 
-		JTextField textFieldDNIPatient = new JTextField();
+		textFieldDNIPatient = new JTextField();
 		textFieldDNIPatient.setBounds(98, 49, 119, 20);
 		panelRegistrationPatient.add(textFieldDNIPatient);
 		textFieldDNIPatient.setColumns(10);
@@ -463,7 +559,7 @@ public class View {
 			}
 		});
 
-		JTextField textFieldNamePatient = new JTextField();
+		textFieldNamePatient = new JTextField();
 		textFieldNamePatient.setBounds(98, 84, 119, 20);
 		panelRegistrationPatient.add(textFieldNamePatient);
 		textFieldNamePatient.setColumns(10);
@@ -476,7 +572,7 @@ public class View {
 			}
 		});
 
-		JTextField textFieldSurnamePatient = new JTextField();
+		textFieldSurnamePatient = new JTextField();
 		textFieldSurnamePatient.setBounds(98, 118, 119, 20);
 		panelRegistrationPatient.add(textFieldSurnamePatient);
 		textFieldSurnamePatient.setColumns(10);
@@ -489,7 +585,7 @@ public class View {
 			}
 		});
 
-		JPasswordField textFieldPasswordPatient = new JPasswordField();
+		textFieldPasswordPatient = new JPasswordField();
 		textFieldPasswordPatient.setBounds(98, 190, 119, 20);
 		panelRegistrationPatient.add(textFieldPasswordPatient);
 		textFieldPasswordPatient.addKeyListener(new KeyAdapter() {
@@ -507,29 +603,45 @@ public class View {
 		comboBoxGenderPatient.addItem("Hombre");
 		comboBoxGenderPatient.addItem("Mujer");
 
-		JButton btnAceptarRegistro = new JButton("Aceptar");
+		btnAceptarRegistro = new JButton("Aceptar");
 		btnAceptarRegistro.setBackground(new Color(255, 255, 255));
 		btnAceptarRegistro.setFont(new Font("Tahoma", Font.BOLD, 11));
 		btnAceptarRegistro.setForeground(new Color(16, 169, 121));
 		btnAceptarRegistro.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
 				Patient patient = new Patient();
-				patient.setDni(textFieldDNIPatient.getText().trim());
-				patient.setName(textFieldNamePatient.getText().trim());
-				patient.setSurname(textFieldSurnamePatient.getText().trim());
-				patient.setGender((String) comboBoxGenderPatient.getSelectedItem());
-				String sDate1 = textFieldBirthDatePatient.getText().trim();
-				Date date1 = null;
 				try {
-					date1 = new SimpleDateFormat("yyyy-MM-dd").parse(sDate1);
-				} catch (ParseException e2) {
-					JOptionPane.showMessageDialog(null, "Se ha producido un error.", "Error", 0);
+					if(patientManager.select(textFieldDNIPatient.getText().trim()) != null) {
+						JOptionPane.showMessageDialog(null, "Usuario ya registrado", "Aviso", 2);
+					} else {
+						patient.setDni(textFieldDNIPatient.getText().trim());
+						patient.setName(textFieldNamePatient.getText().trim());
+						patient.setSurname(textFieldSurnamePatient.getText().trim());
+						patient.setGender((String) comboBoxGenderPatient.getSelectedItem());
+						String sDate1 = textFieldBirthDatePatient.getText().trim();
+						Date date1 = null;
+						try {
+							date1 = new SimpleDateFormat("yyyy-MM-dd").parse(sDate1);
+						} catch (ParseException e2) {
+							JOptionPane.showMessageDialog(null, "Se ha producido un error.", "Error", 0);
+						}
+						patient.setBirthDate(date1);
+						String password = new String(textFieldPasswordPatient.getPassword());
+						patient.setPassword(password);
+						patient.setPhoneNumber(textFieldPhoneNumberPatient.getText().trim());
+						patient.setAddress(textFieldAddressPatient.getText());
+					}
+				} catch (HeadlessException e2) {
+					// TODO Auto-generated catch block
+					e2.printStackTrace();
+				} catch (SQLException e2) {
+					// TODO Auto-generated catch block
+					e2.printStackTrace();
+				} catch (Exception e2) {
+					// TODO Auto-generated catch block
+					e2.printStackTrace();
 				}
-				patient.setBirthDate(date1);
-				String password = new String(textFieldPasswordPatient.getPassword());
-				patient.setPassword(password);
-				patient.setPhoneNumber(textFieldPhoneNumberPatient.getText().trim());
-				patient.setAddress(textFieldAddressPatient.getText());
+				
 
 				try {
 					patientManager.insert(patient);
@@ -539,6 +651,7 @@ public class View {
 					JOptionPane.showMessageDialog(null, "Se ha producido un error.", "Error", 0);
 				}
 
+				JOptionPane.showMessageDialog(null, "Usuario registrado", "Bien", 3);
 				panelLogin.setVisible(true);
 				panelRegistrationPatient.setVisible(false);
 				tfLoginPassword.setText("");
@@ -1288,8 +1401,7 @@ public class View {
 		panelSanitarian.add(lblNurseIconPanelSanitarian);
 
 		JLabel lblCrossPanelSanitarian = new JLabel("");
-		lblCrossPanelSanitarian
-				.setIcon(new ImageIcon(View.class.getResource("/view/images/OsasunbideCross.jpg")));
+		lblCrossPanelSanitarian.setIcon(new ImageIcon(View.class.getResource("/view/images/OsasunbideCross.jpg")));
 		lblCrossPanelSanitarian.setBounds(476, 105, 140, 140);
 		panelSanitarian.add(lblCrossPanelSanitarian);
 
@@ -1363,13 +1475,14 @@ public class View {
 		btnCancelAppointment.setBounds(228, 150, 160, 20);
 		panelPatient.add(btnCancelAppointment);
 
-		JButton btnShowAppointments = new JButton("Ver citas");
+		btnShowAppointments = new JButton("Ver citas");
 		btnShowAppointments.setFont(new Font("Tahoma", Font.BOLD, 11));
 		btnShowAppointments.setForeground(new Color(255, 255, 255));
 		btnShowAppointments.setBackground(new Color(16, 169, 121));
 		btnShowAppointments.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
-				// TODO
+				panelPatient.setVisible(false);
+				panelShowAppointment.setVisible(true);
 			}
 		});
 		btnShowAppointments.setBounds(228, 120, 160, 20);
@@ -1867,7 +1980,7 @@ public class View {
 
 				panelSelectAppointmentAmbulatoryType.setVisible(false);
 				panelSelectAppointmentDateTimeSlot.setVisible(true);
-				
+
 				DefaultTableModel model = (DefaultTableModel) tableSelectTimeSlot.getModel();
 				model.setRowCount(0);
 				cbSelectAppointmentDate.removeAll();
