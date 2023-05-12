@@ -769,20 +769,20 @@ public class ViewAmaia {
 					String dateString = cbSelectAppointmentDate.getSelectedItem().toString();
 
 					ArrayList<Sanitarian> sanitarians;
-					try {
-						sanitarians = appointmentSelectionManager.showAvailableSanitarianByDate(wantedSanitarian,
-								dateString);
-						cbSelectAppointmentSanitarian.addItem("");
-						for (Sanitarian sanitarian : sanitarians) {
-							cbSelectAppointmentSanitarian
-									.addItem(sanitarian.getSurname() + ", " + sanitarian.getName());
-						}
-					} catch (SQLException e1) {
-						JOptionPane.showMessageDialog(null, "Se ha producido un error con la Base de Datos.", "Error",
-								0);
-					} catch (Exception e1) {
-						JOptionPane.showMessageDialog(null, "Se ha producido un error.", "Error", 0);
-					}
+//					try {
+//						sanitarians = appointmentSelectionManager.showAvailableSanitarianByDate(wantedSanitarian,
+//								dateString);
+//						cbSelectAppointmentSanitarian.addItem("");
+//						for (Sanitarian sanitarian : sanitarians) {
+//							cbSelectAppointmentSanitarian
+//									.addItem(sanitarian.getSurname() + ", " + sanitarian.getName());
+//						}
+//					} catch (SQLException e1) {
+//						JOptionPane.showMessageDialog(null, "Se ha producido un error con la Base de Datos.", "Error",
+//								0);
+//					} catch (Exception e1) {
+//						JOptionPane.showMessageDialog(null, "Se ha producido un error.", "Error", 0);
+//					}
 				} else {
 					cbSelectAppointmentSanitarian.removeAllItems();
 					cbSelectAppointmentSanitarian.addItem("");

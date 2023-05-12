@@ -1867,6 +1867,13 @@ public class View {
 
 				panelSelectAppointmentAmbulatoryType.setVisible(false);
 				panelSelectAppointmentDateTimeSlot.setVisible(true);
+				
+				DefaultTableModel model = (DefaultTableModel) tableSelectTimeSlot.getModel();
+				model.setRowCount(0);
+				cbSelectAppointmentDate.removeAll();
+				cbSelectAppointmentDate.addItem("");
+				cbSelectAppointmentSanitarian.removeAll();
+				cbSelectAppointmentSanitarian.addItem("");
 			}
 		});
 		btnSelectAppointmentAmbulatoryTypeOk.setBounds(199, 273, 85, 21);
