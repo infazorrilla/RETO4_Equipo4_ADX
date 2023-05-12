@@ -61,9 +61,6 @@ import java.awt.Toolkit;
 import java.awt.Font;
 
 public class View {
-//	private PatientManager patientManager;
-//	private DoctorManager doctorManager;
-//	private NurseManager nurseManager;
 	private UserDataModificationManager userDataModificationManager;
 	private AppointmentSelectionManager appointmentSelectionManager;
 	private TimeSlotManager timeSlotManager;
