@@ -12,8 +12,6 @@ import java.awt.event.MouseListener;
 import java.sql.SQLException;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
-import java.time.LocalDateTime;
-import java.time.format.DateTimeFormatter;
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.Enumeration;
@@ -34,12 +32,10 @@ import javax.swing.event.CaretEvent;
 import javax.swing.event.CaretListener;
 import javax.swing.table.DefaultTableModel;
 
-import manager.AmbulatoryManager;
 import manager.AppointmentManager;
 import manager.AppointmentSelectionManager;
 import manager.BlockUnlockPatientManager;
 import manager.PatientManager;
-import manager.RegistrationManager;
 import manager.TimeSlotManager;
 import manager.UserDataModificationManager;
 import model.pojos.Ambulatory;
@@ -90,9 +86,6 @@ public class View {
 	private JButton btnModifyPatientUnsubscribe;
 	private JButton btnModifyPatientCancel;
 	private JButton btnLoginOk;
-	private JButton btnLoginCancel;
-	private JButton btnLoginResgistration;
-	private JTextField tfModifyPatientDNI;
 	private JTextField tfModifySanitarianDNI;
 	private JPasswordField tfModifySanitarianPassword;
 	private JButton btnModifySanitarianOk;
@@ -106,7 +99,6 @@ public class View {
 	private JTable tableSelectTimeSlot;
 	private JComboBox<String> cbSelectAppointmentDate;
 	private JComboBox<String> cbSelectAppointmentSanitarian;
-	private JButton btnNewButton;
 	private JPanel panelSanitarian;
 	private JLabel lblCross;
 	private JPanel panelPatient;
@@ -117,8 +109,6 @@ public class View {
 	private PatientManager patientManager;
 	private DoctorManager doctorManager;
 	private NurseManager nurseManager;
-	private AmbulatoryManager ambulatoryManager;
-	private RegistrationManager registrationManager;
 	private JPanel panelRegistrationPatient;
 	private JTextField textFieldBirthDatePatient;
 	private JTextField textFieldPhoneNumberPatient;
@@ -171,8 +161,6 @@ public class View {
 		patientManager = new PatientManager();
 		doctorManager = new DoctorManager();
 		nurseManager = new NurseManager();
-		ambulatoryManager = new AmbulatoryManager();
-		registrationManager = new RegistrationManager();
 		appointmentManager = new AppointmentManager();
 
 		initialize();
@@ -256,7 +244,7 @@ public class View {
 		lblLoginPassword.setFont(new Font("Tahoma", Font.BOLD, 14));
 		lblLoginPassword.setForeground(new Color(16, 169, 121));
 
-		btnLoginOk = new JButton("Aceptar");
+		btnLoginOk = new JButton("Entrar");
 		btnLoginOk.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
 				userDNI = tfLoginUser.getText();
@@ -344,20 +332,8 @@ public class View {
 		});
 		btnLoginOk.setForeground(new Color(255, 255, 255));
 		btnLoginOk.setBackground(new Color(16, 169, 121));
-		btnLoginOk.setBounds(22, 123, 89, 23);
+		btnLoginOk.setBounds(41, 123, 171, 23);
 		panel.add(btnLoginOk);
-
-		btnLoginCancel = new JButton("Cancelar");
-		btnLoginCancel.addActionListener(new ActionListener() {
-			public void actionPerformed(ActionEvent e) {
-				tfLoginUser.setText("");
-				tfLoginPassword.setText("");
-			}
-		});
-		btnLoginCancel.setForeground(new Color(255, 255, 255));
-		btnLoginCancel.setBackground(new Color(16, 169, 121));
-		btnLoginCancel.setBounds(121, 123, 89, 23);
-		panel.add(btnLoginCancel);
 
 		tfLoginPassword = new JPasswordField();
 		tfLoginPassword.setBounds(41, 81, 171, 20);
@@ -565,6 +541,8 @@ public class View {
 
 				panelLogin.setVisible(true);
 				panelRegistrationPatient.setVisible(false);
+				tfLoginPassword.setText("");
+				tfLoginUser.setText("");
 			}
 
 		});
@@ -579,6 +557,8 @@ public class View {
 			public void actionPerformed(ActionEvent e) {
 				panelLogin.setVisible(true);
 				panelRegistrationPatient.setVisible(false);
+				tfLoginPassword.setText("");
+				tfLoginUser.setText("");
 			}
 		});
 		btnCancelarRegistro.setBounds(373, 257, 89, 23);
@@ -818,6 +798,8 @@ public class View {
 			public void actionPerformed(ActionEvent e) {
 				panelLogin.setVisible(true);
 				panelRegistrationDoctor.setVisible(false);
+				tfLoginPassword.setText("");
+				tfLoginUser.setText("");
 			}
 		});
 		btnCancelDoctor.setBounds(341, 275, 89, 23);
@@ -860,6 +842,8 @@ public class View {
 						JOptionPane.showMessageDialog(null, "Usuario registrado", "Bien", 3);
 						panelLogin.setVisible(true);
 						panelRegistrationDoctor.setVisible(false);
+						tfLoginPassword.setText("");
+						tfLoginUser.setText("");
 					}
 				} catch (HeadlessException e1) {
 					// TODO Auto-generated catch block
@@ -1115,6 +1099,8 @@ public class View {
 						JOptionPane.showMessageDialog(null, "Usuario registrado", "Bien", 3);
 						panelLogin.setVisible(true);
 						panelRegistrationNurse.setVisible(false);
+						tfLoginPassword.setText("");
+						tfLoginUser.setText("");
 					}
 				} catch (HeadlessException e1) {
 					// TODO Auto-generated catch block
@@ -1142,6 +1128,8 @@ public class View {
 			public void actionPerformed(ActionEvent e) {
 				panelLogin.setVisible(true);
 				panelRegistrationNurse.setVisible(false);
+				tfLoginPassword.setText("");
+				tfLoginUser.setText("");
 			}
 		});
 		btnCancelNurse.setBounds(341, 275, 89, 23);
@@ -1983,6 +1971,8 @@ public class View {
 				} catch (Exception e1) {
 					JOptionPane.showMessageDialog(null, "Se ha producido un error.", "Error", 0);
 				}
+				panelPatient.setVisible(true);
+				panelSelectAppointmentDateTimeSlot.setVisible(false);
 			}
 		});
 		btnSelectAppointmentDateTimeSlotOk.setBounds(207, 292, 89, 23);
@@ -2046,6 +2036,7 @@ public class View {
 				}
 			});
 		} catch (Exception e) {
+			JOptionPane.showMessageDialog(null, "Se ha producido un error.", "Error", 0);
 		}
 		cbSelectAppointmentSanitarian.setBounds(319, 76, 138, 22);
 		panelSelectAppointmentDateTimeSlot.add(cbSelectAppointmentSanitarian);
