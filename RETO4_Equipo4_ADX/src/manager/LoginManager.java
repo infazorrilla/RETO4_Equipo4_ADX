@@ -14,7 +14,16 @@ import model.pojos.Patient;
 import model.pojos.User;
 import model.utils.BBDDUtils;
 
+/**
+ * @author dannyelfloyd
+ *
+ */
 public class LoginManager {
+	/**
+	 * @param userDNI
+	 * @param pass
+	 * @return convertion
+	 */
 	public int getUserByDniAndPassword(String userDNI, String pass) {
 
 		int convertion = 0;
@@ -79,6 +88,12 @@ public class LoginManager {
 		return convertion;
 	}
 
+	/**
+	 * @param userDNI
+	 * @return User
+	 * @throws SQLException
+	 * @throws Exception
+	 */
 	public User identifyUserType(String userDNI) throws SQLException, Exception {
 
 		User ret = null;
@@ -99,6 +114,12 @@ public class LoginManager {
 		return ret;
 	}
 
+	/**
+	 * @param dni
+	 * @return Doctor
+	 * @throws SQLException
+	 * @throws Exception
+	 */
 	private Doctor selectDoctor(String dni) throws SQLException, Exception {
 		Doctor ret = null;
 
@@ -176,6 +197,12 @@ public class LoginManager {
 		return ret;
 	}
 
+	/**
+	 * @param dni
+	 * @return Nurse
+	 * @throws SQLException
+	 * @throws Exception
+	 */
 	private Nurse selectNurse(String dni) throws SQLException, Exception {
 		Nurse ret = null;
 
@@ -253,6 +280,12 @@ public class LoginManager {
 		return ret;
 	}
 
+	/**
+	 * @param dni
+	 * @return Patient
+	 * @throws SQLException
+	 * @throws Exception
+	 */
 	public Patient selectPatient(String dni) throws SQLException, Exception {
 		Patient ret = null;
 

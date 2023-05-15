@@ -1,7 +1,6 @@
 package manager;
 
 import java.sql.Connection;
-import java.sql.Date;
 import java.sql.DriverManager;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
@@ -14,21 +13,11 @@ import model.pojos.Ambulatory;
 import model.pojos.Doctor;
 import model.utils.BBDDUtils;
 
+/**
+ * @author dannyelfloyd
+ *
+ */
 public class DoctorManager {
-
-	// RUBRICA | SPRINT 2 | INDIVIDUAL
-	// Management of the Table:
-	/**
-	 * Select: The equivalent of the operation “select * from table” | Insert:
-	 * Insert a new entry in the table | Update: Update an entry in the table |
-	 * Delete: Delete an entry in the table by its Id | Common errors have to be
-	 * reported: empty table, does not exist, I could not delete, etc.
-	 */
-	// Complex operations
-	/**
-	 * At least one non-elementary operation is performed on the table chosen by the
-	 * student | An operation that affects several tables, for example
-	 */
 
 	public static final String SANITARIAN_TABLE = "sanitario";
 	public static final String SQL_SELECT_ONE = "SELECT * FROM `sanitario`  s JOIN `usuario` u ON s.dniSanitario = u.dni WHERE s.dniSanitario = ? AND tipo = 'Medicina'";
@@ -37,9 +26,15 @@ public class DoctorManager {
 	public static final String SQL_INSERT_USER = "INSERT INTO `usuario` (`dni`, `nombre`, `apellido`, `sexo`, `fechaNac`, `contrasena`) VALUES (?, ?, ?, ?, ?, ?)";
 	public static final String SQL_INSERT_SANITARIAN = "INSERT INTO `sanitario` (`dniSanitario`, `numPersonal`, `salario`, `idAmbulatorio`, `tipo`, `especialidad`, `MIR`, `categoria`, `EIR`) VALUES (?, ?, ?, ?, 'Medicina', ?, ?, NULL, NULL)";
 
-	public static final String SQL_UPDATE = "";
-	public static final String SQL_DELETE = "";
-
+	/**
+	 * This method gets a doctor from the database, set a DNI as a parameter and
+	 * stores it in a Doctor POJO.
+	 * 
+	 * @param dni
+	 * @return Doctor
+	 * @throws SQLException
+	 * @throws Exception
+	 */
 	public Doctor select(String dni) throws SQLException, Exception {
 		Doctor ret = null;
 
@@ -110,6 +105,14 @@ public class DoctorManager {
 		return ret;
 	}
 
+	/**
+	 * This method gets all doctors from the database and stores it in an Array
+	 * List.
+	 * 
+	 * @return ArrayList<Doctor>
+	 * @throws SQLException
+	 * @throws Exception
+	 */
 	public List<Doctor> select() throws SQLException, Exception {
 		// Returns all rows of the ambulatory table
 		// If there is nothing, it returns NULL
@@ -205,6 +208,13 @@ public class DoctorManager {
 		return ret;
 	}
 
+	/**
+	 * Insert values in the DB into the User and Doctor tables
+	 * 
+	 * @param doctor Is an object
+	 * @throws SQLException If there is an error on DB
+	 * @throws Exception If there is a generic error
+	 */
 	public void insert(Doctor doctor) throws SQLException, Exception {
 		// Connection with the DB
 		Connection connection = null;
@@ -263,6 +273,12 @@ public class DoctorManager {
 
 	}
 
+	/**
+	 * This method update a values in the DB into the User and Doctor tables
+	 * @param doctor
+	 * @throws SQLException
+	 * @throws Exception
+	 */
 	public void update(Doctor doctor) throws SQLException, Exception {
 		// Connection with the BD
 		Connection connection = null;
@@ -276,8 +292,6 @@ public class DoctorManager {
 
 			// We open the connection with the BD
 			connection = DriverManager.getConnection(BBDDUtils.URL_LOCAL, BBDDUtils.USER_LOCAL, BBDDUtils.PASS_LOCAL);
-
-			
 
 			// SQL structure.
 			// The ?s are filled in below
@@ -315,6 +329,11 @@ public class DoctorManager {
 
 	}
 
+	/**
+	 * @param dni
+	 * @throws SQLException
+	 * @throws Exception
+	 */
 	public void delete(String dni) throws SQLException, Exception {
 		// Connection with the BD
 		Connection connection = null;

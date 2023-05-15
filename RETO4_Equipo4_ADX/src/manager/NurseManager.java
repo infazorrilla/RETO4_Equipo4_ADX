@@ -13,27 +13,23 @@ import model.pojos.Ambulatory;
 import model.pojos.Nurse;
 import model.utils.BBDDUtils;
 
+/**
+ * @author dannyelfloyd
+ *
+ */
 public class NurseManager {
-
-	// RUBRICA | SPRINT 2 | INDIVIDUAL
-	// Management of the Table:
-	/**
-	 * Select: The equivalent of the operation “select * from table” | Insert:
-	 * Insert a new entry in the table | Update: Update an entry in the table |
-	 * Delete: Delete an entry in the table by its Id | Common errors have to be
-	 * reported: empty table, does not exist, I could not delete, etc.
-	 */
-	// Complex operations
-	/**
-	 * At least one non-elementary operation is performed on the table chosen by the
-	 * student | An operation that affects several tables, for example
-	 */
 
 	public static final String SANITARIAN_TABLE = "sanitario";
 	public static final String SQL_SELECT_ONE = "SELECT * FROM `sanitario`  s JOIN `usuario` u ON s.dniSanitario = u.dni WHERE s.dniSanitario = ? AND tipo = 'Enfermeria'";
 	public static final String SQL_SELECT_ALL = "SELECT * FROM `sanitario`  s JOIN `usuario` u ON s.dniSanitario = u.dni WHERE tipo = 'Enfermeria'";
 	public static final String SQL_UPDATE = "UPDATE `sanitario` set categoria = ? where dniSanitario = ?";
 
+	/**
+	 * @param dni
+	 * @return Nurse
+	 * @throws SQLException
+	 * @throws Exception
+	 */
 	public Nurse select(String dni) throws SQLException, Exception {
 		Nurse ret = null;
 
@@ -102,6 +98,11 @@ public class NurseManager {
 		return ret;
 	}
 
+	/**
+	 * @return ArrayList<Nurse>
+	 * @throws SQLException
+	 * @throws Exception
+	 */
 	public List<Nurse> select() throws SQLException, Exception {
 		// Returns all rows of the ambulatory table
 		// If there is nothing, it returns NULL
@@ -201,6 +202,11 @@ public class NurseManager {
 
 	}
 
+	/**
+	 * @param nurse
+	 * @throws SQLException
+	 * @throws Exception
+	 */
 	public void insert(Nurse nurse) throws SQLException, Exception {
 		// Connection with the BD
 		Connection connection = null;
@@ -259,6 +265,11 @@ public class NurseManager {
 
 	}
 
+	/**
+	 * @param nurse
+	 * @throws SQLException
+	 * @throws Exception
+	 */
 	public void update(Nurse nurse) throws SQLException, Exception {
 		// Connection with the BD
 		Connection connection = null;
@@ -305,6 +316,11 @@ public class NurseManager {
 
 	}
 
+	/**
+	 * @param dni
+	 * @throws SQLException
+	 * @throws Exception
+	 */
 	public void delete(String dni) throws SQLException, Exception {
 		// Connection with the BD
 		Connection connection = null;
