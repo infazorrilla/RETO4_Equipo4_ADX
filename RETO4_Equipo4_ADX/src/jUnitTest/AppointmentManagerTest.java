@@ -15,7 +15,7 @@ import model.pojos.Sanitarian;
 
 class AppointmentManagerTest {
 
-	private final int COLUMN_NUMBER = 3;
+	private final int COLUMN_NUMBER = 9;
 	AppointmentManager appointmentManager = new AppointmentManager();
 
 	@Test
@@ -55,17 +55,17 @@ class AppointmentManagerTest {
 	@Test
 	void testInsert() {
 		Appointment expected = new Appointment();
-		expected.setId(9);
+		expected.setId(3);
 		
 		Ambulatory ambulatory = new Ambulatory();
+		ambulatory.setId(1);
+		expected.setAmbulatory(ambulatory);
 		Sanitarian sanitarian = new Doctor();
 		Patient patient = new Patient();
 		patient.setDni("00000000A");
 		sanitarian.setDni("11111111A");
-		ambulatory.setId(1);
 		expected.setPatient(patient);
 		expected.setSanitarian(sanitarian);
-		expected.setAmbulatory(ambulatory);
 		
 		
 		try {
