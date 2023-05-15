@@ -14,8 +14,9 @@ import model.pojos.Doctor;
 import model.utils.BBDDUtils;
 
 /**
+ * The class manages the basic functions (CRUD) in databases
+ * 
  * @author dannyelfloyd
- *
  */
 public class DoctorManager {
 
@@ -27,13 +28,13 @@ public class DoctorManager {
 	public static final String SQL_INSERT_SANITARIAN = "INSERT INTO `sanitario` (`dniSanitario`, `numPersonal`, `salario`, `idAmbulatorio`, `tipo`, `especialidad`, `MIR`, `categoria`, `EIR`) VALUES (?, ?, ?, ?, 'Medicina', ?, ?, NULL, NULL)";
 
 	/**
-	 * This method gets a doctor from the database, set a DNI as a parameter and
-	 * stores it in a Doctor POJO.
+	 * Returns data from the database about Doctors with a DNI as a conditional
+	 * parameter or Null
 	 * 
-	 * @param dni
-	 * @return Doctor
-	 * @throws SQLException
-	 * @throws Exception
+	 * @param dni | Is a String
+	 * @return Doctor or Null | Is an Object
+	 * @throws SQLException | If there is an error on DB
+	 * @throws Exception    | If there is a generic error
 	 */
 	public Doctor select(String dni) throws SQLException, Exception {
 		Doctor ret = null;
@@ -106,15 +107,14 @@ public class DoctorManager {
 	}
 
 	/**
-	 * This method gets all doctors from the database and stores it in an Array
-	 * List.
+	 * Returns a List from the database about Doctors or Null
 	 * 
-	 * @return ArrayList<Doctor>
-	 * @throws SQLException
-	 * @throws Exception
+	 * @return List<Nurse> or Null
+	 * @throws SQLException | If there is an error on DB
+	 * @throws Exception    | If there is a generic error
 	 */
 	public List<Doctor> select() throws SQLException, Exception {
-		// Returns all rows of the ambulatory table
+		// Returns all rows of the doctor table
 		// If there is nothing, it returns NULL
 
 		ArrayList<Doctor> ret = null;
@@ -209,11 +209,11 @@ public class DoctorManager {
 	}
 
 	/**
-	 * Insert values in the DB into the User and Doctor tables
+	 * Enter an object in the database as an output parameter
 	 * 
-	 * @param doctor Is an object
-	 * @throws SQLException If there is an error on DB
-	 * @throws Exception If there is a generic error
+	 * @param doctor | Is an Object
+	 * @throws SQLException | If there is an error on DB
+	 * @throws Exception    | If there is a generic error
 	 */
 	public void insert(Doctor doctor) throws SQLException, Exception {
 		// Connection with the DB
@@ -274,10 +274,11 @@ public class DoctorManager {
 	}
 
 	/**
-	 * This method update a values in the DB into the User and Doctor tables
-	 * @param doctor
-	 * @throws SQLException
-	 * @throws Exception
+	 * Update in the database using an object as output parameter
+	 * 
+	 * @param doctor | Is an Object
+	 * @throws SQLException | If there is an error on DB
+	 * @throws Exception    | If there is a generic error
 	 */
 	public void update(Doctor doctor) throws SQLException, Exception {
 		// Connection with the BD
@@ -330,9 +331,11 @@ public class DoctorManager {
 	}
 
 	/**
-	 * @param dni
-	 * @throws SQLException
-	 * @throws Exception
+	 * Delete in the database via a String conditional output parameter
+	 * 
+	 * @param dni | Is a String
+	 * @throws SQLException | If there is an error on DB
+	 * @throws Exception    | If there is a generic error
 	 */
 	public void delete(String dni) throws SQLException, Exception {
 		// Connection with the BD

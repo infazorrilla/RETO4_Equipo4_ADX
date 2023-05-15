@@ -14,8 +14,9 @@ import model.pojos.Nurse;
 import model.utils.BBDDUtils;
 
 /**
+ * The class manages the basic functions (CRUD) in databases
+ * 
  * @author dannyelfloyd
- *
  */
 public class NurseManager {
 
@@ -25,10 +26,13 @@ public class NurseManager {
 	public static final String SQL_UPDATE = "UPDATE `sanitario` set categoria = ? where dniSanitario = ?";
 
 	/**
-	 * @param dni
-	 * @return Nurse
-	 * @throws SQLException
-	 * @throws Exception
+	 * Returns data from the database about Nurses with a DNI as a conditional
+	 * parameter or Null
+	 * 
+	 * @param dni | Is a String
+	 * @return Nurse or Null | Is an Object
+	 * @throws SQLException | If there is an error on DB
+	 * @throws Exception    | If there is a generic error
 	 */
 	public Nurse select(String dni) throws SQLException, Exception {
 		Nurse ret = null;
@@ -99,12 +103,14 @@ public class NurseManager {
 	}
 
 	/**
-	 * @return ArrayList<Nurse>
-	 * @throws SQLException
-	 * @throws Exception
+	 * Returns a List from the database about Nurses or Null
+	 * 
+	 * @return List<Nurse> or Null
+	 * @throws SQLException | If there is an error on DB
+	 * @throws Exception    | If there is a generic error
 	 */
 	public List<Nurse> select() throws SQLException, Exception {
-		// Returns all rows of the ambulatory table
+		// Returns all rows of the nurse table
 		// If there is nothing, it returns NULL
 
 		ArrayList<Nurse> ret = null;
@@ -203,9 +209,11 @@ public class NurseManager {
 	}
 
 	/**
-	 * @param nurse
-	 * @throws SQLException
-	 * @throws Exception
+	 * Enter an object in the database as an output parameter
+	 * 
+	 * @param nurse | Is an Object
+	 * @throws SQLException | If there is an error on DB
+	 * @throws Exception    | If there is a generic error
 	 */
 	public void insert(Nurse nurse) throws SQLException, Exception {
 		// Connection with the BD
@@ -266,9 +274,11 @@ public class NurseManager {
 	}
 
 	/**
-	 * @param nurse
-	 * @throws SQLException
-	 * @throws Exception
+	 * Update in the database using an object as output parameter
+	 * 
+	 * @param nurse | Is an Object
+	 * @throws SQLException | If there is an error on DB
+	 * @throws Exception    | If there is a generic error
 	 */
 	public void update(Nurse nurse) throws SQLException, Exception {
 		// Connection with the BD
@@ -317,9 +327,11 @@ public class NurseManager {
 	}
 
 	/**
-	 * @param dni
-	 * @throws SQLException
-	 * @throws Exception
+	 * Delete in the database via a String conditional output parameter
+	 * 
+	 * @param dni | Is a String
+	 * @throws SQLException | If there is an error on DB
+	 * @throws Exception    | If there is a generic error
 	 */
 	public void delete(String dni) throws SQLException, Exception {
 		// Connection with the BD

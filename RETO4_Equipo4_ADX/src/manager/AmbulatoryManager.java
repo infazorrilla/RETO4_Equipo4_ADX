@@ -13,6 +13,8 @@ import model.pojos.Ambulatory;
 import model.utils.BBDDUtils;
 
 /**
+ * The class manages the basic functions (CRUD) in databases
+ * 
  * @author dannyelfloyd
  *
  */
@@ -20,6 +22,15 @@ public class AmbulatoryManager extends AbstractManager<Ambulatory> {
 
 	public static final String AMBULATORY_TABLE = "ambulatorio";
 
+	/**
+	 * Returns data from the database about Ambulatory with a ID as a conditional
+	 * parameter or Null
+	 * 
+	 * @param ID | Is a Integer
+	 * @return Ambulatory or Null | Is an Object
+	 * @throws SQLException | If there is an error on DB
+	 * @throws Exception    | If there is a generic error
+	 */
 	@Override
 	public Ambulatory select(int id) throws SQLException, Exception {
 		Ambulatory ret = null;
@@ -72,6 +83,13 @@ public class AmbulatoryManager extends AbstractManager<Ambulatory> {
 		return ret;
 	}
 
+	/**
+	 * Returns a List from the database about Ambulatory or Null
+	 * 
+	 * @return List<Ambulatory> or Null
+	 * @throws SQLException | If there is an error on DB
+	 * @throws Exception    | If there is a generic error
+	 */
 	@Override
 	public List<Ambulatory> select() throws SQLException, Exception {
 		// Returns all rows of the ambulatory table
@@ -157,6 +175,13 @@ public class AmbulatoryManager extends AbstractManager<Ambulatory> {
 		return ret;
 	}
 
+	/**
+	 * Enter an object in the database as an output parameter
+	 * 
+	 * @param ambulatory | Is an Object
+	 * @throws SQLException | If there is an error on DB
+	 * @throws Exception    | If there is a generic error
+	 */
 	@Override
 	public void insert(Ambulatory ambulatory) throws SQLException, Exception {
 		// Connection with the BD
@@ -206,6 +231,13 @@ public class AmbulatoryManager extends AbstractManager<Ambulatory> {
 
 	}
 
+	/**
+	 * Update in the database using an object as output parameter
+	 * 
+	 * @param ambulatory | Is an Object
+	 * @throws SQLException | If there is an error on DB
+	 * @throws Exception    | If there is a generic error
+	 */
 	@Override
 	public void update(Ambulatory ambulatory) throws SQLException, Exception {
 
@@ -259,6 +291,13 @@ public class AmbulatoryManager extends AbstractManager<Ambulatory> {
 
 	}
 
+	/**
+	 * Delete in the database via a String conditional output parameter
+	 * 
+	 * @param id | Is a String
+	 * @throws SQLException | If there is an error on DB
+	 * @throws Exception    | If there is a generic error
+	 */
 	@Override
 	public void delete(int id) throws SQLException, Exception {
 
