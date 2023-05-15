@@ -2188,5 +2188,6 @@ public class ViewSabi {
 		panelSelectAppointmentAmbulatoryType.setVisible(false);
 		tablePatientData.setDefaultEditor(Object.class, null);
 
+		
 	}
 }

@@ -31,6 +31,7 @@ public class RegistrationManager  {
 
 	public static final String AMBULATORY_TABLE = "ambulatorio";
 
+	
 	/**
 	 * Returns one Ambulatory from the DB by its name
 	 * 
@@ -40,6 +41,7 @@ public class RegistrationManager  {
 	public Ambulatory select(String name) throws SQLException, Exception {
 		Ambulatory ret = null;
 
+		
 		String sql = "select * from ambulatorio where nombre=  '" + name + "'";
 
 		Connection connection = null;
@@ -119,10 +121,10 @@ public class RegistrationManager  {
 				Ambulatory ambulatory = new Ambulatory();
 
 				// We take out the columns of the RS
-				int id = resultSet.getInt("id");
-				String name = resultSet.getString("name");
-				String phoneNumber = resultSet.getString("phoneNumber");
-				String address = resultSet.getString("address");
+				int id = resultSet.getInt("idAmbulatorio");
+				String name = resultSet.getString("nombre");
+				String phoneNumber = resultSet.getString("telefono");
+				String address = resultSet.getString("direccion");
 
 				// We put the data into Example
 				ambulatory.setId(id);
