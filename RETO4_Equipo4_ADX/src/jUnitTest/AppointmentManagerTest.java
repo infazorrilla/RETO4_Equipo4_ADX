@@ -12,7 +12,6 @@ import model.pojos.Doctor;
 import model.pojos.Patient;
 import model.pojos.Sanitarian;
 
-
 class AppointmentManagerTest {
 
 	private final int COLUMN_NUMBER = 9;
@@ -31,8 +30,7 @@ class AppointmentManagerTest {
 
 		Appointment expected = new Appointment();
 		expected.setId(2);
-		
-		
+
 		assertEquals(appointment.getId(), expected.getId());
 	}
 
@@ -52,11 +50,12 @@ class AppointmentManagerTest {
 			assertEquals(COLUMN_NUMBER, appointment.size());
 		}
 	}
+
 	@Test
 	void testInsert() {
 		Appointment expected = new Appointment();
 		expected.setId(3);
-		
+
 		Ambulatory ambulatory = new Ambulatory();
 		ambulatory.setId(1);
 		expected.setAmbulatory(ambulatory);
@@ -66,8 +65,7 @@ class AppointmentManagerTest {
 		sanitarian.setDni("11111111A");
 		expected.setPatient(patient);
 		expected.setSanitarian(sanitarian);
-		
-		
+
 		try {
 			appointmentManager.insert(expected);
 		} catch (SQLException sqle) {
@@ -86,7 +84,7 @@ class AppointmentManagerTest {
 		}
 		assertEquals(expected.getId(), actual.getId());
 	}
-	
+
 //	@Test
 //	void testUpdate() {
 //		Appointment newAppointment = new Appointment();
@@ -130,14 +128,13 @@ class AppointmentManagerTest {
 //
 //		assertEquals(expected, result);
 //	}
-	
+
 	@Test
 	void testDelete() {
 		Appointment appointment = new Appointment();
 
 		appointment.setId(11);
-		
-		
+
 		try {
 			appointmentManager.insert(appointment);
 		} catch (SQLException sqle) {
@@ -145,7 +142,7 @@ class AppointmentManagerTest {
 		} catch (Exception e1) {
 			e1.printStackTrace();
 		}
-		
+
 		try {
 			appointmentManager.delete(appointment.getId());
 		} catch (SQLException sqle) {
@@ -153,15 +150,15 @@ class AppointmentManagerTest {
 		} catch (Exception e) {
 			e.printStackTrace();
 		}
-		
+
 		try {
-			appointment= appointmentManager.select(appointment.getId());
+			appointment = appointmentManager.select(appointment.getId());
 		} catch (SQLException e) {
 			e.printStackTrace();
 		} catch (Exception e) {
 			e.printStackTrace();
 		}
-		
+
 		assertEquals(appointment, null);
 	}
 }

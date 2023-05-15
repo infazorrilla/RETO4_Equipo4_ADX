@@ -1,3 +1,4 @@
+
 package view;
 
 import java.awt.Color;
@@ -192,6 +193,10 @@ public class ViewSabi {
 		frame.getContentPane().setLayout(null);
 		frame.setResizable(false); // fixed dimensions
 		frame.setLocationRelativeTo(null); // central position on the screen
+		
+		JPanel panelDeleteAppointmentSanitarian = new JPanel();
+		panelDeleteAppointmentSanitarian.setBounds(0, 0, 616, 351);
+		frame.getContentPane().add(panelDeleteAppointmentSanitarian);
 
 		// LOGIN | PANEL
 		panelLogin = new JPanel();
