@@ -18,6 +18,12 @@ public class PatientManager {
 
 	public static final String PATIENT_TABLE = "paciente";
 
+	/**
+	 * Returns one Patient from the DB by its dni
+	 * 
+	 * @param dni String
+	 * @return Patient object
+	 */
 	public Patient select(String dni) throws SQLException, Exception {
 		Patient ret = null;
 
@@ -75,6 +81,11 @@ public class PatientManager {
 		return ret;
 	}
 
+	/**
+	 * Returns a list of all the Patient from the DB
+	 * 
+	 * @return an ArrayList of Patient
+	 */
 	public List<Patient> select() throws SQLException, Exception {
 		ArrayList<Patient> ret = null;
 
@@ -152,6 +163,11 @@ public class PatientManager {
 		return ret;
 	}
 
+	/**
+	 * Inserts one Patient into the DB
+	 * 
+	 * @param one object Patient
+	 */
 	public void insert(Patient patient) throws SQLException, Exception {
 		Connection connection = null;
 		Statement statement = null;
@@ -191,6 +207,11 @@ public class PatientManager {
 		}
 	}
 
+	/**
+	 * Updates ''numeroTelefono' of a Patient from the DB at '777666555' by its dni
+	 * 
+	 * @param one object Patient
+	 */
 	public void update(Patient patient) throws SQLException, Exception {
 		Connection connection = null;
 		PreparedStatement preparedStatement = null;
@@ -228,6 +249,10 @@ public class PatientManager {
 		}
 	}
 
+	/**
+	 * Deletes the row in 'Paciente' table of the DB by its dni
+	 * @param dni String
+	 */
 	public void delete(String dni) throws SQLException, Exception {
 		Connection connection = null;
 		PreparedStatement preparedStatement = null;

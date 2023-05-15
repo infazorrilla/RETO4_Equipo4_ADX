@@ -23,6 +23,11 @@ import model.utils.BBDDUtils;
 
 public class ShowAppointmentManager {
 
+	/**
+	 * Returns a list of all the Appointment from a Patient from the DB
+	 * 
+	 * @return an ArrayList of Appointments
+	 */
 	public List<Appointment> select(String dni) throws SQLException, Exception {
 		ArrayList<Appointment> ret = null;
 

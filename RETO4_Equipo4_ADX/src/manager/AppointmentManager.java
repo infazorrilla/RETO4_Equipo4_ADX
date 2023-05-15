@@ -21,6 +21,13 @@ public class AppointmentManager extends AbstractManager<Appointment> {
 
 	public static final String APPOINTMENT_TABLE = "cita";
 
+	/**
+	 * Returns one Appointment from the DB by its id
+	 * 
+	 * @param id int
+	 * @return Appointment object
+	 */
+	
 	@Override
 	public Appointment select(int id) throws SQLException, Exception {
 		Appointment ret = null;
@@ -87,6 +94,11 @@ public class AppointmentManager extends AbstractManager<Appointment> {
 		return ret;
 	}
 
+	/**
+	 * Returns a list of all the Appointments from the DB
+	 * 
+	 * @return an ArrayList of Appointments
+	 */
 	@Override
 	public List<Appointment> select() throws SQLException, Exception {
 		ArrayList<Appointment> ret = null;
@@ -158,6 +170,11 @@ public class AppointmentManager extends AbstractManager<Appointment> {
 		return ret;
 	}
 
+	/**
+	 * Inserts one Appointment into the DB
+	 * 
+	 * @param one object Appointment
+	 */
 	@Override
 	public void insert(Appointment appointment) throws SQLException, Exception {
 		Connection connection = null;
@@ -197,6 +214,11 @@ public class AppointmentManager extends AbstractManager<Appointment> {
 		
 	}
 
+	
+	/**
+	 * Deletes the row in 'Cita' table of the DB by its id
+	 * @param id int
+	 */
 	@Override
 	public void delete(int id) throws SQLException, Exception {
 		Connection connection = null;

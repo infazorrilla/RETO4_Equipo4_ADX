@@ -31,6 +31,12 @@ public class RegistrationManager  {
 
 	public static final String AMBULATORY_TABLE = "ambulatorio";
 
+	/**
+	 * Returns one Ambulatory from the DB by its name
+	 * 
+	 * @param name String
+	 * @return Ambulatory object
+	 */
 	public Ambulatory select(String name) throws SQLException, Exception {
 		Ambulatory ret = null;
 
@@ -85,6 +91,11 @@ public class RegistrationManager  {
 		return ret;
 	}
 	
+	/**
+	 * Returns a list of all the Ambulatory from the DB
+	 * 
+	 * @return an ArrayList of Ambulatory
+	 */
 	public List<Ambulatory> select() throws SQLException, Exception {
 		ArrayList<Ambulatory> ret = null;
 
