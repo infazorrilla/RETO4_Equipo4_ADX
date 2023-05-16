@@ -3,6 +3,11 @@ package manager;
 import java.sql.SQLException;
 import java.util.List;
 
+/**
+ * @author adx
+ *
+ * @param <T>
+ */
 public abstract class AbstractManager<T> implements GeneralInterface <T>{
 
 	@Override

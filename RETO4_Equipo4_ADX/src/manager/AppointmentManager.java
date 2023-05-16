@@ -17,8 +17,15 @@ import model.pojos.Patient;
 import model.pojos.Sanitarian;
 import model.utils.BBDDUtils;
 
+/**
+ * @author adx
+ *
+ */
 public class AppointmentManager extends AbstractManager<Appointment> {
 
+	/**
+	 * 
+	 */
 	public static final String APPOINTMENT_TABLE = "cita";
 
 	/**

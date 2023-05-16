@@ -22,6 +22,10 @@ import model.pojos.TimeSlot;
 import model.pojos.WorkingDay;
 import model.utils.BBDDUtils;
 
+/**
+ * @author adx
+ *
+ */
 public class AppointmentSelectionManager {
 
 	/**

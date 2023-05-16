@@ -8,18 +8,30 @@ import java.sql.SQLException;
 import java.sql.Statement;
 
 import java.util.ArrayList;
-import java.util.Date;
+
 import java.util.List;
 
-import model.pojos.Appointment;
 import model.pojos.Patient;
 import model.utils.BBDDUtils;
 
+/**
+ * @author in1dw3
+ *
+ */
 public class AppointmentWorkingDayTimeSlotManager  {
 
+	/**
+	 * 
+	 */
 	public static final String AWT = "citaJornadaFranja";
 	
 
+	/**
+	 * @param id
+	 * @return
+	 * @throws SQLException
+	 * @throws Exception
+	 */
 	public AppointmentWorkingDayTimeSlotManager select(int id) throws SQLException, Exception {
 		AppointmentWorkingDayTimeSlotManager ret = null;
 

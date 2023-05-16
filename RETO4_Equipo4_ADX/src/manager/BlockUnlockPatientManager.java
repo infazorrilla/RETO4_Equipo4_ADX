@@ -11,6 +11,10 @@ import java.util.ArrayList;
 import model.pojos.Patient;
 import model.utils.BBDDUtils;
 
+/**
+ * @author adx
+ *
+ */
 public class BlockUnlockPatientManager {
 
 	/**
@@ -18,6 +22,7 @@ public class BlockUnlockPatientManager {
 	 * @param id int
 	 * @return ArrayList<Patient>
 	 * @throws SQLException, Exception 
+	 * @throws Exception 
 	 */
 	public ArrayList<Patient> showPatientByAmbulatoryId(int id) throws SQLException, Exception {
 		ArrayList<Patient> ret = null;

@@ -12,16 +12,25 @@ import java.util.List;
 
 import model.pojos.Appointment;
 import model.pojos.AppointmentWorkingDayTimeSlot;
-import model.pojos.Doctor;
-import model.pojos.Nurse;
 import model.pojos.Patient;
-import model.pojos.Sanitarian;
 import model.pojos.TimeSlot;
 import model.pojos.WorkingDay;
 import model.utils.BBDDUtils;
 
+/**
+ * @author adx
+ *
+ */
 public class ShowSanitarianAppointmentManager {
 
+	/**
+	 * Returns a list of all the Appointment from a Sanitarian from the DB
+	 * @param dni 
+	 * 
+	 * @return an ArrayList of Appointments
+	 * @throws SQLException 
+	 * @throws Exception 
+	 */
 	public List<Appointment> select(String dni) throws SQLException, Exception {
 		ArrayList<Appointment> ret = null;
 

@@ -20,6 +20,9 @@ import model.utils.BBDDUtils;
  */
 public class AmbulatoryManager extends AbstractManager<Ambulatory> {
 
+	/**
+	 * 
+	 */
 	public static final String AMBULATORY_TABLE = "ambulatorio";
 
 	/**

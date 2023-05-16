@@ -10,7 +10,7 @@ import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
 
-import model.pojos.Ambulatory;
+
 import model.pojos.Appointment;
 import model.pojos.AppointmentWorkingDayTimeSlot;
 import model.pojos.Doctor;
@@ -21,12 +21,19 @@ import model.pojos.TimeSlot;
 import model.pojos.WorkingDay;
 import model.utils.BBDDUtils;
 
+/**
+ * @author adx
+ *
+ */
 public class ShowAppointmentManager {
 
 	/**
 	 * Returns a list of all the Appointment from a Patient from the DB
+	 * @param dni 
 	 * 
 	 * @return an ArrayList of Appointments
+	 * @throws SQLException 
+	 * @throws Exception 
 	 */
 	public List<Appointment> select(String dni) throws SQLException, Exception {
 		ArrayList<Appointment> ret = null;
