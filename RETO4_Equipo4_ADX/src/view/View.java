@@ -383,14 +383,235 @@ public class View {
 		panel.add(tfLoginUser);
 		tfLoginUser.setColumns(10);
 
+		// PANEL | SANITARIAN
+		panelSanitarian = new JPanel();
+		panelSanitarian.setBackground(new Color(16, 169, 121));
+		panelSanitarian.setBounds(0, 0, 616, 351);
+		frame.getContentPane().add(panelSanitarian);
+		panelSanitarian.setLayout(null);
+		panelSanitarian.setVisible(false);
+
+		JLabel lblDoctorIconPanelSanitarian = new JLabel("");
+		lblDoctorIconPanelSanitarian.setIcon(new ImageIcon(View.class.getResource("/view/images/DoctorIcon.jpg")));
+		lblDoctorIconPanelSanitarian.setBounds(35, 211, 140, 140);
+		panelSanitarian.add(lblDoctorIconPanelSanitarian);
+
+		JLabel lblPatient = new JLabel("EMPLEADO");
+		lblPatient.setForeground(new Color(255, 255, 255));
+		lblPatient.setFont(new Font("Tahoma", Font.BOLD, 18));
+		lblPatient.setHorizontalAlignment(SwingConstants.CENTER);
+		lblPatient.setBounds(208, 27, 200, 25);
+		panelSanitarian.add(lblPatient);
+
+		JButton btnLogOutPanelSanitarian = new JButton("LOGOUT");
+		btnLogOutPanelSanitarian.setBackground(new Color(255, 255, 255));
+		btnLogOutPanelSanitarian.setForeground(new Color(16, 169, 121));
+		btnLogOutPanelSanitarian.setFont(new Font("Tahoma", Font.BOLD, 11));
+		btnLogOutPanelSanitarian.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent e) {
+				panelSanitarian.setVisible(false);
+				panelLogin.setVisible(true);
+				tfLoginUser.setText("");
+				tfLoginPassword.setText("");
+			}
+		});
+		btnLogOutPanelSanitarian.setBounds(263, 264, 89, 23);
+		panelSanitarian.add(btnLogOutPanelSanitarian);
+
+		JButton btnBlockAmbulatoryPatient = new JButton("Gestión de pacientes");
+		btnBlockAmbulatoryPatient.setForeground(new Color(255, 255, 255));
+		btnBlockAmbulatoryPatient.setBackground(new Color(16, 169, 121));
+		btnBlockAmbulatoryPatient.setFont(new Font("Tahoma", Font.BOLD, 11));
+		btnBlockAmbulatoryPatient.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent e) {
+				panelBlockPatient.setVisible(true);
+				panelSanitarian.setVisible(false);
+			}
+		});
+		btnBlockAmbulatoryPatient.setBounds(228, 110, 160, 20);
+		panelSanitarian.add(btnBlockAmbulatoryPatient);
+
+		JButton btntodo2 = new JButton("TO DO 2");
+		btntodo2.setFont(new Font("Tahoma", Font.BOLD, 11));
+		btntodo2.setForeground(new Color(255, 255, 255));
+		btntodo2.setBackground(new Color(16, 169, 121));
+		btntodo2.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent e) {
+				// TODO
+			}
+		});
+		btntodo2.setBounds(228, 150, 160, 20);
+		// panelSanitarian.add(btntodo2);
+
+		JButton btntodo1 = new JButton("TO DO");
+		btntodo1.setForeground(new Color(255, 255, 255));
+		btntodo1.setFont(new Font("Tahoma", Font.BOLD, 11));
+		btntodo1.setBackground(new Color(16, 169, 121));
+		btntodo1.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent e) {
+				// TODO
+			}
+		});
+		btntodo1.setBounds(228, 120, 160, 20);
+		// panelSanitarian.add(btntodo1);
+
+		JButton btnModifySanitarianData = new JButton("Modificar contraseña");
+		btnModifySanitarianData.setFont(new Font("Tahoma", Font.BOLD, 11));
+		btnModifySanitarianData.setForeground(new Color(255, 255, 255));
+		btnModifySanitarianData.setBackground(new Color(16, 169, 121));
+		btnModifySanitarianData.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent e) {
+				panelModifySanitarian.setVisible(true);
+				panelSanitarian.setVisible(false);
+			}
+		});
+		btnModifySanitarianData.setBounds(228, 160, 160, 20);
+		panelSanitarian.add(btnModifySanitarianData);
+
+		JLabel lblLettersPanelSanitarian = new JLabel("");
+		lblLettersPanelSanitarian.setIcon(new ImageIcon(View.class.getResource("/view/images/Letters.jpg")));
+		lblLettersPanelSanitarian.setBounds(0, 105, 140, 140);
+		panelSanitarian.add(lblLettersPanelSanitarian);
+
+		JPanel panelBackGroundSanitarianMenu = new JPanel();
+		panelBackGroundSanitarianMenu.setBackground(new Color(255, 255, 255));
+		panelBackGroundSanitarianMenu.setBounds(198, 73, 220, 140);
+		panelSanitarian.add(panelBackGroundSanitarianMenu);
+
+		JLabel lblChooseMenuSanitarian = new JLabel("Seleccione una opción:");
+		lblChooseMenuSanitarian.setHorizontalAlignment(SwingConstants.CENTER);
+		lblChooseMenuSanitarian.setForeground(Color.WHITE);
+		lblChooseMenuSanitarian.setFont(new Font("Tahoma", Font.BOLD, 11));
+		lblChooseMenuSanitarian.setBounds(208, 45, 200, 25);
+		panelSanitarian.add(lblChooseMenuSanitarian);
+
+		JLabel lblNurseIconPanelSanitarian = new JLabel("");
+		lblNurseIconPanelSanitarian.setIcon(new ImageIcon(View.class.getResource("/view/images/NurseIcon.jpg")));
+		lblNurseIconPanelSanitarian.setBounds(395, 211, 140, 140);
+		panelSanitarian.add(lblNurseIconPanelSanitarian);
+
+		JLabel lblCrossPanelSanitarian = new JLabel("");
+		lblCrossPanelSanitarian.setIcon(new ImageIcon(View.class.getResource("/view/images/OsasunbideCross.jpg")));
+		lblCrossPanelSanitarian.setBounds(476, 105, 140, 140);
+		panelSanitarian.add(lblCrossPanelSanitarian);
+
+		// PANEL | PATIENT
+		panelPatient = new JPanel();
+		panelPatient.setBackground(new Color(16, 169, 121));
+		panelPatient.setBounds(0, 0, 616, 351);
+		frame.getContentPane().add(panelPatient);
+		panelPatient.setLayout(null);
+		panelPatient.setVisible(false);
+
+		JLabel lblLettersPanelSanitarian_1_1 = new JLabel("");
+		lblLettersPanelSanitarian_1_1.setIcon(new ImageIcon(View.class.getResource("/view/images/PatientIcon.jpg")));
+		lblLettersPanelSanitarian_1_1.setBounds(50, 211, 140, 140);
+		panelPatient.add(lblLettersPanelSanitarian_1_1);
+
+		lblCrossPanelPatient = new JLabel("");
+		lblCrossPanelPatient.setIcon(new ImageIcon(View.class.getResource("/view/images/OsasunbideCross.jpg")));
+		lblCrossPanelPatient.setBounds(476, 105, 140, 140);
+		panelPatient.add(lblCrossPanelPatient);
+
+		lblLettersPanelSanitarian_1 = new JLabel("");
+		lblLettersPanelSanitarian_1.setIcon(new ImageIcon(View.class.getResource("/view/images/Letters.jpg")));
+		lblLettersPanelSanitarian_1.setBounds(0, 105, 140, 140);
+		panelPatient.add(lblLettersPanelSanitarian_1);
+
+		lblPatientTitule = new JLabel("PACIENTE");
+		lblPatientTitule.setHorizontalAlignment(SwingConstants.CENTER);
+		lblPatientTitule.setForeground(Color.WHITE);
+		lblPatientTitule.setFont(new Font("Tahoma", Font.BOLD, 18));
+		lblPatientTitule.setBounds(208, 27, 200, 25);
+		panelPatient.add(lblPatientTitule);
+
+		btnLogOutPanelPatient = new JButton("LOGOUT");
+		btnLogOutPanelPatient.setFont(new Font("Tahoma", Font.BOLD, 11));
+		btnLogOutPanelPatient.setForeground(new Color(16, 169, 121));
+		btnLogOutPanelPatient.setBackground(new Color(255, 255, 255));
+		btnLogOutPanelPatient.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent e) {
+				panelPatient.setVisible(false);
+				panelLogin.setVisible(true);
+				tfLoginUser.setText("");
+				tfLoginPassword.setText("");
+			}
+		});
+		btnLogOutPanelPatient.setBounds(263, 264, 89, 23);
+		panelPatient.add(btnLogOutPanelPatient);
+
+		JButton btnSelectAppointment = new JButton("Cita previa");
+		btnSelectAppointment.setFont(new Font("Tahoma", Font.BOLD, 11));
+		btnSelectAppointment.setForeground(new Color(255, 255, 255));
+		btnSelectAppointment.setBackground(new Color(16, 169, 121));
+		btnSelectAppointment.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent e) {
+				panelSelectAppointmentAmbulatoryType.setVisible(true);
+				panelPatient.setVisible(false);
+			}
+		});
+		btnSelectAppointment.setBounds(228, 90, 160, 20);
+		panelPatient.add(btnSelectAppointment);
+
+		JButton btnCancelAppointment = new JButton("Cancelar cita");
+		btnCancelAppointment.setFont(new Font("Tahoma", Font.BOLD, 11));
+		btnCancelAppointment.setForeground(new Color(255, 255, 255));
+		btnCancelAppointment.setBackground(new Color(16, 169, 121));
+		btnCancelAppointment.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent e) {
+				// TODO
+			}
+		});
+		btnCancelAppointment.setBounds(228, 150, 160, 20);
+		// panelPatient.add(btnCancelAppointment);
+
+		btnShowAppointments = new JButton("Ver citas");
+		btnShowAppointments.setFont(new Font("Tahoma", Font.BOLD, 11));
+		btnShowAppointments.setForeground(new Color(255, 255, 255));
+		btnShowAppointments.setBackground(new Color(16, 169, 121));
+		btnShowAppointments.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent e) {
+				panelPatient.setVisible(false);
+				panelShowAppointment.setVisible(true);
+			}
+		});
+		btnShowAppointments.setBounds(228, 135, 160, 20);
+		panelPatient.add(btnShowAppointments);
+
+		JButton btnModifyPatientData = new JButton("Modificar datos");
+		btnModifyPatientData.setFont(new Font("Tahoma", Font.BOLD, 11));
+		btnModifyPatientData.setForeground(new Color(255, 255, 255));
+		btnModifyPatientData.setBackground(new Color(16, 169, 121));
+		btnModifyPatientData.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent e) {
+				panelModifyPatient.setVisible(true);
+				panelPatient.setVisible(false);
+			}
+		});
+		btnModifyPatientData.setBounds(228, 180, 160, 20);
+		panelPatient.add(btnModifyPatientData);
+
+		JPanel panelBackGroundPatientMenu = new JPanel();
+		panelBackGroundPatientMenu.setBackground(Color.WHITE);
+		panelBackGroundPatientMenu.setBounds(198, 73, 220, 140);
+		panelPatient.add(panelBackGroundPatientMenu);
+
+		JLabel lblChooseMenuPatient = new JLabel("Seleccione una opción:");
+		lblChooseMenuPatient.setHorizontalAlignment(SwingConstants.CENTER);
+		lblChooseMenuPatient.setForeground(Color.WHITE);
+		lblChooseMenuPatient.setFont(new Font("Tahoma", Font.BOLD, 11));
+		lblChooseMenuPatient.setBounds(208, 45, 200, 25);
+		panelPatient.add(lblChooseMenuPatient);
+
 		panelShowAppointment = new JPanel();
+		panelShowAppointment.setBackground(new Color(16, 169, 121));
 		panelShowAppointment.setBounds(0, 0, 616, 351);
 		frame.getContentPane().add(panelShowAppointment);
 		panelShowAppointment.setLayout(null);
 		panelShowAppointment.setVisible(false);
 
 		JScrollPane scrollPane_2 = new JScrollPane();
-		scrollPane_2.setBounds(112, 72, 356, 198);
+		scrollPane_2.setBounds(103, 72, 409, 198);
 		panelShowAppointment.add(scrollPane_2);
 
 		tableShowAppointment = new JTable();
@@ -399,14 +620,27 @@ public class View {
 				new String[] { "Id Cita", "DNI Sanitario", "Tipo", "Hora", "Fecha" }));
 
 		btnBackShowAppointment = new JButton("Atras");
+		btnBackShowAppointment.setBackground(new Color(255, 255, 255));
+		btnBackShowAppointment.setForeground(new Color(16, 169, 121));
+		btnBackShowAppointment.setFont(new Font("Tahoma", Font.BOLD, 11));
 		btnBackShowAppointment.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
 				panelPatient.setVisible(true);
 				panelShowAppointment.setVisible(false);
 			}
 		});
-		btnBackShowAppointment.setBounds(195, 281, 188, 45);
+		btnBackShowAppointment.setBounds(262, 284, 91, 29);
 		panelShowAppointment.add(btnBackShowAppointment);
+
+		JLabel lblCross_1_4 = new JLabel("");
+		lblCross_1_4.setIcon(new ImageIcon(View.class.getResource("/view/images/OsasunbideCross.jpg")));
+		lblCross_1_4.setBounds(476, 105, 140, 140);
+		panelShowAppointment.add(lblCross_1_4);
+
+		JLabel lblCross_1_5 = new JLabel("");
+		lblCross_1_5.setIcon(new ImageIcon(View.class.getResource("/view/images/Letters.jpg")));
+		lblCross_1_5.setBounds(0, 105, 140, 140);
+		panelShowAppointment.add(lblCross_1_5);
 		tableShowAppointment.setDefaultEditor(Object.class, null);
 
 		// PANEL | REGISTRATION: SANITARIAN
@@ -1279,225 +1513,407 @@ public class View {
 		lblUstedSeEsta.setBounds(195, 37, 300, 25);
 		panelRegistrationNurse.add(lblUstedSeEsta);
 
-		// PANEL | SANITARIAN
-		panelSanitarian = new JPanel();
-		panelSanitarian.setBackground(new Color(16, 169, 121));
-		panelSanitarian.setBounds(0, 0, 616, 351);
-		frame.getContentPane().add(panelSanitarian);
-		panelSanitarian.setLayout(null);
-		panelSanitarian.setVisible(false);
+		// PANEL | BLOCK OR UNLOCK PATIENTS
+		panelBlockPatient = new JPanel();
+		panelBlockPatient.setBackground(new Color(16, 169, 121));
+		panelBlockPatient.setBounds(0, 0, 616, 351);
+		frame.getContentPane().add(panelBlockPatient);
+		panelBlockPatient.setLayout(null);
+		panelBlockPatient.setVisible(false);
 
-		JLabel lblDoctorIconPanelSanitarian = new JLabel("");
-		lblDoctorIconPanelSanitarian.setIcon(new ImageIcon(View.class.getResource("/view/images/DoctorIcon.jpg")));
-		lblDoctorIconPanelSanitarian.setBounds(35, 211, 140, 140);
-		panelSanitarian.add(lblDoctorIconPanelSanitarian);
+		JScrollPane scrollPane = new JScrollPane();
+		scrollPane.setBounds(86, 77, 443, 173);
+		panelBlockPatient.add(scrollPane);
 
-		JLabel lblPatient = new JLabel("EMPLEADO");
-		lblPatient.setForeground(new Color(255, 255, 255));
-		lblPatient.setFont(new Font("Tahoma", Font.BOLD, 18));
-		lblPatient.setHorizontalAlignment(SwingConstants.CENTER);
-		lblPatient.setBounds(208, 27, 200, 25);
-		panelSanitarian.add(lblPatient);
-
-		JButton btnLogOutPanelSanitarian = new JButton("LOGOUT");
-		btnLogOutPanelSanitarian.setBackground(new Color(255, 255, 255));
-		btnLogOutPanelSanitarian.setForeground(new Color(16, 169, 121));
-		btnLogOutPanelSanitarian.setFont(new Font("Tahoma", Font.BOLD, 11));
-		btnLogOutPanelSanitarian.addActionListener(new ActionListener() {
-			public void actionPerformed(ActionEvent e) {
-				panelSanitarian.setVisible(false);
-				panelLogin.setVisible(true);
-				tfLoginUser.setText("");
-				tfLoginPassword.setText("");
+		tableBlockPatients = new JTable();
+		tableBlockPatients.setModel(
+				new DefaultTableModel(new Object[][] {}, new String[] { "DNI", "Nombre", "Apellido", "Estado" }));
+		scrollPane.setViewportView(tableBlockPatients);
+		tableBlockPatients.setDefaultEditor(Object.class, null);
+		tableBlockPatients.addMouseListener((MouseListener) new MouseAdapter() {
+			public void mouseClicked(MouseEvent e) {
+				int fila = tableBlockPatients.getSelectedRow();
+				String patientDni = (String) tableBlockPatients.getValueAt(fila, 0);
+				Patient patient = null;
+				try {
+					patient = userDataModificationManager.selectPatient(patientDni);
+					if (false == patient.isBlocked()) {
+						btnBlockPatientOk.setText("Bloquear");
+					} else {
+						btnBlockPatientOk.setText("Desbloquear");
+					}
+				} catch (SQLException e1) {
+					JOptionPane.showMessageDialog(null, "Se ha producido un error con la Base de Datos.", "Error", 0);
+				} catch (Exception e1) {
+					JOptionPane.showMessageDialog(null, "Se ha producido un error.", "Error", 0);
+				}
 			}
 		});
-		btnLogOutPanelSanitarian.setBounds(263, 264, 89, 23);
-		panelSanitarian.add(btnLogOutPanelSanitarian);
 
-		JButton btnBlockAmbulatoryPatient = new JButton("Gestión de pacientes");
-		btnBlockAmbulatoryPatient.setForeground(new Color(255, 255, 255));
-		btnBlockAmbulatoryPatient.setBackground(new Color(16, 169, 121));
-		btnBlockAmbulatoryPatient.setFont(new Font("Tahoma", Font.BOLD, 11));
-		btnBlockAmbulatoryPatient.addActionListener(new ActionListener() {
+		btnBlockPatientOk = new JButton("Bloquear");
+		btnBlockPatientOk.setFont(new Font("Tahoma", Font.BOLD, 11));
+		btnBlockPatientOk.setForeground(new Color(16, 169, 121));
+		btnBlockPatientOk.setBackground(new Color(255, 255, 255));
+		btnBlockPatientOk.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
-				panelBlockPatient.setVisible(true);
-				panelSanitarian.setVisible(false);
+				int fila = tableBlockPatients.getSelectedRow();
+				String patientDni = (String) tableBlockPatients.getValueAt(fila, 0);
+				Patient patient = null;
+				try {
+					patient = userDataModificationManager.selectPatient(patientDni);
+					if (false == patient.isBlocked()) {
+						blockUnlockPatientManager.blockPatient(patient);
+						JOptionPane.showMessageDialog(null, "Paciente bloqueado/a", "Confirmación", 1);
+					} else {
+						blockUnlockPatientManager.unlockPatient(patient);
+						JOptionPane.showMessageDialog(null, "Paciente desbloqueado/a", "Confirmación", 1);
+					}
+
+					ArrayList<Patient> patients = blockUnlockPatientManager.showPatientByAmbulatoryId(
+							userDataModificationManager.selectDoctor(userDNI).getAmbulatory().getId());
+
+					DefaultTableModel model = (DefaultTableModel) tableBlockPatients.getModel();
+					model.setRowCount(0);
+
+					for (Patient Onepatient : patients) {
+						model.addRow(new String[] { Onepatient.getDni(), Onepatient.getName(), Onepatient.getSurname(),
+								blockUnlockPatientManager.patientState(Onepatient.isBlocked()) });
+					}
+					tableBlockPatients.repaint();
+
+				} catch (SQLException e2) {
+					JOptionPane.showMessageDialog(null, "Se ha producido un error con la BBDD.", "Error", 0);
+				} catch (Exception e2) {
+					JOptionPane.showMessageDialog(null, "Se ha producido un error.", "Error", 0);
+
+				}
 			}
 		});
-		btnBlockAmbulatoryPatient.setBounds(228, 90, 160, 20);
-		panelSanitarian.add(btnBlockAmbulatoryPatient);
+		btnBlockPatientOk.setBounds(265, 261, 85, 21);
+		panelBlockPatient.add(btnBlockPatientOk);
 
-		JButton btntodo2 = new JButton("TO DO 2");
-		btntodo2.setFont(new Font("Tahoma", Font.BOLD, 11));
-		btntodo2.setForeground(new Color(255, 255, 255));
-		btntodo2.setBackground(new Color(16, 169, 121));
-		btntodo2.addActionListener(new ActionListener() {
+		JButton btnBlockPatienCancel = new JButton("Cancelar");
+		btnBlockPatienCancel.setFont(new Font("Tahoma", Font.BOLD, 11));
+		btnBlockPatienCancel.setForeground(new Color(16, 169, 121));
+		btnBlockPatienCancel.setBackground(new Color(255, 255, 255));
+		btnBlockPatienCancel.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
-				// TODO
+				panelBlockPatient.setVisible(false);
+				panelSanitarian.setVisible(true);
 			}
 		});
-		btntodo2.setBounds(228, 150, 160, 20);
-		panelSanitarian.add(btntodo2);
+		btnBlockPatienCancel.setBounds(265, 289, 85, 21);
+		panelBlockPatient.add(btnBlockPatienCancel);
+		panelBlockPatient.setVisible(false);
 
-		JButton btntodo1 = new JButton("TO DO");
-		btntodo1.setForeground(new Color(255, 255, 255));
-		btntodo1.setFont(new Font("Tahoma", Font.BOLD, 11));
-		btntodo1.setBackground(new Color(16, 169, 121));
-		btntodo1.addActionListener(new ActionListener() {
-			public void actionPerformed(ActionEvent e) {
-				// TODO
+		// PANEL | SELECT APPOINTMENT : DATE & TIMESLOT
+		panelSelectAppointmentDateTimeSlot = new JPanel();
+		panelSelectAppointmentDateTimeSlot.setForeground(new Color(255, 255, 255));
+		panelSelectAppointmentDateTimeSlot.setBackground(new Color(16, 169, 121));
+		panelSelectAppointmentDateTimeSlot.setBounds(0, 0, 616, 351);
+		frame.getContentPane().add(panelSelectAppointmentDateTimeSlot);
+		panelSelectAppointmentDateTimeSlot.setLayout(null);
+		panelSelectAppointmentDateTimeSlot.setVisible(false);
+
+		JScrollPane scrollPaneSelectTimeSlot = new JScrollPane();
+		scrollPaneSelectTimeSlot.setBounds(116, 124, 383, 147);
+		panelSelectAppointmentDateTimeSlot.add(scrollPaneSelectTimeSlot);
+
+		tableSelectTimeSlot = new JTable();
+		tableSelectTimeSlot.setDefaultEditor(Object.class, null);
+		tableSelectTimeSlot.setModel(new DefaultTableModel(new Object[][] {},
+				new String[] { "Profesional", "Ambulatorio", "Fecha", "Hora" }));
+		scrollPaneSelectTimeSlot.setViewportView(tableSelectTimeSlot);
+
+		JLabel lblSelectAppointmentDate = new JLabel("Seleccione una fecha");
+		lblSelectAppointmentDate.setFont(new Font("Tahoma", Font.BOLD, 11));
+		lblSelectAppointmentDate.setForeground(new Color(255, 255, 255));
+		lblSelectAppointmentDate.setBounds(174, 23, 129, 14);
+		panelSelectAppointmentDateTimeSlot.add(lblSelectAppointmentDate);
+
+		cbSelectAppointmentDate = new JComboBox<String>();
+		cbSelectAppointmentDate.addItemListener(new ItemListener() {
+			public void itemStateChanged(ItemEvent e) {
+				if (!cbSelectAppointmentDate.getSelectedItem().toString().equals("")) {
+					cbSelectAppointmentSanitarian.removeAllItems();
+					String dateString = cbSelectAppointmentDate.getSelectedItem().toString();
+
+					ArrayList<Sanitarian> sanitarians;
+					try {
+						Ambulatory ambulatory = appointmentSelectionManager.selectAmbulatory(wantedAmbulatory);
+						sanitarians = appointmentSelectionManager.showAvailableSanitarianByDate(wantedSanitarian,
+								dateString, ambulatory);
+						cbSelectAppointmentSanitarian.addItem("");
+						for (Sanitarian sanitarian : sanitarians) {
+							cbSelectAppointmentSanitarian
+									.addItem(sanitarian.getSurname() + ", " + sanitarian.getName());
+						}
+					} catch (SQLException e1) {
+						JOptionPane.showMessageDialog(null, "Se ha producido un error con la Base de Datos.", "Error",
+								0);
+					} catch (Exception e1) {
+						JOptionPane.showMessageDialog(null, "Se ha producido un error.", "Error", 0);
+					}
+				} else {
+					cbSelectAppointmentSanitarian.removeAllItems();
+					cbSelectAppointmentSanitarian.addItem("");
+				}
 			}
 		});
-		btntodo1.setBounds(228, 120, 160, 20);
-		panelSanitarian.add(btntodo1);
+		cbSelectAppointmentDate.setBounds(313, 19, 144, 22);
+		panelSelectAppointmentDateTimeSlot.add(cbSelectAppointmentDate);
 
-		JButton btnModifySanitarianData = new JButton("Modificar contraseña");
-		btnModifySanitarianData.setFont(new Font("Tahoma", Font.BOLD, 11));
-		btnModifySanitarianData.setForeground(new Color(255, 255, 255));
-		btnModifySanitarianData.setBackground(new Color(16, 169, 121));
-		btnModifySanitarianData.addActionListener(new ActionListener() {
+		JButton btnSelectAppointmentDateTimeSlotOk = new JButton("Aceptar");
+		btnSelectAppointmentDateTimeSlotOk.setFont(new Font("Tahoma", Font.BOLD, 11));
+		btnSelectAppointmentDateTimeSlotOk.setBackground(new Color(255, 255, 255));
+		btnSelectAppointmentDateTimeSlotOk.setForeground(new Color(16, 169, 121));
+		btnSelectAppointmentDateTimeSlotOk.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
-				panelModifySanitarian.setVisible(true);
-				panelSanitarian.setVisible(false);
+				int fila = tableSelectTimeSlot.getSelectedRow();
+				String hour = (String) tableSelectTimeSlot.getValueAt(fila, 3);
+				String dateString = cbSelectAppointmentDate.getSelectedItem().toString();
+
+				Appointment appointment = new Appointment();
+				try {
+					String nameSurname = (String) cbSelectAppointmentSanitarian.getSelectedItem();
+					String[] parts = nameSurname.split(",");
+					String surname = parts[0].trim();
+					String name = parts[1].trim();
+					Sanitarian sanitarian = appointmentSelectionManager.selectSanitarian(name, surname);
+
+					Ambulatory ambulatory = appointmentSelectionManager.selectAmbulatory(wantedAmbulatory);
+					appointment.setAmbulatory(ambulatory);
+					appointment.setPatient((Patient) user);
+					appointment.setSanitarian(sanitarian);
+
+					appointmentManager.insert(appointment);
+
+					appointment = appointmentSelectionManager.selectAppointment((Patient) user, sanitarian,
+							appointmentSelectionManager.selectAmbulatory(wantedAmbulatory));
+
+					WorkingDay workingDay = appointmentSelectionManager.selectWorkingDay(dateString);
+					TimeSlot timeSlot = appointmentSelectionManager.selectTimeSlot(hour);
+					appointmentSelectionManager.insertAppointmentWorkingDayTimeSlot(appointment, workingDay, timeSlot);
+
+					JOptionPane.showMessageDialog(null, "Cita seleccionada", "Info", 1);
+				} catch (SQLException e1) {
+					JOptionPane.showMessageDialog(null, "Se ha producido un error con la Base de Datos.", "Error", 0);
+				} catch (Exception e1) {
+					JOptionPane.showMessageDialog(null, "Se ha producido un error.", "Error", 0);
+				}
+				panelPatient.setVisible(true);
+				panelSelectAppointmentDateTimeSlot.setVisible(false);
 			}
 		});
-		btnModifySanitarianData.setBounds(228, 180, 160, 20);
-		panelSanitarian.add(btnModifySanitarianData);
+		btnSelectAppointmentDateTimeSlotOk.setBounds(207, 292, 89, 23);
+		panelSelectAppointmentDateTimeSlot.add(btnSelectAppointmentDateTimeSlotOk);
 
-		JLabel lblLettersPanelSanitarian = new JLabel("");
-		lblLettersPanelSanitarian.setIcon(new ImageIcon(View.class.getResource("/view/images/Letters.jpg")));
-		lblLettersPanelSanitarian.setBounds(0, 105, 140, 140);
-		panelSanitarian.add(lblLettersPanelSanitarian);
-
-		JPanel panelBackGroundSanitarianMenu = new JPanel();
-		panelBackGroundSanitarianMenu.setBackground(new Color(255, 255, 255));
-		panelBackGroundSanitarianMenu.setBounds(198, 73, 220, 140);
-		panelSanitarian.add(panelBackGroundSanitarianMenu);
-
-		JLabel lblChooseMenuSanitarian = new JLabel("Seleccione una opción:");
-		lblChooseMenuSanitarian.setHorizontalAlignment(SwingConstants.CENTER);
-		lblChooseMenuSanitarian.setForeground(Color.WHITE);
-		lblChooseMenuSanitarian.setFont(new Font("Tahoma", Font.BOLD, 11));
-		lblChooseMenuSanitarian.setBounds(208, 45, 200, 25);
-		panelSanitarian.add(lblChooseMenuSanitarian);
-
-		JLabel lblNurseIconPanelSanitarian = new JLabel("");
-		lblNurseIconPanelSanitarian.setIcon(new ImageIcon(View.class.getResource("/view/images/NurseIcon.jpg")));
-		lblNurseIconPanelSanitarian.setBounds(395, 211, 140, 140);
-		panelSanitarian.add(lblNurseIconPanelSanitarian);
-
-		JLabel lblCrossPanelSanitarian = new JLabel("");
-		lblCrossPanelSanitarian.setIcon(new ImageIcon(View.class.getResource("/view/images/OsasunbideCross.jpg")));
-		lblCrossPanelSanitarian.setBounds(476, 105, 140, 140);
-		panelSanitarian.add(lblCrossPanelSanitarian);
-
-		// PANEL | PATIENT
-		panelPatient = new JPanel();
-		panelPatient.setBackground(new Color(16, 169, 121));
-		panelPatient.setBounds(0, 0, 616, 351);
-		frame.getContentPane().add(panelPatient);
-		panelPatient.setLayout(null);
-		panelPatient.setVisible(false);
-
-		JLabel lblLettersPanelSanitarian_1_1 = new JLabel("");
-		lblLettersPanelSanitarian_1_1.setIcon(new ImageIcon(View.class.getResource("/view/images/PatientIcon.jpg")));
-		lblLettersPanelSanitarian_1_1.setBounds(50, 211, 140, 140);
-		panelPatient.add(lblLettersPanelSanitarian_1_1);
-
-		lblCrossPanelPatient = new JLabel("");
-		lblCrossPanelPatient.setIcon(new ImageIcon(View.class.getResource("/view/images/OsasunbideCross.jpg")));
-		lblCrossPanelPatient.setBounds(476, 105, 140, 140);
-		panelPatient.add(lblCrossPanelPatient);
-
-		lblLettersPanelSanitarian_1 = new JLabel("");
-		lblLettersPanelSanitarian_1.setIcon(new ImageIcon(View.class.getResource("/view/images/Letters.jpg")));
-		lblLettersPanelSanitarian_1.setBounds(0, 105, 140, 140);
-		panelPatient.add(lblLettersPanelSanitarian_1);
-
-		lblPatientTitule = new JLabel("PACIENTE");
-		lblPatientTitule.setHorizontalAlignment(SwingConstants.CENTER);
-		lblPatientTitule.setForeground(Color.WHITE);
-		lblPatientTitule.setFont(new Font("Tahoma", Font.BOLD, 18));
-		lblPatientTitule.setBounds(208, 27, 200, 25);
-		panelPatient.add(lblPatientTitule);
-
-		btnLogOutPanelPatient = new JButton("LOGOUT");
-		btnLogOutPanelPatient.setFont(new Font("Tahoma", Font.BOLD, 11));
-		btnLogOutPanelPatient.setForeground(new Color(16, 169, 121));
-		btnLogOutPanelPatient.setBackground(new Color(255, 255, 255));
-		btnLogOutPanelPatient.addActionListener(new ActionListener() {
+		JButton btnSelectAppointmentDateTimeSlotCancel = new JButton("Cancelar");
+		btnSelectAppointmentDateTimeSlotCancel.setFont(new Font("Tahoma", Font.BOLD, 11));
+		btnSelectAppointmentDateTimeSlotCancel.setBackground(new Color(255, 255, 255));
+		btnSelectAppointmentDateTimeSlotCancel.setForeground(new Color(16, 169, 121));
+		btnSelectAppointmentDateTimeSlotCancel.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
-				panelPatient.setVisible(false);
-				panelLogin.setVisible(true);
-				tfLoginUser.setText("");
-				tfLoginPassword.setText("");
-			}
-		});
-		btnLogOutPanelPatient.setBounds(263, 264, 89, 23);
-		panelPatient.add(btnLogOutPanelPatient);
-
-		JButton btnSelectAppointment = new JButton("Cita previa");
-		btnSelectAppointment.setFont(new Font("Tahoma", Font.BOLD, 11));
-		btnSelectAppointment.setForeground(new Color(255, 255, 255));
-		btnSelectAppointment.setBackground(new Color(16, 169, 121));
-		btnSelectAppointment.addActionListener(new ActionListener() {
-			public void actionPerformed(ActionEvent e) {
+				panelSelectAppointmentDateTimeSlot.setVisible(false);
 				panelSelectAppointmentAmbulatoryType.setVisible(true);
-				panelPatient.setVisible(false);
 			}
 		});
-		btnSelectAppointment.setBounds(228, 90, 160, 20);
-		panelPatient.add(btnSelectAppointment);
+		btnSelectAppointmentDateTimeSlotCancel.setBounds(323, 292, 89, 23);
+		panelSelectAppointmentDateTimeSlot.add(btnSelectAppointmentDateTimeSlotCancel);
 
-		JButton btnCancelAppointment = new JButton("Cancelar cita");
-		btnCancelAppointment.setFont(new Font("Tahoma", Font.BOLD, 11));
-		btnCancelAppointment.setForeground(new Color(255, 255, 255));
-		btnCancelAppointment.setBackground(new Color(16, 169, 121));
-		btnCancelAppointment.addActionListener(new ActionListener() {
+		JLabel lblSelectAppontmentSanitarian = new JLabel("Profesionales disponibles");
+		lblSelectAppontmentSanitarian.setFont(new Font("Tahoma", Font.BOLD, 11));
+		lblSelectAppontmentSanitarian.setForeground(new Color(255, 255, 255));
+		lblSelectAppontmentSanitarian.setBounds(144, 80, 159, 14);
+		panelSelectAppointmentDateTimeSlot.add(lblSelectAppontmentSanitarian);
+
+		cbSelectAppointmentSanitarian = new JComboBox<String>();
+		cbSelectAppointmentSanitarian.addItemListener(new ItemListener() {
+			public void itemStateChanged(ItemEvent e) {
+				if (null != cbSelectAppointmentSanitarian.getSelectedItem()) {
+					if (!cbSelectAppointmentSanitarian.getSelectedItem().toString().equals("")) {
+						String dateString = cbSelectAppointmentDate.getSelectedItem().toString();
+						String nameSurname = (String) cbSelectAppointmentSanitarian.getSelectedItem();
+
+						String[] parts = nameSurname.split(",");
+						String surname = parts[0].trim();
+						String name = parts[1].trim();
+						ArrayList<TimeSlot> timeSlots = null;
+						try {
+							Sanitarian sanitarian = appointmentSelectionManager.selectSanitarian(name, surname);
+							timeSlots = appointmentSelectionManager.showAvailableTimeSlots(sanitarian, dateString);
+
+							DefaultTableModel model = (DefaultTableModel) tableSelectTimeSlot.getModel();
+							model.setRowCount(0);
+
+							if ((null == timeSlots) || (timeSlots.size() == 0)) {
+								JOptionPane.showMessageDialog(null, "No quedan citas disponibles con " + name, "Error",
+										0);
+							} else {
+								for (TimeSlot timeSlot : timeSlots) {
+									model.addRow(new String[] { surname + ", " + name, wantedAmbulatory,
+											cbSelectAppointmentDate.getSelectedItem().toString(),
+											timeSlotManager.select(timeSlot.getId()).getStartTime().toString() });
+								}
+							}
+						} catch (SQLException e1) {
+							JOptionPane.showMessageDialog(null, "Se ha producido un error con la Base de Datos.",
+									"Error", 0);
+						} catch (Exception e1) {
+							JOptionPane.showMessageDialog(null, "Se ha producido un error.", "Error", 0);
+						}
+					} else {
+						DefaultTableModel model = (DefaultTableModel) tableSelectTimeSlot.getModel();
+						model.setRowCount(0);
+					}
+				}
+			}
+		});
+		cbSelectAppointmentSanitarian.setBounds(313, 76, 138, 22);
+		panelSelectAppointmentDateTimeSlot.add(cbSelectAppointmentSanitarian);
+
+		JLabel lblCross_1_2 = new JLabel("");
+		lblCross_1_2.setIcon(new ImageIcon(View.class.getResource("/view/images/OsasunbideCross.jpg")));
+		lblCross_1_2.setBounds(476, 105, 140, 140);
+		panelSelectAppointmentDateTimeSlot.add(lblCross_1_2);
+
+		JLabel lblCross_1_3 = new JLabel("");
+		lblCross_1_3.setIcon(new ImageIcon(View.class.getResource("/view/images/Letters.jpg")));
+		lblCross_1_3.setBounds(0, 105, 140, 140);
+		panelSelectAppointmentDateTimeSlot.add(lblCross_1_3);
+
+		// PANEL | MODIFICATION: SANITARIAN
+		panelModifySanitarian = new JPanel();
+		panelModifySanitarian.setBackground(new Color(16, 169, 121));
+		panelModifySanitarian.setBounds(0, 0, 616, 351);
+		frame.getContentPane().add(panelModifySanitarian);
+		panelModifySanitarian.setLayout(null);
+		panelModifySanitarian.setVisible(false);
+
+		JLabel lblModifySanitarian = new JLabel("MODIFICACIÓN DE DATOS");
+		lblModifySanitarian.setForeground(new Color(255, 255, 255));
+		lblModifySanitarian.setFont(new Font("Tahoma", Font.BOLD, 18));
+		lblModifySanitarian.setHorizontalAlignment(SwingConstants.CENTER);
+		lblModifySanitarian.setBounds(158, 32, 300, 20);
+		panelModifySanitarian.add(lblModifySanitarian);
+
+		JLabel lblModifySanitarianDNI = new JLabel("DNI:");
+		lblModifySanitarianDNI.setForeground(new Color(255, 255, 255));
+		lblModifySanitarianDNI.setFont(new Font("Tahoma", Font.BOLD, 11));
+		lblModifySanitarianDNI.setSize(94, 23);
+		lblModifySanitarianDNI.setLocation(106, 102);
+		lblModifySanitarianDNI.setBounds(216, 105, 119, 14);
+		panelModifySanitarian.add(lblModifySanitarianDNI);
+
+		JLabel lblModifySanitarianPassword = new JLabel("Contraseña:");
+		lblModifySanitarianPassword.setForeground(new Color(255, 255, 255));
+		lblModifySanitarianPassword.setFont(new Font("Tahoma", Font.BOLD, 11));
+		lblModifySanitarianPassword.setBounds(216, 151, 119, 14);
+		panelModifySanitarian.add(lblModifySanitarianPassword);
+
+		tfModifySanitarianDNI = new JTextField();
+		tfModifySanitarianDNI.setEnabled(false);
+		tfModifySanitarianDNI.setEditable(false);
+		tfModifySanitarianDNI.setBounds(216, 118, 183, 20);
+		panelModifySanitarian.add(tfModifySanitarianDNI);
+		tfModifySanitarianDNI.setColumns(10);
+
+		tfModifySanitarianPassword = new JPasswordField();
+		tfModifySanitarianPassword.addCaretListener(new CaretListener() {
+			public void caretUpdate(CaretEvent e) {
+				if (null == tfModifySanitarianPassword)
+					tfModifySanitarianPassword.setText("");
+				String tfPasswd = String.valueOf(tfModifySanitarianPassword.getPassword());
+				btnModifySanitarianOk.setEnabled(userDataModificationManager.enableModifySanitarianOkButton(tfPasswd));
+			}
+		});
+		tfModifySanitarianPassword.addKeyListener(new KeyAdapter() {
+			@Override
+			public void keyTyped(KeyEvent e) {
+				if (tfModifySanitarianPassword.getCaretPosition() >= 50) {
+					e.consume();
+				}
+			}
+		});
+		tfModifySanitarianPassword.setBounds(216, 165, 183, 20);
+		panelModifySanitarian.add(tfModifySanitarianPassword);
+
+		btnModifySanitarianOk = new JButton("Guardar");
+		btnModifySanitarianOk.setEnabled(false);
+		btnModifySanitarianOk.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
-				// TODO
+				String tfPasswd = String.valueOf(tfModifySanitarianPassword.getPassword());
+				if (tfPasswd.length() > 0) {
+					try {
+						if (user instanceof Doctor)
+							userDataModificationManager.updateDoctorPassword((Doctor) user, tfPasswd);
+
+						if (user instanceof Nurse)
+							userDataModificationManager.updateNursePassword((Nurse) user, tfPasswd);
+					} catch (SQLException e1) {
+						JOptionPane.showMessageDialog(null,
+								"Se ha producido un error con la Base de Datos. Imposible modificar datos del usuario.",
+								"Error", 0);
+					} catch (Exception e1) {
+						JOptionPane.showMessageDialog(null,
+								"Se ha producido un error. Imposible modificar datos del usuario.", "Error", 0);
+
+					}
+				}
+				JOptionPane.showMessageDialog(null, "Información actualizada", "Confirmación", 1);
+
+				panelModifySanitarian.setVisible(false);
+				panelSanitarian.setVisible(true);
 			}
 		});
-		btnCancelAppointment.setBounds(228, 150, 160, 20);
-		panelPatient.add(btnCancelAppointment);
+		btnModifySanitarianOk.setBounds(135, 271, 89, 23);
+		panelModifySanitarian.add(btnModifySanitarianOk);
 
-		btnShowAppointments = new JButton("Ver citas");
-		btnShowAppointments.setFont(new Font("Tahoma", Font.BOLD, 11));
-		btnShowAppointments.setForeground(new Color(255, 255, 255));
-		btnShowAppointments.setBackground(new Color(16, 169, 121));
-		btnShowAppointments.addActionListener(new ActionListener() {
+		btnModifySanitarianCancel = new JButton("Cancelar");
+		btnModifySanitarianCancel.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
-				panelPatient.setVisible(false);
-				panelShowAppointment.setVisible(true);
+				panelModifySanitarian.setVisible(false);
+				panelSanitarian.setVisible(true);
 			}
 		});
-		btnShowAppointments.setBounds(228, 120, 160, 20);
-		panelPatient.add(btnShowAppointments);
+		btnModifySanitarianCancel.setBounds(395, 271, 89, 23);
+		panelModifySanitarian.add(btnModifySanitarianCancel);
 
-		JButton btnModifyPatientData = new JButton("Modificar datos");
-		btnModifyPatientData.setFont(new Font("Tahoma", Font.BOLD, 11));
-		btnModifyPatientData.setForeground(new Color(255, 255, 255));
-		btnModifyPatientData.setBackground(new Color(16, 169, 121));
-		btnModifyPatientData.addActionListener(new ActionListener() {
+		btnModifySanitarianUnsubscribe = new JButton("Eliminar cuenta");
+		btnModifySanitarianUnsubscribe.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
-				panelModifyPatient.setVisible(true);
-				panelPatient.setVisible(false);
+				try {
+					if (user instanceof Doctor)
+						userDataModificationManager.deleteDoctor(userDNI);
+
+					if (user instanceof Nurse)
+						userDataModificationManager.deleteNurse(userDNI);
+
+				} catch (SQLException e1) {
+					JOptionPane.showMessageDialog(null,
+							"Se ha producido un error con la Base de Datos. Imposible eliminar usuario.", "Error", 0);
+				} catch (Exception e1) {
+					JOptionPane.showMessageDialog(null, "Se ha producido un error. Imposible eliminar usuario.",
+							"Error", 0);
+				}
+				JOptionPane.showMessageDialog(null, "Cuenta eliminada", "Confirmación", 1);
+
+				panelModifySanitarian.setVisible(false);
+				panelSanitarian.setVisible(true);
 			}
 		});
-		btnModifyPatientData.setBounds(228, 180, 160, 20);
-		panelPatient.add(btnModifyPatientData);
+		btnModifySanitarianUnsubscribe.setBounds(243, 271, 130, 23);
+		panelModifySanitarian.add(btnModifySanitarianUnsubscribe);
 
-		JPanel panelBackGroundPatientMenu = new JPanel();
-		panelBackGroundPatientMenu.setBackground(Color.WHITE);
-		panelBackGroundPatientMenu.setBounds(198, 73, 220, 140);
-		panelPatient.add(panelBackGroundPatientMenu);
+		JLabel lblCrossModSanitarian = new JLabel("");
+		lblCrossModSanitarian.setIcon(new ImageIcon(View.class.getResource("/view/images/OsasunbideCross.jpg")));
+		lblCrossModSanitarian.setBounds(476, 105, 140, 140);
+		panelModifySanitarian.add(lblCrossModSanitarian);
 
-		JLabel lblChooseMenuPatient = new JLabel("Seleccione una opción:");
-		lblChooseMenuPatient.setHorizontalAlignment(SwingConstants.CENTER);
-		lblChooseMenuPatient.setForeground(Color.WHITE);
-		lblChooseMenuPatient.setFont(new Font("Tahoma", Font.BOLD, 11));
-		lblChooseMenuPatient.setBounds(208, 45, 200, 25);
-		panelPatient.add(lblChooseMenuPatient);
+		JLabel lblLettersModSanitarian = new JLabel("");
+		lblLettersModSanitarian.setIcon(new ImageIcon(View.class.getResource("/view/images/Letters.jpg")));
+		lblLettersModSanitarian.setBounds(0, 105, 140, 140);
+		panelModifySanitarian.add(lblLettersModSanitarian);
 
 		// PANEL | MODIFICATION: PATIENT
 		panelModifyPatient = new JPanel();
@@ -1737,174 +2153,36 @@ public class View {
 		lblChangeTextModifyPatient.setFont(new Font("Tahoma", Font.BOLD, 11));
 		lblChangeTextModifyPatient.setBounds(158, 216, 300, 20);
 		panelModifyPatient.add(lblChangeTextModifyPatient);
-
-		// PANEL | MODIFICATION: SANITARIAN
-		panelModifySanitarian = new JPanel();
-		panelModifySanitarian.setBackground(new Color(16, 169, 121));
-		panelModifySanitarian.setBounds(0, 0, 616, 351);
-		frame.getContentPane().add(panelModifySanitarian);
-		panelModifySanitarian.setLayout(null);
-		panelModifySanitarian.setVisible(false);
-
-		JLabel lblModifySanitarian = new JLabel("MODIFICACIÓN DE DATOS");
-		lblModifySanitarian.setForeground(new Color(255, 255, 255));
-		lblModifySanitarian.setFont(new Font("Tahoma", Font.BOLD, 18));
-		lblModifySanitarian.setHorizontalAlignment(SwingConstants.CENTER);
-		lblModifySanitarian.setBounds(158, 32, 300, 20);
-		panelModifySanitarian.add(lblModifySanitarian);
-
-		JLabel lblModifySanitarianDNI = new JLabel("DNI:");
-		lblModifySanitarianDNI.setForeground(new Color(255, 255, 255));
-		lblModifySanitarianDNI.setFont(new Font("Tahoma", Font.BOLD, 11));
-		lblModifySanitarianDNI.setSize(94, 23);
-		lblModifySanitarianDNI.setLocation(106, 102);
-		lblModifySanitarianDNI.setBounds(216, 105, 119, 14);
-		panelModifySanitarian.add(lblModifySanitarianDNI);
-
-		JLabel lblModifySanitarianPassword = new JLabel("Contraseña:");
-		lblModifySanitarianPassword.setForeground(new Color(255, 255, 255));
-		lblModifySanitarianPassword.setFont(new Font("Tahoma", Font.BOLD, 11));
-		lblModifySanitarianPassword.setBounds(216, 151, 119, 14);
-		panelModifySanitarian.add(lblModifySanitarianPassword);
-
-		tfModifySanitarianDNI = new JTextField();
-		tfModifySanitarianDNI.setEnabled(false);
-		tfModifySanitarianDNI.setEditable(false);
-		tfModifySanitarianDNI.setBounds(216, 118, 183, 20);
-		panelModifySanitarian.add(tfModifySanitarianDNI);
-		tfModifySanitarianDNI.setColumns(10);
-
-		tfModifySanitarianPassword = new JPasswordField();
-		tfModifySanitarianPassword.addCaretListener(new CaretListener() {
-			public void caretUpdate(CaretEvent e) {
-				if (null == tfModifySanitarianPassword)
-					tfModifySanitarianPassword.setText("");
-				String tfPasswd = String.valueOf(tfModifySanitarianPassword.getPassword());
-				btnModifySanitarianOk.setEnabled(userDataModificationManager.enableModifySanitarianOkButton(tfPasswd));
-			}
-		});
-		tfModifySanitarianPassword.addKeyListener(new KeyAdapter() {
-			@Override
-			public void keyTyped(KeyEvent e) {
-				if (tfModifySanitarianPassword.getCaretPosition() >= 50) {
-					e.consume();
-				}
-			}
-		});
-		tfModifySanitarianPassword.setBounds(216, 165, 183, 20);
-		panelModifySanitarian.add(tfModifySanitarianPassword);
-
-		btnModifySanitarianOk = new JButton("Guardar");
-		btnModifySanitarianOk.setEnabled(false);
-		btnModifySanitarianOk.addActionListener(new ActionListener() {
-			public void actionPerformed(ActionEvent e) {
-				String tfPasswd = String.valueOf(tfModifySanitarianPassword.getPassword());
-				if (tfPasswd.length() > 0) {
-					try {
-						if (user instanceof Doctor)
-							userDataModificationManager.updateDoctorPassword((Doctor) user, tfPasswd);
-
-						if (user instanceof Nurse)
-							userDataModificationManager.updateNursePassword((Nurse) user, tfPasswd);
-					} catch (SQLException e1) {
-						JOptionPane.showMessageDialog(null,
-								"Se ha producido un error con la Base de Datos. Imposible modificar datos del usuario.",
-								"Error", 0);
-					} catch (Exception e1) {
-						JOptionPane.showMessageDialog(null,
-								"Se ha producido un error. Imposible modificar datos del usuario.", "Error", 0);
-
-					}
-				}
-				JOptionPane.showMessageDialog(null, "Información actualizada", "Confirmación", 1);
-
-				panelModifySanitarian.setVisible(false);
-				panelSanitarian.setVisible(true);
-			}
-		});
-		btnModifySanitarianOk.setBounds(135, 271, 89, 23);
-		panelModifySanitarian.add(btnModifySanitarianOk);
-
-		btnModifySanitarianCancel = new JButton("Cancelar");
-		btnModifySanitarianCancel.addActionListener(new ActionListener() {
-			public void actionPerformed(ActionEvent e) {
-				panelModifySanitarian.setVisible(false);
-				panelSanitarian.setVisible(true);
-			}
-		});
-		btnModifySanitarianCancel.setBounds(395, 271, 89, 23);
-		panelModifySanitarian.add(btnModifySanitarianCancel);
-
-		btnModifySanitarianUnsubscribe = new JButton("Eliminar cuenta");
-		btnModifySanitarianUnsubscribe.addActionListener(new ActionListener() {
-			public void actionPerformed(ActionEvent e) {
-				try {
-					if (user instanceof Doctor)
-						userDataModificationManager.deleteDoctor(userDNI);
-
-					if (user instanceof Nurse)
-						userDataModificationManager.deleteNurse(userDNI);
-
-				} catch (SQLException e1) {
-					JOptionPane.showMessageDialog(null,
-							"Se ha producido un error con la Base de Datos. Imposible eliminar usuario.", "Error", 0);
-				} catch (Exception e1) {
-					JOptionPane.showMessageDialog(null, "Se ha producido un error. Imposible eliminar usuario.",
-							"Error", 0);
-				}
-				JOptionPane.showMessageDialog(null, "Cuenta eliminada", "Confirmación", 1);
-
-				panelModifySanitarian.setVisible(false);
-				panelSanitarian.setVisible(true);
-			}
-		});
-		btnModifySanitarianUnsubscribe.setBounds(243, 271, 130, 23);
-		panelModifySanitarian.add(btnModifySanitarianUnsubscribe);
-
-		JLabel lblCrossModSanitarian = new JLabel("");
-		lblCrossModSanitarian.setIcon(new ImageIcon(View.class.getResource("/view/images/OsasunbideCross.jpg")));
-		lblCrossModSanitarian.setBounds(476, 105, 140, 140);
-		panelModifySanitarian.add(lblCrossModSanitarian);
-
-		JLabel lblLettersModSanitarian = new JLabel("");
-		lblLettersModSanitarian.setIcon(new ImageIcon(View.class.getResource("/view/images/Letters.jpg")));
-		lblLettersModSanitarian.setBounds(0, 105, 140, 140);
-		panelModifySanitarian.add(lblLettersModSanitarian);
+		tablePatientData.setDefaultEditor(Object.class, null);
 
 		// PANEL | SELECT APPOINTMENT : AMBULATORY & SANITARIAN TYPE
 		panelSelectAppointmentAmbulatoryType = new JPanel();
-		panelSelectAppointmentAmbulatoryType.setBackground(new Color(0, 128, 192));
+		panelSelectAppointmentAmbulatoryType.setBackground(new Color(16, 169, 121));
 		panelSelectAppointmentAmbulatoryType.setBounds(0, 0, 616, 351);
 		frame.getContentPane().add(panelSelectAppointmentAmbulatoryType);
 		panelSelectAppointmentAmbulatoryType.setLayout(null);
 		panelSelectAppointmentAmbulatoryType.setVisible(false);
 
 		JLabel lblSelectAmbulatory = new JLabel("Seleccione un ambulatorio");
+		lblSelectAmbulatory.setForeground(new Color(255, 255, 255));
+		lblSelectAmbulatory.setFont(new Font("Tahoma", Font.BOLD, 11));
 		lblSelectAmbulatory.setBounds(155, 112, 129, 13);
 		panelSelectAppointmentAmbulatoryType.add(lblSelectAmbulatory);
 
 		JComboBox<String> cbAmbulatory = new JComboBox<String>();
+		cbAmbulatory.setBackground(new Color(255, 255, 255));
 		cbAmbulatory.setBounds(295, 108, 134, 21);
-		ArrayList<String> ambulatoriesNames = null;
-		try {
-			ambulatoriesNames = appointmentSelectionManager.selectAmbulatoryNames();
-		} catch (SQLException e1) {
-			JOptionPane.showMessageDialog(null, "Se ha producido un error con la Base de Datos.", "Error", 0);
-		} catch (Exception e1) {
-			JOptionPane.showMessageDialog(null, "Se ha producido un error.", "Error", 0);
-		}
-		for (String ambulatory : ambulatoriesNames) {
-			cbAmbulatory.addItem(ambulatory);
-			comboBoxAmbulatoryNurse.addItem(ambulatory);
-			comboBoxAmbulatoryDoctor.addItem(ambulatory);
-		}
 		panelSelectAppointmentAmbulatoryType.add(cbAmbulatory);
 
 		JLabel lblSelectSanitarian = new JLabel("Seleccione tipo de consulta");
+		lblSelectSanitarian.setForeground(new Color(255, 255, 255));
+		lblSelectSanitarian.setFont(new Font("Tahoma", Font.BOLD, 11));
 		lblSelectSanitarian.setBounds(153, 170, 276, 13);
 		panelSelectAppointmentAmbulatoryType.add(lblSelectSanitarian);
 
 		JRadioButton rdbtnSelectDoctor = new JRadioButton("Medicina");
+		rdbtnSelectDoctor.setForeground(new Color(16, 169, 121));
+		rdbtnSelectDoctor.setFont(new Font("Tahoma", Font.BOLD, 11));
 		rdbtnSelectDoctor.addItemListener(new ItemListener() {
 			public void itemStateChanged(ItemEvent e) {
 				if ((true == rdbtnSelectDoctor.isSelected()) || (true == rdbtnSelectNurse.isSelected())) {
@@ -1918,6 +2196,8 @@ public class View {
 		panelSelectAppointmentAmbulatoryType.add(rdbtnSelectDoctor);
 
 		rdbtnSelectNurse = new JRadioButton("Enfermeria");
+		rdbtnSelectNurse.setForeground(new Color(16, 169, 121));
+		rdbtnSelectNurse.setFont(new Font("Tahoma", Font.BOLD, 11));
 		rdbtnSelectNurse.addItemListener(new ItemListener() {
 			public void itemStateChanged(ItemEvent e) {
 				if ((true == rdbtnSelectDoctor.isSelected()) || (true == rdbtnSelectNurse.isSelected())) {
@@ -1929,12 +2209,13 @@ public class View {
 		});
 		rdbtnSelectNurse.setBounds(315, 189, 103, 21);
 		panelSelectAppointmentAmbulatoryType.add(rdbtnSelectNurse);
-
 		ButtonGroup groupType = new ButtonGroup();
 		groupType.add(rdbtnSelectDoctor);
 		groupType.add(rdbtnSelectNurse);
 
 		btnSelectAppointmentAmbulatoryTypeOk = new JButton("Siguiente");
+		btnSelectAppointmentAmbulatoryTypeOk.setForeground(new Color(16, 169, 121));
+		btnSelectAppointmentAmbulatoryTypeOk.setFont(new Font("Tahoma", Font.BOLD, 11));
 		btnSelectAppointmentAmbulatoryTypeOk.setEnabled(false);
 		btnSelectAppointmentAmbulatoryTypeOk.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
@@ -1979,6 +2260,8 @@ public class View {
 		panelSelectAppointmentAmbulatoryType.add(btnSelectAppointmentAmbulatoryTypeOk);
 
 		btnSelectAppointmentAmbulatoryTypeCancel = new JButton("Cancelar");
+		btnSelectAppointmentAmbulatoryTypeCancel.setForeground(new Color(16, 169, 121));
+		btnSelectAppointmentAmbulatoryTypeCancel.setFont(new Font("Tahoma", Font.BOLD, 11));
 		btnSelectAppointmentAmbulatoryTypeCancel.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
 				panelPatient.setVisible(true);
@@ -1987,261 +2270,36 @@ public class View {
 		});
 		btnSelectAppointmentAmbulatoryTypeCancel.setBounds(315, 273, 85, 21);
 		panelSelectAppointmentAmbulatoryType.add(btnSelectAppointmentAmbulatoryTypeCancel);
+
+		JLabel lblCross_1 = new JLabel("");
+		lblCross_1.setIcon(new ImageIcon(View.class.getResource("/view/images/OsasunbideCross.jpg")));
+		lblCross_1.setBounds(476, 105, 140, 140);
+		panelSelectAppointmentAmbulatoryType.add(lblCross_1);
+
+		JLabel lblCross_1_1 = new JLabel("");
+		lblCross_1_1.setIcon(new ImageIcon(View.class.getResource("/view/images/Letters.jpg")));
+		lblCross_1_1.setBounds(0, 105, 140, 140);
+		panelSelectAppointmentAmbulatoryType.add(lblCross_1_1);
 		panelSelectAppointmentAmbulatoryType.setVisible(false);
-
-		// PANEL | SELECT APPOINTMENT : DATE & TIMESLOT
-		panelSelectAppointmentDateTimeSlot = new JPanel();
-		panelSelectAppointmentDateTimeSlot.setBackground(new Color(0, 128, 192));
-		panelSelectAppointmentDateTimeSlot.setBounds(0, 0, 616, 351);
-		frame.getContentPane().add(panelSelectAppointmentDateTimeSlot);
-		panelSelectAppointmentDateTimeSlot.setLayout(null);
-		panelSelectAppointmentDateTimeSlot.setVisible(false);
-
-		JScrollPane scrollPaneSelectTimeSlot = new JScrollPane();
-		scrollPaneSelectTimeSlot.setBounds(61, 124, 517, 147);
-		panelSelectAppointmentDateTimeSlot.add(scrollPaneSelectTimeSlot);
-
-		tableSelectTimeSlot = new JTable();
-		tableSelectTimeSlot.setDefaultEditor(Object.class, null);
-		tableSelectTimeSlot.setModel(new DefaultTableModel(new Object[][] {},
-				new String[] { "Profesional", "Ambulatorio", "Fecha", "Hora" }));
-		scrollPaneSelectTimeSlot.setViewportView(tableSelectTimeSlot);
-
-		JLabel lblSelectAppointmentDate = new JLabel("Seleccione una fecha");
-		lblSelectAppointmentDate.setBounds(174, 23, 129, 14);
-		panelSelectAppointmentDateTimeSlot.add(lblSelectAppointmentDate);
-
-		cbSelectAppointmentDate = new JComboBox<String>();
-		cbSelectAppointmentDate.addItemListener(new ItemListener() {
-			public void itemStateChanged(ItemEvent e) {
-				if (!cbSelectAppointmentDate.getSelectedItem().toString().equals("")) {
-					cbSelectAppointmentSanitarian.removeAllItems();
-					String dateString = cbSelectAppointmentDate.getSelectedItem().toString();
-
-					ArrayList<Sanitarian> sanitarians;
-					try {
-						Ambulatory ambulatory = appointmentSelectionManager.selectAmbulatory(wantedAmbulatory);
-						sanitarians = appointmentSelectionManager.showAvailableSanitarianByDate(wantedSanitarian,
-								dateString, ambulatory);
-						cbSelectAppointmentSanitarian.addItem("");
-						for (Sanitarian sanitarian : sanitarians) {
-							cbSelectAppointmentSanitarian
-									.addItem(sanitarian.getSurname() + ", " + sanitarian.getName());
-						}
-					} catch (SQLException e1) {
-						JOptionPane.showMessageDialog(null, "Se ha producido un error con la Base de Datos.", "Error",
-								0);
-					} catch (Exception e1) {
-						JOptionPane.showMessageDialog(null, "Se ha producido un error.", "Error", 0);
-					}
-				} else {
-					cbSelectAppointmentSanitarian.removeAllItems();
-					cbSelectAppointmentSanitarian.addItem("");
-				}
-			}
-		});
-		cbSelectAppointmentDate.setBounds(313, 19, 144, 22);
-		panelSelectAppointmentDateTimeSlot.add(cbSelectAppointmentDate);
-
-		JButton btnSelectAppointmentDateTimeSlotOk = new JButton("Aceptar");
-		btnSelectAppointmentDateTimeSlotOk.addActionListener(new ActionListener() {
-			public void actionPerformed(ActionEvent e) {
-				int fila = tableSelectTimeSlot.getSelectedRow();
-				String hour = (String) tableSelectTimeSlot.getValueAt(fila, 3);
-				String dateString = cbSelectAppointmentDate.getSelectedItem().toString();
-
-				Appointment appointment = new Appointment();
-				try {
-					String nameSurname = (String) cbSelectAppointmentSanitarian.getSelectedItem();
-					String[] parts = nameSurname.split(",");
-					String surname = parts[0].trim();
-					String name = parts[1].trim();
-					Sanitarian sanitarian = appointmentSelectionManager.selectSanitarian(name, surname);
-
-					Ambulatory ambulatory = appointmentSelectionManager.selectAmbulatory(wantedAmbulatory);
-					appointment.setAmbulatory(ambulatory);
-					appointment.setPatient((Patient) user);
-					appointment.setSanitarian(sanitarian);
-
-					appointmentManager.insert(appointment);
-
-					appointment = appointmentSelectionManager.selectAppointment((Patient) user, sanitarian,
-							appointmentSelectionManager.selectAmbulatory(wantedAmbulatory));
-
-					WorkingDay workingDay = appointmentSelectionManager.selectWorkingDay(dateString);
-					TimeSlot timeSlot = appointmentSelectionManager.selectTimeSlot(hour);
-					appointmentSelectionManager.insertAppointmentWorkingDayTimeSlot(appointment, workingDay, timeSlot);
-
-					JOptionPane.showMessageDialog(null, "Cita seleccionada", "Info", 1);
-				} catch (SQLException e1) {
-					JOptionPane.showMessageDialog(null, "Se ha producido un error con la Base de Datos.", "Error", 0);
-				} catch (Exception e1) {
-					JOptionPane.showMessageDialog(null, "Se ha producido un error.", "Error", 0);
-				}
-				panelPatient.setVisible(true);
-				panelSelectAppointmentDateTimeSlot.setVisible(false);
-			}
-		});
-		btnSelectAppointmentDateTimeSlotOk.setBounds(207, 292, 89, 23);
-		panelSelectAppointmentDateTimeSlot.add(btnSelectAppointmentDateTimeSlotOk);
-
-		JButton btnSelectAppointmentDateTimeSlotCancel = new JButton("Cancelar");
-		btnSelectAppointmentDateTimeSlotCancel.addActionListener(new ActionListener() {
-			public void actionPerformed(ActionEvent e) {
-				panelSelectAppointmentDateTimeSlot.setVisible(false);
-				panelSelectAppointmentAmbulatoryType.setVisible(true);
-			}
-		});
-		btnSelectAppointmentDateTimeSlotCancel.setBounds(323, 292, 89, 23);
-		panelSelectAppointmentDateTimeSlot.add(btnSelectAppointmentDateTimeSlotCancel);
-
-		JLabel lblSelectAppontmentSanitarian = new JLabel("Profesionales disponibles");
-		lblSelectAppontmentSanitarian.setBounds(174, 80, 129, 14);
-		panelSelectAppointmentDateTimeSlot.add(lblSelectAppontmentSanitarian);
-
-		cbSelectAppointmentSanitarian = new JComboBox<String>();
+		panelSelectAppointmentAmbulatoryType.setVisible(false);
+		ArrayList<String> ambulatoriesNames = null;
 		try {
-			cbSelectAppointmentSanitarian.addItemListener(new ItemListener() {
-				public void itemStateChanged(ItemEvent e) {
-					if (null != cbSelectAppointmentSanitarian.getSelectedItem()) {
-						if (!cbSelectAppointmentSanitarian.getSelectedItem().toString().equals("")) {
-							String dateString = cbSelectAppointmentDate.getSelectedItem().toString();
-							String nameSurname = (String) cbSelectAppointmentSanitarian.getSelectedItem();
+			ambulatoriesNames = appointmentSelectionManager.selectAmbulatoryNames();
+		} catch (SQLException e1) {
+			JOptionPane.showMessageDialog(null, "Se ha producido un error con la Base de Datos.", "Error", 0);
+		} catch (Exception e1) {
+			JOptionPane.showMessageDialog(null, "Se ha producido un error.", "Error", 0);
+		}
+		for (String ambulatory : ambulatoriesNames) {
+			cbAmbulatory.addItem(ambulatory);
+			comboBoxAmbulatoryNurse.addItem(ambulatory);
+			comboBoxAmbulatoryDoctor.addItem(ambulatory);
+		}
 
-							String[] parts = nameSurname.split(",");
-							String surname = parts[0].trim();
-							String name = parts[1].trim();
-							ArrayList<TimeSlot> timeSlots = null;
-							try {
-								Sanitarian sanitarian = appointmentSelectionManager.selectSanitarian(name, surname);
-								timeSlots = appointmentSelectionManager.showAvailableTimeSlots(sanitarian, dateString);
-
-								DefaultTableModel model = (DefaultTableModel) tableSelectTimeSlot.getModel();
-								model.setRowCount(0);
-
-								if ((null == timeSlots) || (timeSlots.size() == 0)) {
-									JOptionPane.showMessageDialog(null, "No quedan citas disponibles con " + name,
-											"Error", 0);
-								} else {
-									for (TimeSlot timeSlot : timeSlots) {
-										model.addRow(new String[] { surname + ", " + name, wantedAmbulatory,
-												cbSelectAppointmentDate.getSelectedItem().toString(),
-												timeSlotManager.select(timeSlot.getId()).getStartTime().toString() });
-									}
-								}
-							} catch (SQLException e1) {
-								JOptionPane.showMessageDialog(null, "Se ha producido un error con la Base de Datos.",
-										"Error", 0);
-							} catch (Exception e1) {
-								JOptionPane.showMessageDialog(null, "Se ha producido un error.", "Error", 0);
-							}
-						} else {
-							DefaultTableModel model = (DefaultTableModel) tableSelectTimeSlot.getModel();
-							model.setRowCount(0);
-						}
-					}
-				}
-			});
+		try {
 		} catch (Exception e) {
 			JOptionPane.showMessageDialog(null, "Se ha producido un error.", "Error", 0);
 		}
-		cbSelectAppointmentSanitarian.setBounds(319, 76, 138, 22);
-		panelSelectAppointmentDateTimeSlot.add(cbSelectAppointmentSanitarian);
-
-		// PANEL | BLOCK OR UNLOCK PATIENTS
-		panelBlockPatient = new JPanel();
-		panelBlockPatient.setBackground(new Color(16, 169, 121));
-		panelBlockPatient.setBounds(0, 0, 616, 351);
-		frame.getContentPane().add(panelBlockPatient);
-		panelBlockPatient.setLayout(null);
-		panelBlockPatient.setVisible(false);
-
-		JScrollPane scrollPane = new JScrollPane();
-		scrollPane.setBounds(86, 77, 443, 173);
-		panelBlockPatient.add(scrollPane);
-
-		tableBlockPatients = new JTable();
-		tableBlockPatients.setModel(
-				new DefaultTableModel(new Object[][] {}, new String[] { "DNI", "Nombre", "Apellido", "Estado" }));
-		scrollPane.setViewportView(tableBlockPatients);
-		tableBlockPatients.setDefaultEditor(Object.class, null);
-		tableBlockPatients.addMouseListener((MouseListener) new MouseAdapter() {
-			public void mouseClicked(MouseEvent e) {
-				int fila = tableBlockPatients.getSelectedRow();
-				String patientDni = (String) tableBlockPatients.getValueAt(fila, 0);
-				Patient patient = null;
-				try {
-					patient = userDataModificationManager.selectPatient(patientDni);
-					if (false == patient.isBlocked()) {
-						btnBlockPatientOk.setText("Bloquear");
-					} else {
-						btnBlockPatientOk.setText("Desbloquear");
-					}
-				} catch (SQLException e1) {
-					JOptionPane.showMessageDialog(null, "Se ha producido un error con la Base de Datos.", "Error", 0);
-				} catch (Exception e1) {
-					JOptionPane.showMessageDialog(null, "Se ha producido un error.", "Error", 0);
-				}
-			}
-		});
-
-		btnBlockPatientOk = new JButton("Bloquear");
-		btnBlockPatientOk.setFont(new Font("Tahoma", Font.BOLD, 11));
-		btnBlockPatientOk.setForeground(new Color(16, 169, 121));
-		btnBlockPatientOk.setBackground(new Color(255, 255, 255));
-		btnBlockPatientOk.addActionListener(new ActionListener() {
-			public void actionPerformed(ActionEvent e) {
-				int fila = tableBlockPatients.getSelectedRow();
-				String patientDni = (String) tableBlockPatients.getValueAt(fila, 0);
-				Patient patient = null;
-				try {
-					patient = userDataModificationManager.selectPatient(patientDni);
-					if (false == patient.isBlocked()) {
-						blockUnlockPatientManager.blockPatient(patient);
-						JOptionPane.showMessageDialog(null, "Paciente bloqueado/a", "Confirmación", 1);
-					} else {
-						blockUnlockPatientManager.unlockPatient(patient);
-						JOptionPane.showMessageDialog(null, "Paciente desbloqueado/a", "Confirmación", 1);
-					}
-
-					ArrayList<Patient> patients = blockUnlockPatientManager.showPatientByAmbulatoryId(
-							userDataModificationManager.selectDoctor(userDNI).getAmbulatory().getId());
-
-					DefaultTableModel model = (DefaultTableModel) tableBlockPatients.getModel();
-					model.setRowCount(0);
-
-					for (Patient Onepatient : patients) {
-						model.addRow(new String[] { Onepatient.getDni(), Onepatient.getName(), Onepatient.getSurname(),
-								blockUnlockPatientManager.patientState(Onepatient.isBlocked()) });
-					}
-					tableBlockPatients.repaint();
-
-				} catch (SQLException e2) {
-					JOptionPane.showMessageDialog(null, "Se ha producido un error con la BBDD.", "Error", 0);
-				} catch (Exception e2) {
-					JOptionPane.showMessageDialog(null, "Se ha producido un error.", "Error", 0);
-
-				}
-			}
-		});
-		btnBlockPatientOk.setBounds(265, 261, 85, 21);
-		panelBlockPatient.add(btnBlockPatientOk);
-
-		JButton btnBlockPatienCancel = new JButton("Cancelar");
-		btnBlockPatienCancel.setFont(new Font("Tahoma", Font.BOLD, 11));
-		btnBlockPatienCancel.setForeground(new Color(16, 169, 121));
-		btnBlockPatienCancel.setBackground(new Color(255, 255, 255));
-		btnBlockPatienCancel.addActionListener(new ActionListener() {
-			public void actionPerformed(ActionEvent e) {
-				panelBlockPatient.setVisible(false);
-				panelSanitarian.setVisible(true);
-			}
-		});
-		btnBlockPatienCancel.setBounds(265, 289, 85, 21);
-		panelBlockPatient.add(btnBlockPatienCancel);
-		panelBlockPatient.setVisible(false);
-		panelSelectAppointmentAmbulatoryType.setVisible(false);
-		tablePatientData.setDefaultEditor(Object.class, null);
 
 	}
 }
