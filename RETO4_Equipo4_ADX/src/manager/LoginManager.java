@@ -67,7 +67,9 @@ public class LoginManager {
 
 			}
 		} catch (SQLException sqle) {
+			System.out.println("Error con la BBDD - " + sqle.getMessage());
 		} catch (Exception e) {
+			System.out.println("Error generico - " + e.getMessage());
 		} finally {
 			try {
 				if (resultSet != null)
