@@ -12,7 +12,7 @@ import model.pojos.*;
 class LoginManagerTest {
 
 	@Test
-	void testGetUserByDniAndPassword() {
+	void testChekingLogin() {
 
 		// We set the values
 		String userDNI = "00000000D";
@@ -21,14 +21,14 @@ class LoginManagerTest {
 		// Instantiate the manager class
 		LoginManager loginManager = new LoginManager();
 		// We get the values
-		int user = loginManager.getUserByDniAndPassword(userDNI, pass);
+		String user = loginManager.chekingLogin(userDNI, pass);
 
 		// We check that the method is not empty
 		assertNotNull(user);
 	}
 
 	@Test
-	void testIdentifyUserType() {
+	void testCheckUserType() {
 
 		// We initialized the Pojos
 		User doctor = null;
@@ -40,9 +40,9 @@ class LoginManagerTest {
 
 		try {
 			// We set the values in the Method
-			doctor = loginManager.identifyUserType("00000000D");
-			nurse = loginManager.identifyUserType("00000000E");
-			patient = loginManager.identifyUserType("00000000P");
+			doctor = loginManager.checkUserType("00000000D");
+			nurse = loginManager.checkUserType("00000000E");
+			patient = loginManager.checkUserType("00000000P");
 		} catch (SQLException e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();

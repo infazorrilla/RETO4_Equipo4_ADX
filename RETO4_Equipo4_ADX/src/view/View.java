@@ -209,7 +209,7 @@ public class View {
 				textFieldBirthDatePatient.setText("");
 				textFieldPhoneNumberPatient.setText("");
 				textFieldAddressPatient.setText("");
-				
+
 				panelLogin.setVisible(false);
 				panelRegistrationPatient.setVisible(true);
 			}
@@ -223,9 +223,7 @@ public class View {
 		btnRegistroSanitarian.setForeground(new Color(255, 255, 255));
 		btnRegistroSanitarian.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
-				
-				
-				
+
 				panelLogin.setVisible(false);
 				panelNurseOrDoctor.setVisible(true);
 			}
@@ -277,10 +275,10 @@ public class View {
 					JOptionPane.showMessageDialog(null, e2.getMessage(), "Error", 0);
 				}
 
-				int verifiedUser = new LoginManager().getUserByDniAndPassword(userDNI, pass);
+				String checkingUser = new LoginManager().chekingLogin(userDNI, pass);
 
-				switch (verifiedUser) {
-				case 1:
+				switch (checkingUser) {
+				case "PatientUnlock":
 					JOptionPane.showMessageDialog(null, "ACCEDIENDO COMO PACIENTE");
 					panelLogin.setVisible(false);
 					panelPatient.setVisible(true);
@@ -321,14 +319,14 @@ public class View {
 								appointment.getAppointmentWorkingDayTimeSlot().getWorkingDay().getDate().toString() });
 					}
 					break;
-				case 2:
+				case "Sanitarian":
 					JOptionPane.showMessageDialog(null, "ACCEDIENDO COMO EMPLEADO"); // ADMIN
 					panelLogin.setVisible(false);
 					panelSanitarian.setVisible(true);
 					tfModifySanitarianDNI.setText(userDNI);
 
 					break;
-				case 3:
+				case "PatientBlock":
 					JOptionPane.showMessageDialog(null, "USUARIO BLOQUEADO"); // PATIENT BLOCKED
 					break;
 				default:
@@ -433,12 +431,7 @@ public class View {
 				textFieldStaffNumDoctor.setText("");
 				textFieldSalaryDoctor.setText("");
 				textFieldSpecialityDoctor.setText("");
-				
 
-				
-				
-				
-				
 				panelNurseOrDoctor.setVisible(false);
 				panelRegistrationDoctor.setVisible(true);
 			}
@@ -460,10 +453,7 @@ public class View {
 				textFieldStaffNumberNurse.setText("");
 				textFieldSalaryNurse.setText("");
 				textFieldCategoryNurse.setText("");
-				
-				
-				
-				
+
 				panelNurseOrDoctor.setVisible(false);
 				panelRegistrationNurse.setVisible(true);
 			}
@@ -608,7 +598,7 @@ public class View {
 			public void actionPerformed(ActionEvent e) {
 				Patient patient = new Patient();
 				try {
-					if(patientManager.select(textFieldDNIPatient.getText().trim()) != null) {
+					if (patientManager.select(textFieldDNIPatient.getText().trim()) != null) {
 						JOptionPane.showMessageDialog(null, "Usuario ya registrado", "Aviso", 2);
 					} else {
 						patient.setDni(textFieldDNIPatient.getText().trim());
@@ -638,7 +628,6 @@ public class View {
 					// TODO Auto-generated catch block
 					e2.printStackTrace();
 				}
-				
 
 				try {
 					patientManager.insert(patient);
