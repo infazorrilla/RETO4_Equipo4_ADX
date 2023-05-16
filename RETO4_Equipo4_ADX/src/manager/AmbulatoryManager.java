@@ -20,9 +20,6 @@ import model.utils.BBDDUtils;
  */
 public class AmbulatoryManager extends AbstractManager<Ambulatory> {
 
-	/**
-	 * 
-	 */
 	public static final String AMBULATORY_TABLE = "ambulatorio";
 
 	/**
@@ -299,7 +296,7 @@ public class AmbulatoryManager extends AbstractManager<Ambulatory> {
 	/**
 	 * Delete in the database via a String conditional output parameter
 	 * 
-	 * @param id | Is a String
+	 * @param id | Is a Integer
 	 * @throws SQLException | If there is an error on DB
 	 * @throws Exception    | If there is a generic error
 	 */

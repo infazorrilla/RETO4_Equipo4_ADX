@@ -25,19 +25,18 @@ public class ShowSanitarianAppointmentManager {
 
 	/**
 	 * Returns a list of all the Appointment from a Sanitarian from the DB
-	 * @param dni 
 	 * 
-	 * @return an ArrayList of Appointments
-	 * @throws SQLException 
-	 * @throws Exception 
+	 * @param dni | Is a String
+	 * @return a List of Appointments
+	 * @throws SQLException | If there is an error on DB
+	 * @throws Exception    | If there is a generic error
 	 */
 	public List<Appointment> select(String dni) throws SQLException, Exception {
 		ArrayList<Appointment> ret = null;
 
 		String sql = "select c.idCita, c.dniPaciente, j.fecha, f.horaInicio"
 				+ "from cita c join citajornadafranja cjf on c.idCita=cjf.idCita"
-				+ "join jornada j on j.idJornada=cjf.idJornada"
-				+ "join franja f on f.idFranja=cjf.idFranja"
+				+ "join jornada j on j.idJornada=cjf.idJornada" + "join franja f on f.idFranja=cjf.idFranja"
 				+ "where c.dniSanitario like '" + dni + "'";
 
 		Connection connection = null;
@@ -55,10 +54,6 @@ public class ShowSanitarianAppointmentManager {
 				if (null == ret)
 					ret = new ArrayList<Appointment>();
 
-				
-			
-				
-
 				// We take out the columns of the RS
 				int id = resultSet.getInt("idCita");
 				String dniPatient = resultSet.getString("dniPaciente");
@@ -75,21 +70,17 @@ public class ShowSanitarianAppointmentManager {
 				AppointmentWorkingDayTimeSlot appointmentWorkingDayTimeSlot = new AppointmentWorkingDayTimeSlot();
 				patient.setDni(dniPatient);
 				appointmentWorkingDayTimeSlot.setWorkingDay(workingDay);
-				
-				
+
 				appointment.setId(id);
 				appointment.setPatient(patient);
 				appointment.setTimeSlot(timeSlot);
 				appointment.setPatient(patient);
 				appointment.setAppointmentWorkingDayTimeSlot(appointmentWorkingDayTimeSlot);
-			
-				
-				
 
 				// We save it in ret
-				
+
 				ret.add(appointment);
-				
+
 			}
 
 		} catch (SQLException sqle) {

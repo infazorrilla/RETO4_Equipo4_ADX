@@ -22,10 +22,10 @@ public class UserDataModificationManager {
 	/**
 	 * Identifies which kind of user enters the application
 	 * 
-	 * @param userDNI, String with user's id
+	 * @param userDNI String with user's id
 	 * @return doctor, nurse or patient
-	 * @throws SQLException
-	 * @throws Exception
+	 * @throws SQLException | If there is an error on DB
+	 * @throws Exception    | If there is a generic error
 	 */
 	public User identifyUserType(String userDNI) throws SQLException, Exception {
 
@@ -52,9 +52,9 @@ public class UserDataModificationManager {
 	 * Strings from fields tfPasswd, address and phoneNumber are filled or not. If
 	 * any of of them is filled, the method returns true, and the button enables.
 	 * 
-	 * @param tfPasswd,    a String with the field's content.
-	 * @param address,     a String with the field's content.
-	 * @param phoneNumber, a String with the field's content.
+	 * @param password    | a String with the field's content.
+	 * @param address     | a String with the field's content.
+	 * @param phoneNumber | a String with the field's content.
 	 * @return boolean
 	 */
 	public boolean enableModifyPatientOkButton(String password, String address, String phoneNumber) {
@@ -74,7 +74,7 @@ public class UserDataModificationManager {
 	 * String from field tfPasswd is filled or not. If it's filled, the method
 	 * returns true, and the button enables.
 	 * 
-	 * @param password, a String with the field's content.
+	 * @param password | a String with the field's content.
 	 * @return boolean
 	 */
 	public boolean enableModifySanitarianOkButton(String password) {
@@ -112,8 +112,8 @@ public class UserDataModificationManager {
 	 * 
 	 * @param patient Object Patient
 	 * @param address String of the new address
-	 * @throws SQLException
-	 * @throws Exception
+	 * @throws SQLException | If there is an error on DB
+	 * @throws Exception    | If there is a generic error
 	 */
 	public void updatePatientAddress(Patient patient, String address) throws SQLException, Exception {
 		Connection connection = null;
@@ -154,8 +154,8 @@ public class UserDataModificationManager {
 	 * 
 	 * @param patient     Object Patient
 	 * @param phoneNumber String of the new phone number
-	 * @throws SQLException
-	 * @throws Exception
+	 * @throws SQLException | If there is an error on DB
+	 * @throws Exception    | If there is a generic error
 	 */
 	public void updatePatientPhoneNumber(Patient patient, String phoneNumber) throws SQLException, Exception {
 		Connection connection = null;
@@ -196,8 +196,8 @@ public class UserDataModificationManager {
 	 * 
 	 * @param patient  Object Patient
 	 * @param password String of the new password
-	 * @throws SQLException
-	 * @throws Exception
+	 * @throws SQLException | If there is an error on DB
+	 * @throws Exception    | If there is a generic error
 	 */
 	public void updatePatientPassword(Patient patient, String password) throws SQLException, Exception {
 		Connection connection = null;
@@ -236,10 +236,10 @@ public class UserDataModificationManager {
 	/**
 	 * Updates 'contrasena' atribute DB's usuario table by doctor's id
 	 * 
-	 * @param patient  Object Doctor
+	 * @param doctor   Object Doctor
 	 * @param password String of the new password
-	 * @throws SQLException
-	 * @throws Exception
+	 * @throws SQLException | If there is an error on DB
+	 * @throws Exception    | If there is a generic error
 	 */
 	public void updateDoctorPassword(Doctor doctor, String password) throws SQLException, Exception {
 		Connection connection = null;
@@ -278,10 +278,10 @@ public class UserDataModificationManager {
 	/**
 	 * Updates 'contrasena' atribute DB's usuario table by nurse's id
 	 * 
-	 * @param patient  Object Nurse
+	 * @param nurse    Object Nurse
 	 * @param password String of the new password
-	 * @throws SQLException
-	 * @throws Exception
+	 * @throws SQLException | If there is an error on DB
+	 * @throws Exception    | If there is a generic error
 	 */
 	public void updateNursePassword(Nurse nurse, String password) throws SQLException, Exception {
 		Connection connection = null;
@@ -321,8 +321,8 @@ public class UserDataModificationManager {
 	 * Deletes 'sanitario' table's row by dni
 	 * 
 	 * @param dni String of doctor's dni
-	 * @throws SQLException
-	 * @throws Exception
+	 * @throws SQLException | If there is an error on DB
+	 * @throws Exception    | If there is a generic error
 	 */
 	public void deleteDoctor(String dni) throws SQLException, Exception {
 		Connection connection = null;
@@ -337,7 +337,7 @@ public class UserDataModificationManager {
 			preparedStatement = connection.prepareStatement(sql);
 
 			preparedStatement.executeUpdate();
-			
+
 		} catch (SQLException sqle) {
 			throw sqle;
 		} catch (Exception e) {
@@ -362,8 +362,8 @@ public class UserDataModificationManager {
 	 * Deletes 'sanitario' table's row by dni
 	 * 
 	 * @param dni String of nurse dni
-	 * @throws SQLException
-	 * @throws Exception
+	 * @throws SQLException | If there is an error on DB
+	 * @throws Exception    | If there is a generic error
 	 */
 	public void deleteNurse(String dni) throws SQLException, Exception {
 		Connection connection = null;
@@ -378,7 +378,7 @@ public class UserDataModificationManager {
 			preparedStatement = connection.prepareStatement(sql);
 
 			preparedStatement.executeUpdate();
-			
+
 		} catch (SQLException sqle) {
 			throw sqle;
 		} catch (Exception e) {
@@ -402,8 +402,10 @@ public class UserDataModificationManager {
 	/**
 	 * Returns one Doctor from the DB by its id
 	 * 
-	 * @param id int
+	 * @param dni | String
 	 * @return Doctor object
+	 * @throws SQLException | If there is an error on DB
+	 * @throws Exception    | If there is a generic error
 	 */
 	public Doctor selectDoctor(String dni) throws SQLException, Exception {
 		Doctor ret = null;
@@ -487,8 +489,10 @@ public class UserDataModificationManager {
 	/**
 	 * Returns one Nurse from the DB by its id
 	 * 
-	 * @param id int
+	 * @param dni | String
 	 * @return Doctor object
+	 * @throws SQLException | If there is an error on DB
+	 * @throws Exception    | If there is a generic error
 	 */
 	public Nurse selectNurse(String dni) throws SQLException, Exception {
 		Nurse ret = null;
@@ -572,8 +576,10 @@ public class UserDataModificationManager {
 	/**
 	 * Returns one Patient from the DB by its id
 	 * 
-	 * @param id int
+	 * @param dni | String
 	 * @return Patient object
+	 * @throws SQLException | If there is an error on DB
+	 * @throws Exception    | If there is a generic error
 	 */
 	public Patient selectPatient(String dni) throws SQLException, Exception {
 		Patient ret = null;
@@ -610,9 +616,9 @@ public class UserDataModificationManager {
 				ret.setGender(gender);
 				ret.setBirthDate(birthDate);
 				ret.setPassword(password);
-				if(blocked.equalsIgnoreCase("true")) {
+				if (blocked.equalsIgnoreCase("true")) {
 					ret.setBlocked(true);
-				}else {
+				} else {
 					ret.setBlocked(false);
 				}
 			}
@@ -647,7 +653,9 @@ public class UserDataModificationManager {
 	/**
 	 * Deletes the row in 'Paciente' table of the DB by its id
 	 * 
-	 * @param id int
+	 * @param dni | String
+	 * @throws SQLException | If there is an error on DB
+	 * @throws Exception    | If there is a generic error
 	 */
 	public void deletePatient(String dni) throws SQLException, Exception {
 		Connection connection = null;
@@ -662,7 +670,7 @@ public class UserDataModificationManager {
 			preparedStatement = connection.prepareStatement(sql);
 
 			preparedStatement.executeUpdate();
-			
+
 		} catch (SQLException sqle) {
 			throw sqle;
 		} catch (Exception e) {

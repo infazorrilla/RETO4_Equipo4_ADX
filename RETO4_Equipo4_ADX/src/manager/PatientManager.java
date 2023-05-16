@@ -14,6 +14,12 @@ import java.util.List;
 import model.pojos.Patient;
 import model.utils.BBDDUtils;
 
+/**
+ * The class manages the basic functions (CRUD) in databases
+ * 
+ * @author Xabi
+ *
+ */
 public class PatientManager {
 
 	public static final String PATIENT_TABLE = "paciente";
@@ -23,6 +29,8 @@ public class PatientManager {
 	 * 
 	 * @param dni String
 	 * @return Patient object
+	 * @throws SQLException | If there is an error on DB
+	 * @throws Exception    | If there is a generic error
 	 */
 	public Patient select(String dni) throws SQLException, Exception {
 		Patient ret = null;
@@ -49,9 +57,9 @@ public class PatientManager {
 				ret.setDni(dni);
 				ret.setPhoneNumber(phoneNumber);
 				ret.setAddress(address);
-				if(blocked.equals("true")) {
+				if (blocked.equals("true")) {
 					ret.setBlocked(true);
-				}else {
+				} else {
 					ret.setBlocked(false);
 				}
 			}
@@ -85,6 +93,8 @@ public class PatientManager {
 	 * Returns a list of all the Patient from the DB
 	 * 
 	 * @return an ArrayList of Patient
+	 * @throws SQLException | If there is an error on DB
+	 * @throws Exception    | If there is a generic error
 	 */
 	public List<Patient> select() throws SQLException, Exception {
 		ArrayList<Patient> ret = null;
@@ -125,17 +135,15 @@ public class PatientManager {
 				patient.setGender(gender);
 				patient.setBirthDate(birthDate);
 				patient.setPassword(password);
-				
-				
-				if(blocked.equals("true")) {
+
+				if (blocked.equals("true")) {
 					patient.setBlocked(true);
-				}else {
+				} else {
 					patient.setBlocked(false);
 				}
-				
+
 				ret.add(patient);
-				
-				
+
 			}
 
 		} catch (SQLException sqle) {
@@ -166,7 +174,9 @@ public class PatientManager {
 	/**
 	 * Inserts one Patient into the DB
 	 * 
-	 * @param one object Patient
+	 * @param patient object Patient
+	 * @throws SQLException | If there is an error on DB
+	 * @throws Exception    | If there is a generic error
 	 */
 	public void insert(Patient patient) throws SQLException, Exception {
 		Connection connection = null;
@@ -210,7 +220,9 @@ public class PatientManager {
 	/**
 	 * Updates ''numeroTelefono' of a Patient from the DB at '777666555' by its dni
 	 * 
-	 * @param one object Patient
+	 * @param patient object Patient
+	 * @throws SQLException | If there is an error on DB
+	 * @throws Exception    | If there is a generic error
 	 */
 	public void update(Patient patient) throws SQLException, Exception {
 		Connection connection = null;
@@ -251,7 +263,10 @@ public class PatientManager {
 
 	/**
 	 * Deletes the row in 'Paciente' table of the DB by its dni
+	 * 
 	 * @param dni String
+	 * @throws SQLException | If there is an error on DB
+	 * @throws Exception    | If there is a generic error
 	 */
 	public void delete(String dni) throws SQLException, Exception {
 		Connection connection = null;

@@ -6,7 +6,6 @@ import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.sql.Statement;
-import java.time.LocalTime;
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
@@ -19,8 +18,20 @@ import model.pojos.WorkingDay;
 import model.pojos.WorkingDaySanitarian;
 import model.utils.BBDDUtils;
 
+/**
+ * The class manages the basic functions (CRUD) in databases
+ * 
+ * @author adx
+ *
+ */
 public class WorkingDaySanitarianManager {
-	
+	/**
+	 * 
+	 * @param id | Is a String
+	 * @return WorkingDaySanitarian | Is an Object
+	 * @throws SQLException | If there is an error on DB
+	 * @throws Exception    | If there is a generic error
+	 */
 	public WorkingDaySanitarian select(String id) throws SQLException, Exception {
 		WorkingDaySanitarian ret = null;
 
@@ -74,6 +85,13 @@ public class WorkingDaySanitarianManager {
 		return ret;
 	}
 
+	/**
+	 * Return a list of all the working day
+	 * 
+	 * @return List<WorkingDaySanitarian>
+	 * @throws SQLException | If there is an error on DB
+	 * @throws Exception    | If there is a generic error
+	 */
 	public List<WorkingDaySanitarian> select() throws SQLException, Exception {
 		ArrayList<WorkingDaySanitarian> ret = null;
 
@@ -100,12 +118,12 @@ public class WorkingDaySanitarianManager {
 
 				WorkingDay workingDay = new WorkingDay();
 				workingDay.setId(idWorkingDay);
-				
+
 //				DoctorManager doctorManager=new DoctorManager();
 //				NurseManager nurseManager = new NurseManager();
-				
+
 				Sanitarian sanitarian = null;
-				
+
 //				if(null!= doctorManager.select(dniSanitarian)) {
 //					sanitarian = new Doctor();
 //					sanitarian.setDni(dniSanitarian);
@@ -145,6 +163,14 @@ public class WorkingDaySanitarianManager {
 		return ret;
 	}
 
+	/**
+	 * Return a list of all the working day of a particular sanitarian
+	 * 
+	 * @param id | Is an Integer
+	 * @return List<Sanitarian>
+	 * @throws SQLException | If there is an error on DB
+	 * @throws Exception    | If there is a generic error
+	 */
 	public List<Sanitarian> selectSanitarian(int id) throws SQLException, Exception {
 		ArrayList<Sanitarian> ret = null;
 
@@ -243,6 +269,13 @@ public class WorkingDaySanitarianManager {
 		return ret;
 	}
 
+	/**
+	 * Insert a new working day of a Sanitarian in DB
+	 * 
+	 * @param workingDaySanitarian | Is an Object
+	 * @throws SQLException | If there is an error on DB
+	 * @throws Exception    | If there is a generic error
+	 */
 	public void insert(WorkingDaySanitarian workingDaySanitarian) throws SQLException, Exception {
 		Connection connection = null;
 		Statement statement = null;
@@ -275,7 +308,14 @@ public class WorkingDaySanitarianManager {
 			;
 		}
 	}
-	
+
+	/**
+	 * Delete an working day of a Sanitarian in DB
+	 * 
+	 * @param workingDaySanitarian | Is an Object
+	 * @throws SQLException | If there is an error on DB
+	 * @throws Exception    | If there is a generic error
+	 */
 	public void delete(WorkingDaySanitarian workingDaySanitarian) throws SQLException, Exception {
 		Connection connection = null;
 		PreparedStatement preparedStatement = null;
@@ -285,8 +325,9 @@ public class WorkingDaySanitarianManager {
 			preparedStatement = null;
 
 			Class.forName(BBDDUtils.DRIVER_LOCAL);
-			String sql = "delete from jornadasanitario where idJornada = " + workingDaySanitarian.getWorkingDay().getId() + " "
-					+ "and dniSanitario = '"+ workingDaySanitarian.getSanitarian().getDni()+ "'";
+			String sql = "delete from jornadasanitario where idJornada = "
+					+ workingDaySanitarian.getWorkingDay().getId() + " " + "and dniSanitario = '"
+					+ workingDaySanitarian.getSanitarian().getDni() + "'";
 			preparedStatement = connection.prepareStatement(sql);
 
 			preparedStatement.executeUpdate();
@@ -307,10 +348,6 @@ public class WorkingDaySanitarianManager {
 			}
 			;
 		}
-	}
-
-//	No puedo cambiar nada, porque los dos ids son foreign keys
-	public void update(WorkingDaySanitarian workingDaySanitarian) throws SQLException, Exception {
 	}
 
 }

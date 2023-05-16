@@ -23,6 +23,8 @@ import model.pojos.WorkingDay;
 import model.utils.BBDDUtils;
 
 /**
+ * The class manages the all the functions in the selection of an appointment
+ * 
  * @author adx
  *
  */
@@ -32,8 +34,8 @@ public class AppointmentSelectionManager {
 	 * Selects all atribute 'nombre' from every row in DB's 'Ambulatorio' table
 	 * 
 	 * @return ArrayList of type String
-	 * @throws SQLException
-	 * @throws Exception
+	 * @throws SQLException | If there is an error on DB
+	 * @throws Exception    | If there is a generic error
 	 */
 	public ArrayList<String> selectAmbulatoryNames() throws SQLException, Exception {
 		ArrayList<String> ret = new ArrayList<String>();
@@ -51,8 +53,8 @@ public class AppointmentSelectionManager {
 	 * Returns every row in 'Ambulatorio' table
 	 * 
 	 * @return ArrayList of type Ambulatory
-	 * @throws SQLException
-	 * @throws Exception
+	 * @throws SQLException | If there is an error on DB
+	 * @throws Exception    | If there is a generic error
 	 */
 	private List<Ambulatory> selectAmbulatories() throws SQLException, Exception {
 		ArrayList<Ambulatory> ret = null;
@@ -118,12 +120,12 @@ public class AppointmentSelectionManager {
 	 * Calls a function created in the DB called 'sacarFechasDisponibles' which
 	 * returns a list of Dates in which sanitarians work in one ambulatory.
 	 * 
-	 * @param type       String that means type of sanitarian ('Enfermeria' or
+	 * @param type       |String that means type of sanitarian ('Enfermeria' or
 	 *                   'Medicina')
-	 * @param ambulatory Ambulatory
+	 * @param ambulatory | Is an Object (Ambulatory)
 	 * @return ArrayList<Date>
-	 * @throws SQLException
-	 * @throws Exception
+	 * @throws SQLException | If there is an error on DB
+	 * @throws Exception    | If there is a generic error
 	 */
 	public ArrayList<String> showAvailableDates(String type, Ambulatory ambulatory) throws SQLException, Exception {
 		ArrayList<String> ret = null;
@@ -133,8 +135,8 @@ public class AppointmentSelectionManager {
 		ResultSet resultSet = null;
 
 		String sql = "select j.fecha from jornada j join jornadasanitario js on j.idJornada=js.idJornada "
-				+ "join sanitario s on js.dniSanitario=s.dniSanitario "
-				+ "where tipo= '"+type+"' and s.idAmbulatorio = " + ambulatory.getId() ;
+				+ "join sanitario s on js.dniSanitario=s.dniSanitario " + "where tipo= '" + type
+				+ "' and s.idAmbulatorio = " + ambulatory.getId();
 
 		try {
 			Class.forName(BBDDUtils.DRIVER_LOCAL);
@@ -186,8 +188,8 @@ public class AppointmentSelectionManager {
 	 * 
 	 * @param name String. Ambuatory's name
 	 * @return Ambulatory with all the data
-	 * @throws SQLException
-	 * @throws Exception
+	 * @throws SQLException | If there is an error on DB
+	 * @throws Exception    | If there is a generic error
 	 */
 	public Ambulatory selectAmbulatory(String name) throws SQLException, Exception {
 		Ambulatory ret = null;
@@ -250,8 +252,8 @@ public class AppointmentSelectionManager {
 	 * @param sanitarian String. Sanitarian's dni
 	 * @param dateString date
 	 * @return ArrayList of available TimeSlots
-	 * @throws SQLException
-	 * @throws Exception
+	 * @throws SQLException | If there is an error on DB
+	 * @throws Exception    | If there is a generic error
 	 */
 	public ArrayList<TimeSlot> showAvailableTimeSlots(Sanitarian sanitarian, String dateString)
 			throws SQLException, Exception {
@@ -318,10 +320,12 @@ public class AppointmentSelectionManager {
 	/**
 	 * Returns Sanitarian of one type who work in a date.
 	 * 
-	 * @param type String. Type of sanitarian ('Enfermeria', 'Medicina')
-	 * @param date String.
-	 * @return
-	 * @throws SQLException, Exception
+	 * @param type       String. Type of sanitarian ('Enfermeria', 'Medicina')
+	 * @param date       String.
+	 * @param ambulatory | Is an Object
+	 * @return ArrayList<Sanitarian>
+	 ** @throws SQLException | If there is an error on DB
+	 * @throws Exception    | If there is a generic error
 	 */
 	public ArrayList<Sanitarian> showAvailableSanitarianByDate(String type, String date, Ambulatory ambulatory)
 			throws SQLException, Exception {
@@ -329,9 +333,8 @@ public class AppointmentSelectionManager {
 
 		String sql = "select js.dniSanitario, u.nombre, u.apellido "
 				+ "from jornadasanitario js join jornada j on js.idJornada=j.idJornada "
-				+ "join sanitario s on js.dniSanitario=s.dniSanitario "
-				+ "join usuario u on s.dniSanitario=u.dni "
-				+ "WHERE fecha= '"+date+"' and tipo='"+type+"' and s.idAmbulatorio=" + ambulatory.getId();
+				+ "join sanitario s on js.dniSanitario=s.dniSanitario " + "join usuario u on s.dniSanitario=u.dni "
+				+ "WHERE fecha= '" + date + "' and tipo='" + type + "' and s.idAmbulatorio=" + ambulatory.getId();
 
 		Connection connection = null;
 		Statement statement = null;
@@ -401,8 +404,8 @@ public class AppointmentSelectionManager {
 	 * @param name    String
 	 * @param surname String
 	 * @return Sanitarian
-	 * @throws SQLException
-	 * @throws Exception
+	 * @throws SQLException | If there is an error on DB
+	 * @throws Exception    | If there is a generic error
 	 */
 	public Sanitarian selectSanitarian(String name, String surname) throws SQLException, Exception {
 		Sanitarian ret = null;
@@ -477,11 +480,11 @@ public class AppointmentSelectionManager {
 	 * Inserts a row in DB's 'citajornadafranja' table. Gets ids from Appointment,
 	 * WorkingDay and TimeSlot
 	 * 
-	 * @param appointment Appointment
-	 * @param workingDay  WorkingDay
-	 * @param timeSlot    TimeSlot
-	 * @throws SQLException
-	 * @throws Exception
+	 * @param appointment | Is an Object (Appointment)
+	 * @param workingDay  | Is an Object (WorkingDay)
+	 * @param timeSlot    | Is an Object (TimeSlot)
+	 * @throws SQLException | If there is an error on DB
+	 * @throws Exception    | If there is a generic error
 	 */
 	public void insertAppointmentWorkingDayTimeSlot(Appointment appointment, WorkingDay workingDay, TimeSlot timeSlot)
 			throws SQLException, Exception {
@@ -522,12 +525,12 @@ public class AppointmentSelectionManager {
 	 * Selects the last appointment from a certain patient and a certain doctor.
 	 * Used to get appointment's id to make an insert in 'citajornadafranja' table
 	 * 
-	 * @param patient    Patient
-	 * @param sanitarian Sanitarian
-	 * @param ambulatory Ambulatory
-	 * @return Appointment
-	 * @throws SQLException
-	 * @throws Exception
+	 * @param patient    | Is an Object (Patient)
+	 * @param sanitarian | Is an Object (Sanitarian)
+	 * @param ambulatory | Is an Object (Ambulatory)
+	 * @return Appointment | Is an Object
+	 * @throws SQLException | If there is an error on DB
+	 * @throws Exception    | If there is a generic error
 	 */
 	public Appointment selectAppointment(Patient patient, Sanitarian sanitarian, Ambulatory ambulatory)
 			throws SQLException, Exception {
@@ -590,9 +593,9 @@ public class AppointmentSelectionManager {
 	 * in 'citajornadafranja' table
 	 * 
 	 * @param sDate String of the date
-	 * @return WorkingDay
-	 * @throws SQLException
-	 * @throws Exception
+	 * @return WorkingDay | Is an Object
+	 * @throws SQLException | If there is an error on DB
+	 * @throws Exception    | If there is a generic error
 	 */
 	public WorkingDay selectWorkingDay(String sDate) throws SQLException, Exception {
 		WorkingDay ret = null;
@@ -661,9 +664,9 @@ public class AppointmentSelectionManager {
 	 * in 'citajornadafranja' table
 	 * 
 	 * @param sStartTime string of startTime
-	 * @return TimeSlot
-	 * @throws SQLException
-	 * @throws Exception
+	 * @return TimeSlot | Is an Object
+	 * @throws SQLException | If there is an error on DB
+	 * @throws Exception    | If there is a generic error
 	 */
 	public TimeSlot selectTimeSlot(String sStartTime) throws SQLException, Exception {
 		TimeSlot ret = null;

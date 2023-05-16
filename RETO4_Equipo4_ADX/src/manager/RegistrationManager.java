@@ -6,14 +6,19 @@ import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.sql.Statement;
 import java.util.ArrayList;
-import java.util.Date;
+
 import java.util.List;
 
 import model.pojos.Ambulatory;
-import model.pojos.Patient;
+
 import model.utils.BBDDUtils;
 
-public class RegistrationManager  {
+/**
+ * 
+ * @author adx
+ *
+ */
+public class RegistrationManager {
 
 	// RUBRICA | SPRINT 2 | INDIVIDUAL
 	// Management of the Table:
@@ -31,17 +36,17 @@ public class RegistrationManager  {
 
 	public static final String AMBULATORY_TABLE = "ambulatorio";
 
-	
 	/**
 	 * Returns one Ambulatory from the DB by its name
 	 * 
 	 * @param name String
 	 * @return Ambulatory object
+	 * @throws SQLException | If there is an error on DB
+	 * @throws Exception    | If there is a generic error
 	 */
 	public Ambulatory select(String name) throws SQLException, Exception {
 		Ambulatory ret = null;
 
-		
 		String sql = "select * from ambulatorio where nombre=  '" + name + "'";
 
 		Connection connection = null;
@@ -61,7 +66,7 @@ public class RegistrationManager  {
 				int id = resultSet.getInt("idSanitario");
 				String address = resultSet.getString("direccion");
 				String phoneNumber = resultSet.getString("telefono");
-				
+
 				ret.setName(name);
 				ret.setAddress(address);
 				ret.setId(id);
@@ -92,11 +97,13 @@ public class RegistrationManager  {
 		}
 		return ret;
 	}
-	
+
 	/**
 	 * Returns a list of all the Ambulatory from the DB
 	 * 
-	 * @return an ArrayList of Ambulatory
+	 * @return List of Ambulatory
+	 * @throws SQLException | If there is an error on DB
+	 * @throws Exception    | If there is a generic error
 	 */
 	public List<Ambulatory> select() throws SQLException, Exception {
 		ArrayList<Ambulatory> ret = null;
@@ -134,7 +141,7 @@ public class RegistrationManager  {
 
 				// We save it in ret
 				ret.add(ambulatory);
-				
+
 			}
 
 		} catch (SQLException sqle) {
@@ -161,6 +168,4 @@ public class RegistrationManager  {
 		}
 		return ret;
 	}
-	
-	//private ArrayList<int>
 }

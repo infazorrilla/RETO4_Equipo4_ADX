@@ -12,17 +12,21 @@ import model.pojos.Patient;
 import model.utils.BBDDUtils;
 
 /**
+ * The class manages all the functions in the block or unlock a patient
+ * 
  * @author adx
  *
  */
 public class BlockUnlockPatientManager {
 
 	/**
-	 * Returns an arrayList of patients who have appointments in one ambulatory (selected by ambulatory's id)
-	 * @param id int
+	 * Returns an arrayList of patients who have appointments in one ambulatory
+	 * (selected by ambulatory's id)
+	 * 
+	 * @param id int | Is an Integer
 	 * @return ArrayList<Patient>
-	 * @throws SQLException, Exception 
-	 * @throws Exception 
+	 * @throws SQLException | If there is an error on DB
+	 * @throws Exception    | If there is a generic error
 	 */
 	public ArrayList<Patient> showPatientByAmbulatoryId(int id) throws SQLException, Exception {
 		ArrayList<Patient> ret = null;
@@ -48,7 +52,7 @@ public class BlockUnlockPatientManager {
 
 				String dni = resultSet.getString("dniPaciente");
 
-				UserDataModificationManager userDataModificationManager	= new UserDataModificationManager();	
+				UserDataModificationManager userDataModificationManager = new UserDataModificationManager();
 				Patient patient = userDataModificationManager.selectPatient(dni);
 
 				ret.add(patient);
@@ -83,6 +87,7 @@ public class BlockUnlockPatientManager {
 
 	/**
 	 * Returns "Bloqueado/a" boolean if true and "Desbloqueado/a" if false
+	 * 
 	 * @param blocked boolean
 	 * @return String
 	 */
@@ -100,8 +105,10 @@ public class BlockUnlockPatientManager {
 
 	/**
 	 * Sets 'true' in 'Paciente' table's 'bloqueado'.
-	 * @param patient Patient
-	 * @throws SQLException, Exception 
+	 * 
+	 * @param patient Patient | Is an Object
+	 * @throws SQLException | If there is an error on DB
+	 * @throws Exception    | If there is a generic error
 	 */
 	public void blockPatient(Patient patient) throws SQLException, Exception {
 		Connection connection = null;
@@ -143,8 +150,10 @@ public class BlockUnlockPatientManager {
 
 	/**
 	 * Sets 'false' in 'Paciente' table's 'bloqueado'.
-	 * @param patient Patient
-	 * @throws SQLException, Exception 
+	 * 
+	 * @param patient Patient | Is an Object
+	 * @throws SQLException | If there is an error on DB
+	 * @throws Exception    | If there is a generic error
 	 */
 	public void unlockPatient(Patient patient) throws SQLException, Exception {
 		Connection connection = null;

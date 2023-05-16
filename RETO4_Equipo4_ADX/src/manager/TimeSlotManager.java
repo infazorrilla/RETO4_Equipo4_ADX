@@ -13,6 +13,12 @@ import java.util.List;
 import model.pojos.TimeSlot;
 import model.utils.BBDDUtils;
 
+/**
+ * The class manages the basic functions (CRUD) in databases
+ * 
+ * @author adx
+ *
+ */
 public class TimeSlotManager extends AbstractManager<TimeSlot> {
 
 	public static final String TIMESLOT_TABLE = "franja";
@@ -22,6 +28,8 @@ public class TimeSlotManager extends AbstractManager<TimeSlot> {
 	 * 
 	 * @param id int
 	 * @return TimeSlot object
+	 * @throws SQLException | If there is an error on DB
+	 * @throws Exception    | If there is a generic error
 	 */
 	@Override
 	public TimeSlot select(int id) throws SQLException, Exception {
@@ -80,6 +88,8 @@ public class TimeSlotManager extends AbstractManager<TimeSlot> {
 	 * Returns a list of all the TimeSlots from the DB
 	 * 
 	 * @return an ArrayList of TimeSlots
+	 * @throws SQLException | If there is an error on DB
+	 * @throws Exception    | If there is a generic error
 	 */
 	@Override
 	public List<TimeSlot> select() throws SQLException, Exception {
@@ -144,6 +154,8 @@ public class TimeSlotManager extends AbstractManager<TimeSlot> {
 	 * Inserts one TimeSlot into the DB
 	 * 
 	 * @param one object TimeSlot
+	 * @throws SQLException | If there is an error on DB
+	 * @throws Exception    | If there is a generic error
 	 */
 	@Override
 	public void insert(TimeSlot timeSlot) throws SQLException, Exception {
@@ -184,6 +196,8 @@ public class TimeSlotManager extends AbstractManager<TimeSlot> {
 	 * Updates ''horaInicio' of a TimeSlot from the DB at '11:00' by its id
 	 * 
 	 * @param one object TimeSlot
+	 * @throws SQLException | If there is an error on DB
+	 * @throws Exception    | If there is a generic error
 	 */
 	@Override
 	public void update(TimeSlot timeSlot) throws SQLException, Exception {
@@ -229,6 +243,8 @@ public class TimeSlotManager extends AbstractManager<TimeSlot> {
 	 * Deletes the row in 'Franja' table of the DB by its id
 	 * 
 	 * @param id int
+	 * @throws SQLException | If there is an error on DB
+	 * @throws Exception    | If there is a generic error
 	 */
 	@Override
 	public void delete(int id) throws SQLException, Exception {

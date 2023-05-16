@@ -15,6 +15,12 @@ import java.util.List;
 import model.pojos.WorkingDay;
 import model.utils.BBDDUtils;
 
+/**
+ * The class manages the basic functions (CRUD) in databases
+ * 
+ * @author adx
+ *
+ */
 public class WorkingDayManager extends AbstractManager<WorkingDay> {
 
 	public static final String WORKINGDAY_TABLE = "jornada";
@@ -24,6 +30,8 @@ public class WorkingDayManager extends AbstractManager<WorkingDay> {
 	 * 
 	 * @param id int
 	 * @return WorkingDay object
+	 * @throws SQLException | If there is an error on DB
+	 * @throws Exception    | If there is a generic error
 	 */
 	@Override
 	public WorkingDay select(int id) throws SQLException, Exception {
@@ -86,6 +94,8 @@ public class WorkingDayManager extends AbstractManager<WorkingDay> {
 	 * Returns a list of all the WorkingDays from the DB
 	 * 
 	 * @return an ArrayList of WorkingDays
+	 * @throws SQLException | If there is an error on DB
+	 * @throws Exception    | If there is a generic error
 	 */
 	@Override
 	public List<WorkingDay> select() throws SQLException, Exception {
@@ -153,6 +163,8 @@ public class WorkingDayManager extends AbstractManager<WorkingDay> {
 	 * Inserts one WorkingDay into the DB
 	 * 
 	 * @param one object WorkingDay
+	 * @throws SQLException | If there is an error on DB
+	 * @throws Exception    | If there is a generic error
 	 */
 	@Override
 	public void insert(WorkingDay workingDay) throws SQLException, Exception {
@@ -199,6 +211,8 @@ public class WorkingDayManager extends AbstractManager<WorkingDay> {
 	 * Updates ''horaInicio' of a WorkingDay from the DB at '11:00' by its id
 	 * 
 	 * @param one object WorkingDay
+	 * @throws SQLException | If there is an error on DB
+	 * @throws Exception    | If there is a generic error
 	 */
 	@Override
 	public void update(WorkingDay workingDay) throws SQLException, Exception {
@@ -242,7 +256,10 @@ public class WorkingDayManager extends AbstractManager<WorkingDay> {
 
 	/**
 	 * Deletes the row in 'Jornada' table of the DB by its id
+	 * 
 	 * @param id int
+	 * @throws SQLException | If there is an error on DB
+	 * @throws Exception    | If there is a generic error
 	 */
 	@Override
 	public void delete(int id) throws SQLException, Exception {

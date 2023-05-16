@@ -18,10 +18,12 @@ import model.pojos.Sanitarian;
 import model.utils.BBDDUtils;
 
 /**
+ * The class manages the basic functions (CRUD) in databases
+ * 
  * @author adx
  *
  */
-public class AppointmentManager extends AbstractManager<Appointment> {
+public class AppointmentManager {
 
 	/**
 	 * 
@@ -31,11 +33,11 @@ public class AppointmentManager extends AbstractManager<Appointment> {
 	/**
 	 * Returns one Appointment from the DB by its id
 	 * 
-	 * @param id int
-	 * @return Appointment object
+	 * @param id | Is a Integer
+	 * @return Appointment | Is an Object
+	 * @throws SQLException | If there is an error on DB
+	 * @throws Exception    | If there is a generic error
 	 */
-	
-	@Override
 	public Appointment select(int id) throws SQLException, Exception {
 		Appointment ret = null;
 
@@ -105,8 +107,9 @@ public class AppointmentManager extends AbstractManager<Appointment> {
 	 * Returns a list of all the Appointments from the DB
 	 * 
 	 * @return an ArrayList of Appointments
+	 * @throws SQLException | If there is an error on DB
+	 * @throws Exception    | If there is a generic error
 	 */
-	@Override
 	public List<Appointment> select() throws SQLException, Exception {
 		ArrayList<Appointment> ret = null;
 
@@ -180,9 +183,10 @@ public class AppointmentManager extends AbstractManager<Appointment> {
 	/**
 	 * Inserts one Appointment into the DB
 	 * 
-	 * @param one object Appointment
+	 * @param appointment object Appointment
+	 * @throws SQLException | If there is an error on DB
+	 * @throws Exception    | If there is a generic error
 	 */
-	@Override
 	public void insert(Appointment appointment) throws SQLException, Exception {
 		Connection connection = null;
 		Statement statement = null;
@@ -192,9 +196,9 @@ public class AppointmentManager extends AbstractManager<Appointment> {
 			statement = connection.createStatement();
 			Class.forName(BBDDUtils.DRIVER_LOCAL);
 
-			String sql = "insert into cita ( dniPaciente, dniSanitario, idAmbulatorio) values ('" + appointment.getPatient().getDni()
-					+ "', '" + appointment.getSanitarian().getDni() + "', '" + appointment.getAmbulatory().getId()
-					+ "')";
+			String sql = "insert into cita ( dniPaciente, dniSanitario, idAmbulatorio) values ('"
+					+ appointment.getPatient().getDni() + "', '" + appointment.getSanitarian().getDni() + "', '"
+					+ appointment.getAmbulatory().getId() + "')";
 
 			statement.executeUpdate(sql);
 
@@ -216,17 +220,13 @@ public class AppointmentManager extends AbstractManager<Appointment> {
 		}
 	}
 
-	@Override
-	public void update(Appointment appointment) throws SQLException, Exception {
-		
-	}
-
-	
 	/**
 	 * Deletes the row in 'Cita' table of the DB by its id
-	 * @param id int
+	 * 
+	 * @param id | Is a Integer
+	 * @throws SQLException | If there is an error on DB
+	 * @throws Exception    | If there is a generic error
 	 */
-	@Override
 	public void delete(int id) throws SQLException, Exception {
 		Connection connection = null;
 		PreparedStatement preparedStatement = null;

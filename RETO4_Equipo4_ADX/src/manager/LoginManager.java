@@ -25,9 +25,11 @@ public class LoginManager {
 	PatientManager patientManager = new PatientManager();
 
 	/**
-	 * @param userDNI
-	 * @param pass
-	 * @return integer
+	 * Return a string: Sanitarian, PatientBlock or PatientUnlock
+	 * 
+	 * @param userDNI | Is a String
+	 * @param pass    | Is a String
+	 * @return String
 	 */
 	public String chekingLogin(String userDNI, String pass) {
 
@@ -94,10 +96,10 @@ public class LoginManager {
 	}
 
 	/**
-	 * @param userDNI
+	 * @param userDNI | Is a String
 	 * @return User
-	 * @throws SQLException
-	 * @throws Exception
+	 * @throws SQLException | If there is an error on DB
+	 * @throws Exception    | If there is a generic error
 	 */
 	public User checkUserType(String userDNI) throws SQLException, Exception {
 

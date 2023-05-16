@@ -10,7 +10,6 @@ import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
 
-
 import model.pojos.Appointment;
 import model.pojos.AppointmentWorkingDayTimeSlot;
 import model.pojos.Doctor;
@@ -22,6 +21,7 @@ import model.pojos.WorkingDay;
 import model.utils.BBDDUtils;
 
 /**
+ * 
  * @author adx
  *
  */
@@ -29,21 +29,19 @@ public class ShowAppointmentManager {
 
 	/**
 	 * Returns a list of all the Appointment from a Patient from the DB
-	 * @param dni 
 	 * 
+	 * @param dni | Is a String
 	 * @return an ArrayList of Appointments
-	 * @throws SQLException 
-	 * @throws Exception 
+	 * @throws SQLException | If there is an error on DB
+	 * @throws Exception    | If there is a generic error
 	 */
 	public List<Appointment> select(String dni) throws SQLException, Exception {
 		ArrayList<Appointment> ret = null;
 
 		String sql = "select  c.idCita, s.dniSanitario, s.tipo, f.horaInicio, j.fecha "
 				+ "from sanitario s join cita c on s.dniSanitario=c.dniSanitario "
-				+ "join citajornadafranja cjf on c.idCita=cjf.idCita "
-				+ "join franja f on  f.idFranja=cjf.idFranja "
-				+ "join jornada j on j.idJornada=cjf.idJornada "
-				+ "where c.dniPaciente like '" + dni +"'";
+				+ "join citajornadafranja cjf on c.idCita=cjf.idCita " + "join franja f on  f.idFranja=cjf.idFranja "
+				+ "join jornada j on j.idJornada=cjf.idJornada " + "where c.dniPaciente like '" + dni + "'";
 
 		Connection connection = null;
 		Statement statement = null;
@@ -61,18 +59,16 @@ public class ShowAppointmentManager {
 					ret = new ArrayList<Appointment>();
 
 				Sanitarian sanitarian = null;
-			
-				
 
 				// We take out the columns of the RS
 				int id = resultSet.getInt("idCita");
 				String dniSanitarian = resultSet.getString("dniSanitario");
 				String type = resultSet.getString("tipo");
-				if(type.equalsIgnoreCase("Enfermeria")) {
+				if (type.equalsIgnoreCase("Enfermeria")) {
 					sanitarian = new Nurse();
 					sanitarian.setDni(dniSanitarian);
 					sanitarian.setType(type);
-					
+
 				} else {
 					sanitarian = new Doctor();
 					sanitarian.setDni(dniSanitarian);
@@ -91,21 +87,17 @@ public class ShowAppointmentManager {
 				AppointmentWorkingDayTimeSlot appointmentWorkingDayTimeSlot = new AppointmentWorkingDayTimeSlot();
 				patient.setDni(dni);
 				appointmentWorkingDayTimeSlot.setWorkingDay(workingDay);
-				
-				
+
 				appointment.setId(id);
 				appointment.setPatient(patient);
 				appointment.setTimeSlot(timeSlot);
 				appointment.setSanitarian(sanitarian);
 				appointment.setAppointmentWorkingDayTimeSlot(appointmentWorkingDayTimeSlot);
-			
-				
-				
 
 				// We save it in ret
-				
+
 				ret.add(appointment);
-				
+
 			}
 
 		} catch (SQLException sqle) {
